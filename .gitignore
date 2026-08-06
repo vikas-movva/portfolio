@@ -38,3 +38,5 @@ coverage
 
 # Vite
 vite.config.ts.timestamp-*.mjs
+
+.worktrees
