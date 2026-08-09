@@ -6,24 +6,29 @@
  */
 
 export interface ExperienceEntry {
-  role: string
-  company: string
-  period: string
-  location: string
-  type: string
-  description: string
-  achievements: string[]
-  technologies: string[]
+  role: string;
+  company: string;
+  period: string;
+  location: string;
+  type: string;
+  description: string;
+  /** Optional text rendered in bold at the end of `description`. */
+  descriptionHighlight?: string;
+  achievements: string[];
+  technologies: string[];
+  /** Optional external link (paper, project, etc.). Renders a "View Paper" button. */
+  link?: string;
 }
 
 export const experienceData: ExperienceEntry[] = [
   {
     role: "Software Engineering Intern",
     company: "Synerz Technologies",
-    period: "Jan 2023 - Jul 2023",
+    period: "Jan 2023 - Dec 2023",
     location: "Remote",
     type: "Internship",
-    description: "Designed and implemented scalable ETL/ELT pipelines, built data models, and developed interactive dashboards for business intelligence.",
+    description:
+      "Designed and implemented scalable ETL/ELT pipelines, built data models, and developed interactive dashboards for business intelligence.",
     achievements: [
       "Built automated ETL pipelines processing 500K+ records daily using Python, SQL, and Apache Airflow",
       "Designed dimensional data models reducing query latency by 40% for analytics workloads",
@@ -31,37 +36,41 @@ export const experienceData: ExperienceEntry[] = [
       "Implemented data quality checks and monitoring reducing data incidents by 60%",
       "Collaborated with cross-functional teams to define data requirements and SLAs",
     ],
-    technologies: ["Python", "SQL", "Apache Airflow", "PostgreSQL", "Tableau", "dbt", "Git"],
+    technologies: [
+      "Python",
+      "SQL",
+      "Apache Airflow",
+      "PostgreSQL",
+      "Tableau",
+      "dbt",
+      "Git",
+    ],
   },
   {
-    role: "Data Engineering Project Lead",
-    company: "University Capstone Project",
-    period: "Sep 2022 - Dec 2022",
-    location: "On-campus",
-    type: "Academic",
-    description: "Led a team of 4 to build an end-to-end ML platform for credit risk assessment with automated model training and deployment pipelines.",
+    role: "Machine Learning Research (Co-Author)",
+    company: "Wilfrid Laurier University",
+    period: "2024",
+    location: "Waterloo, ON",
+    type: "Research",
+    description:
+      "Co-authored a peer-reviewed IEEE publication applying machine learning to predict psychiatric diagnoses among undergraduate students using demographic, lifestyle, and psychometric survey data collected during the COVID-19 pandemic. ",
+    descriptionHighlight: "IEEE CCECE 2025 [Accepted]",
     achievements: [
-      "Architected microservices-based ML platform with FastAPI and Docker",
-      "Implemented CI/CD pipelines for automated model training, validation, and deployment",
-      "Built feature store and experiment tracking reducing model iteration time by 50%",
-      "Achieved 92% AUC on credit risk prediction with ensemble methods",
-      "Presented technical architecture to faculty panel and industry advisors",
+      "Co-authored 'Mind Matters: Harnessing Machine Learning to Predict Psychiatric Diagnoses in University Students with Real-World Data', published in IEEE Xplore",
+      "Engineered features from multi-section survey data, aggregating psychometric scales (GAD-2, CAMS-R, DERS-16) and consolidating hobby/demographic attributes into model-ready features",
+      "Applied SMOTE to address class imbalance, improving minority-class precision and recall across all classifiers",
+      "Evaluated 4 classifiers (SVM, MLP, Gradient Boosting, Naive Bayes) using confusion matrices, ROC curves, and precision-recall curves; the MLP achieved the highest AUC of 0.77",
+      "Demonstrated a scalable, low-cost approach for institutions to proactively identify at-risk students using non-invasive survey data",
     ],
-    technologies: ["Python", "FastAPI", "Docker", "MLflow", "PostgreSQL", "React", "AWS"],
-  },
-  {
-    role: "Full-Stack Developer (Freelance)",
-    company: "Various Clients",
-    period: "2021 - Present",
-    location: "Remote",
-    type: "Freelance",
-    description: "Delivered custom web applications and data solutions for small businesses and startups.",
-    achievements: [
-      "Built 5+ production React/TypeScript applications with responsive design",
-      "Developed RESTful APIs with FastAPI serving 10K+ daily requests",
-      "Implemented automated testing suites achieving 85%+ code coverage",
-      "Optimized database queries reducing API response times by 35%",
+    technologies: [
+      "Python",
+      "scikit-learn",
+      "Multi-layer Perceptron",
+      "Support Vector Machines",
+      "Gradient Boosting",
+      "SMOTE",
+      "Data Visualization",
     ],
-    technologies: ["React", "TypeScript", "FastAPI", "PostgreSQL", "Tailwind CSS", "Vercel"],
+    link: "/PsychiatricDiagnoses.pdf",
   },
-]
+];

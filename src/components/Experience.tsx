@@ -76,7 +76,7 @@ export default function Experience() {
                 className={`relative flex-${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} md:items-start gap-8`}
               >
                 <motion.div
-                  className="relative z-10 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary border-4 border-darker flex-shrink-0"
+                  className="relative z-10 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary border-4 border-transparent flex-shrink-0"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
@@ -142,8 +142,11 @@ export default function Experience() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 }}
                   >
-                    {exp.description}
-                  </motion.p>
+                                        {exp.description}
+                                        {exp.descriptionHighlight && (
+                                          <strong className="font-bold text-primary">{exp.descriptionHighlight}</strong>
+                                        )}
+                                      </motion.p>
 
                   <motion.ul
                     className="space-y-3 mb-6"
@@ -189,6 +192,22 @@ export default function Experience() {
                       </motion.span>
                     ))}
                   </motion.div>
+
+                  {exp.link && (
+                    <motion.a
+                      href={exp.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-dark font-medium text-sm hover:bg-primary/90 transition-all"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                      View Paper
+                    </motion.a>
+                  )}
                 </motion.div>
               </motion.div>
             ))}

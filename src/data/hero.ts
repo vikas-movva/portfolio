@@ -6,8 +6,8 @@
  */
 
 export interface HeroStat {
-  icon: 'clock' | 'projects' | 'stack'
-  text: string
+  icon: "clock" | "projects" | "stack";
+  text: string;
 }
 
 export const heroData = {
@@ -27,8 +27,7 @@ export const heroData = {
   visualText: "Code & Data",
   /** Quick stats row under the buttons. */
   stats: [
-    { icon: 'clock' as const, text: '2+ Years Experience' },
-    { icon: 'projects' as const, text: '15+ Projects Built' },
-    { icon: 'stack' as const, text: '5+ Technologies' },
+    { icon: "clock" as const, text: "2+ Years Experience" },
+    { icon: "stack" as const, text: "10+ Technologies" },
   ] satisfies HeroStat[],
-}
+};

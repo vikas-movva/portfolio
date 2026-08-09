@@ -43,32 +43,32 @@ const itemVariants = {
 }
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  })
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSubmitStatus('submitting')
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    // In a real app, you would send this to your backend
-    console.log('Form submitted:', formData)
-    
-    setSubmitStatus('success')
-    setFormData({ name: '', email: '', subject: '', message: '' })
-    
-    setTimeout(() => setSubmitStatus('idle'), 5000)
-  }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    const form = e.currentTarget
+    const formData = new FormData(form)
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      })
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        form.reset()
+        setTimeout(() => setSubmitStatus('idle'), 5000)
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch {
+      setSubmitStatus('error')
+    }
   }
 
   return (
@@ -199,6 +199,8 @@ export default function Contact() {
           >
             <motion.form
               onSubmit={handleSubmit}
+              action="https://formsubmit.co/vikas.s.movva@gmail.com"
+              method="POST"
               variants={itemVariants}
               className="p-8 rounded-2xl bg-dark/50 border border-gray-700/50"
               noValidate
@@ -214,8 +216,6 @@ export default function Contact() {
                     type="text"
                     id="name"
                     name="name"
-                    value={formData.name}
-                    onChange={handleChange}
                     required
                     className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     whileFocus={{ scale: 1.01 }}
@@ -229,8 +229,6 @@ export default function Contact() {
                     type="email"
                     id="email"
                     name="email"
-                    value={formData.email}
-                    onChange={handleChange}
                     required
                     className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     whileFocus={{ scale: 1.01 }}
@@ -245,8 +243,6 @@ export default function Contact() {
                 <motion.select
                   id="subject"
                   name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
                   required
                   className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
                   whileFocus={{ scale: 1.01 }}
@@ -265,8 +261,6 @@ export default function Contact() {
                 <motion.textarea
                   id="message"
                   name="message"
-                  value={formData.message}
-                  onChange={handleChange}
                   required
                   rows={5}
                   className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"

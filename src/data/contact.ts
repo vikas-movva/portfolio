@@ -17,11 +17,11 @@ export interface ContactInfo {
 }
 
 export const contactData: ContactInfo = {
-  email: "vikas@example.com",
-  linkedin: "https://linkedin.com/in/vikas",
-  github: "https://github.com/vikas",
-  twitter: "https://twitter.com/vikas",
-  location: "San Francisco, CA",
+  email: "vikas.s.movva@gmail.com",
+  linkedin: "https://linkedin.com/in/vikas-movva",
+  github: "https://github.com/vikas-movva",
+  twitter: "https://twitter.com/vikasmovva",
+  location: "Mississauga, ON",
   availability: "Open to opportunities",
 }
 
