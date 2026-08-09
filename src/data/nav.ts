@@ -23,4 +23,4 @@ export const navLinks: NavLink[] = [
 export const sectionIds = navLinks.map((l) => l.href.replace('#', ''))
 
 /** Brand text shown top-left of the header. */
-export const brandName = 'VIKAS'
+export const brandName = 'VIKAS MOVVA'
