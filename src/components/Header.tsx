@@ -108,40 +108,38 @@ export default function Header() {
         </div>
 
         <AnimatePresence>
-                  {mobileMenuOpen && (
-                    <motion.div
-                      id="mobile-menu"
-                      className="md:hidden mt-4 pb-4 border-t border-primary/20 bg-dark/95 backdrop-blur-md"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <div className="flex flex-col space-y-4 pt-4">
-                        {navLinks.map((link, index) => (
-                          <motion.a
-                            key={link.href}
-                            href={link.href}
-                            onClick={(e) => {
-                              e.preventDefault()
-                              scrollToSection(link.href)
-                            }}
-                            className={`px-4 py-2 rounded-lg text-center font-medium transition-colors ${
-                              activeSection === link.href.replace('#', '')
-                                ? 'bg-primary/20 text-primary'
-                                : 'text-gray-300 hover:bg-primary/10 hover:text-primary'
-                            }`}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.05 }}
-                          >
-                            {link.label}
-                          </motion.a>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              id="mobile-menu"
+              className="md:hidden mt-4 pb-4 border-t border-primary/20 bg-dark/95 backdrop-blur-md"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="flex flex-col space-y-4 pt-4">
+                {navLinks.map((link, index) => (
+                  <motion.button
+                    key={link.href}
+                    onClick={() => scrollToSection(link.href)}
+                    className={`px-4 py-2 rounded-lg text-center font-medium transition-colors text-left ${
+                      activeSection === link.href.replace('#', '')
+                        ? 'bg-primary/20 text-primary'
+                        : 'text-gray-300 hover:bg-primary/10 hover:text-primary'
+                    }`}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {link.label}
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
     </motion.header>
   )
