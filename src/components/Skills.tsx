@@ -1,83 +1,35 @@
 import { motion } from 'framer-motion'
+import { skillsCategories, exploringSkills } from '../data'
+import type { SkillIconName } from '../data'
 
-const skillsCategories = [
-  {
-    category: "Languages",
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-      </svg>
-    ),
-    skills: [
-      { name: "Python", level: 95 },
-      { name: "SQL", level: 90 },
-      { name: "JavaScript/TypeScript", level: 85 },
-      { name: "Java", level: 80 },
-      { name: "HTML/CSS", level: 90 },
-    ],
-  },
-  {
-    category: "Data Engineering",
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-      </svg>
-    ),
-    skills: [
-      { name: "Apache Airflow", level: 85 },
-      { name: "dbt", level: 80 },
-      { name: "Apache Spark", level: 75 },
-      { name: "ETL/ELT Pipelines", level: 90 },
-      { name: "Data Modeling", level: 85 },
-      { name: "PostgreSQL/MySQL", level: 85 },
-    ],
-  },
-  {
-    category: "ML/AI",
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-      </svg>
-    ),
-    skills: [
-      { name: "TensorFlow/Keras", level: 80 },
-      { name: "PyTorch", level: 75 },
-      { name: "Scikit-learn", level: 85 },
-      { name: "LangChain", level: 70 },
-      { name: "MLOps", level: 70 },
-    ],
-  },
-  {
-    category: "Web & Backend",
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-      </svg>
-    ),
-    skills: [
-      { name: "React/Next.js", level: 90 },
-      { name: "FastAPI/Flask", level: 85 },
-      { name: "Tailwind CSS", level: 90 },
-      { name: "RESTful APIs", level: 85 },
-      { name: "Docker", level: 80 },
-    ],
-  },
-  {
-    category: "Cloud & Tools",
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-      </svg>
-    ),
-    skills: [
-      { name: "GCP (BigQuery, Cloud Run)", level: 75 },
-      { name: "AWS (Lambda, S3, RDS)", level: 70 },
-      { name: "Git/GitHub Actions", level: 90 },
-      { name: "Linux/Shell Scripting", level: 80 },
-      { name: "VS Code/JetBrains", level: 95 },
-    ],
-  },
-]
+/** Icon map keyed by the string names used in src/data/skills.ts. */
+const skillIcons: Record<SkillIconName, React.ReactNode> = {
+  code: (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+    </svg>
+  ),
+  database: (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+    </svg>
+  ),
+  lightbulb: (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+    </svg>
+  ),
+  link: (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+    </svg>
+  ),
+  cloud: (
+    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+    </svg>
+  ),
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -149,7 +101,7 @@ export default function Skills() {
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
-                  {cat.icon}
+                  {skillIcons[cat.icon]}
                 </motion.div>
                 <motion.h3
                   className="text-xl font-bold text-white"
@@ -209,7 +161,7 @@ export default function Skills() {
             Always expanding my toolkit — currently exploring:
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            {["Rust", "Kubernetes", "GraphQL", "Apache Kafka", "Terraform"].map((tech) => (
+            {exploringSkills.map((tech) => (
               <motion.span
                 key={tech}
                 className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20 hover:bg-primary/20 transition-all cursor-default"

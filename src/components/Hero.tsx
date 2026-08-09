@@ -1,4 +1,25 @@
 import { motion } from 'framer-motion'
+import { heroData } from '../data'
+import { useThemeColor, hexToRgba } from '../theme/useThemeColor'
+
+/** Clock icon used for the "Years Experience" quick stat. */
+const statIcons = {
+  clock: (
+    <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+    </svg>
+  ),
+  projects: (
+    <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+    </svg>
+  ),
+  stack: (
+    <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+    </svg>
+  ),
+} as const
 
 export default function Hero() {
   const scrollToSection = (href: string) => {
@@ -7,6 +28,15 @@ export default function Hero() {
       element.scrollIntoView({ behavior: 'smooth' })
     }
   }
+
+  // Theme-aware colour for the animated SVG strokes and the accent borders.
+  const primary = useThemeColor('primary')
+  const primaryHex = primary ?? '#00d4ff'
+  const borderColorFrames = [
+    hexToRgba(primaryHex, 0.3) || 'rgba(0, 212, 255, 0.3)',
+    hexToRgba(primaryHex, 0.6) || 'rgba(0, 212, 255, 0.6)',
+    hexToRgba(primaryHex, 0.3) || 'rgba(0, 212, 255, 0.3)',
+  ]
 
   const variants = {
     container: {
@@ -67,7 +97,7 @@ export default function Hero() {
             variants={variants.item}
             className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 border border-primary/20"
           >
-            Software Engineer • Data Engineer • ML Enthusiast
+            {heroData.badge}
           </motion.span>
 
           <motion.h1
@@ -75,17 +105,16 @@ export default function Hero() {
             variants={variants.item}
             className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
           >
-            <span className="text-white">Hi, I'm </span>
+            <span className="text-white">{heroData.headlinePrefix} </span>
             <br />
-            <span className="text-primary">Vikas</span>
+            <span className="text-primary">{heroData.name}</span>
           </motion.h1>
 
           <motion.p
             variants={variants.item}
             className="text-lg md:text-xl text-gray-300 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
           >
-            Building scalable data pipelines, intelligent systems, and clean web applications.
-            Passionate about turning complex data into actionable insights.
+            {heroData.intro}
           </motion.p>
 
           <motion.div
@@ -98,7 +127,7 @@ export default function Hero() {
               whileTap={{ scale: 0.98 }}
               className="px-8 py-4 rounded-xl bg-primary text-dark font-semibold text-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-dark"
             >
-              View Projects
+              {heroData.primaryCta}
             </motion.button>
             <motion.button
               onClick={() => scrollToSection('#contact')}
@@ -106,7 +135,7 @@ export default function Hero() {
               whileTap={{ scale: 0.98 }}
               className="px-8 py-4 rounded-xl bg-transparent border-2 border-primary/50 text-primary font-semibold text-lg hover:bg-primary/10 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-dark"
             >
-              Get In Touch
+              {heroData.secondaryCta}
             </motion.button>
           </motion.div>
 
@@ -114,24 +143,12 @@ export default function Hero() {
             variants={variants.item}
             className="flex flex-wrap justify-center lg:justify-start gap-8 mt-12 text-sm text-gray-400"
           >
-            <span className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-              </svg>
-              2+ Years Experience
-            </span>
-            <span className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-              </svg>
-              15+ Projects Built
-            </span>
-            <span className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-              </svg>
-              5+ Technologies
-            </span>
+            {heroData.stats.map((stat) => (
+              <span key={stat.text} className="flex items-center gap-2">
+                {statIcons[stat.icon]}
+                {stat.text}
+              </span>
+            ))}
           </motion.div>
         </motion.div>
 
@@ -150,8 +167,8 @@ export default function Hero() {
               >
                 <defs>
                   <radialGradient id="gradient" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#00d4ff" stopOpacity="0.3" />
-                    <stop offset="100%" stopColor="#00d4ff" stopOpacity="0" />
+                    <stop offset="0%" stopColor={primaryHex} stopOpacity="0.3" />
+                    <stop offset="100%" stopColor={primaryHex} stopOpacity="0" />
                   </radialGradient>
                 </defs>
                 <motion.circle
@@ -166,7 +183,7 @@ export default function Hero() {
                   cx="200"
                   cy="200"
                   r="140"
-                  stroke="#00d4ff"
+                  stroke={primaryHex}
                   strokeWidth="1"
                   fill="none"
                   strokeDasharray="10, 10"
@@ -177,7 +194,7 @@ export default function Hero() {
                   cx="200"
                   cy="200"
                   r="100"
-                  stroke="#00d4ff"
+                  stroke={primaryHex}
                   strokeWidth="2"
                   fill="none"
                   strokeDasharray="5, 15"
@@ -190,7 +207,7 @@ export default function Hero() {
                 <div className="relative w-64 h-64">
                   <motion.div
                     className="absolute inset-0 rounded-full border-4 border-primary/30"
-                    animate={{ scale: [1, 1.05, 1], borderColor: ['#00d4ff/30', '#00d4ff/60', '#00d4ff/30'] }}
+                    animate={{ scale: [1, 1.05, 1], borderColor: borderColorFrames }}
                     transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                   />
                   <motion.div
@@ -205,9 +222,9 @@ export default function Hero() {
                         animate={{ scale: [1, 1.02, 1] }}
                         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                       >
-                        Code & Data
+                        {heroData.visualText}
                       </motion.span>
-                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

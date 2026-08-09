@@ -2,6 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   Theme tokens — driven by CSS custom properties.
+   To add a theme: copy a [data-theme="..."] block below and
+   change the colour values. See src/theme/theme.ts.
+   The default theme is set by the inline script in index.html
+   so there is no flash of the wrong colour on first paint.
+   ============================================================ */
+
+:root,
+:root[data-theme="cyan"] {
+  --color-primary: #00d4ff;
+  --color-primary-hover: #00b8e0;
+  --color-dark: #0a0f1a;
+  --color-darker: #050810;
+}
+
+:root[data-theme="violet"] {
+  --color-primary: #a78bfa;
+  --color-primary-hover: #8b5cf6;
+  --color-dark: #0f0a1a;
+  --color-darker: #0a0510;
+}
+
+:root[data-theme="emerald"] {
+  --color-primary: #34d399;
+  --color-primary-hover: #10b981;
+  --color-dark: #0a1a14;
+  --color-darker: #05100b;
+}
+
+:root[data-theme="amber"] {
+  --color-primary: #fbbf24;
+  --color-primary-hover: #f59e0b;
+  --color-dark: #1a140a;
+  --color-darker: #100c05;
+}
+
+:root[data-theme="rose"] {
+  --color-primary: #fb7185;
+  --color-primary-hover: #f43f5e;
+  --color-dark: #1a0a0e;
+  --color-darker: #100507;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -14,14 +58,14 @@ html {
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  background-color: #0a0f1a;
+  background-color: var(--color-darker, #050810);
   color: #e2e8f0;
   line-height: 1.6;
 }
 
 ::selection {
-  background-color: #00d4ff;
-  color: #0a0f1a;
+  background-color: var(--color-primary, #00d4ff);
+  color: var(--color-darker, #0a0f1a);
 }
 
 ::-webkit-scrollbar {
@@ -29,14 +73,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #050810;
+  background: var(--color-darker, #050810);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #00d4ff;
+  background: var(--color-primary, #00d4ff);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00b8e0;
+  background: var(--color-primary-hover, #00b8e0);
 }

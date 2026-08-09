@@ -1,14 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-
-const navLinks = [
-  { href: '#hero', label: 'Home' },
-  { href: '#about', label: 'About' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#contact', label: 'Contact' },
-]
+import { navLinks, sectionIds, brandName } from '../data'
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -19,8 +11,7 @@ export default function Header() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
       
-      const sections = ['hero', 'about', 'skills', 'experience', 'projects', 'contact']
-      for (const section of sections) {
+      for (const section of sectionIds) {
         const element = document.getElementById(section)
         if (element) {
           const rect = element.getBoundingClientRect()
@@ -62,7 +53,7 @@ export default function Header() {
             whileTap={{ scale: 0.95 }}
             aria-label="Go to home"
           >
-            VIKAS
+            {brandName}
           </motion.a>
 
           <div className="hidden md:flex items-center space-x-8">

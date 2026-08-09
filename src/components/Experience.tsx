@@ -1,54 +1,6 @@
 import { motion } from 'framer-motion'
-
-const experienceData = [
-  {
-    role: "Software Engineering Intern",
-    company: "Synerz Technologies",
-    period: "Jan 2023 - Jul 2023",
-    location: "Remote",
-    type: "Internship",
-    description: "Designed and implemented scalable ETL/ELT pipelines, built data models, and developed interactive dashboards for business intelligence.",
-    achievements: [
-      "Built automated ETL pipelines processing 500K+ records daily using Python, SQL, and Apache Airflow",
-      "Designed dimensional data models reducing query latency by 40% for analytics workloads",
-      "Developed real-time dashboards with 99.9% uptime using modern BI tools",
-      "Implemented data quality checks and monitoring reducing data incidents by 60%",
-      "Collaborated with cross-functional teams to define data requirements and SLAs",
-    ],
-    technologies: ["Python", "SQL", "Apache Airflow", "PostgreSQL", "Tableau", "dbt", "Git"],
-  },
-  {
-    role: "Data Engineering Project Lead",
-    company: "University Capstone Project",
-    period: "Sep 2022 - Dec 2022",
-    location: "On-campus",
-    type: "Academic",
-    description: "Led a team of 4 to build an end-to-end ML platform for credit risk assessment with automated model training and deployment pipelines.",
-    achievements: [
-      "Architected microservices-based ML platform with FastAPI and Docker",
-      "Implemented CI/CD pipelines for automated model training, validation, and deployment",
-      "Built feature store and experiment tracking reducing model iteration time by 50%",
-      "Achieved 92% AUC on credit risk prediction with ensemble methods",
-      "Presented technical architecture to faculty panel and industry advisors",
-    ],
-    technologies: ["Python", "FastAPI", "Docker", "MLflow", "PostgreSQL", "React", "AWS"],
-  },
-  {
-    role: "Full-Stack Developer (Freelance)",
-    company: "Various Clients",
-    period: "2021 - Present",
-    location: "Remote",
-    type: "Freelance",
-    description: "Delivered custom web applications and data solutions for small businesses and startups.",
-    achievements: [
-      "Built 5+ production React/TypeScript applications with responsive design",
-      "Developed RESTful APIs with FastAPI serving 10K+ daily requests",
-      "Implemented automated testing suites achieving 85%+ code coverage",
-      "Optimized database queries reducing API response times by 35%",
-    ],
-    technologies: ["React", "TypeScript", "FastAPI", "PostgreSQL", "Tailwind CSS", "Vercel"],
-  },
-]
+import { experienceData } from '../data'
+import { useThemeColor, hexToRgba } from '../theme/useThemeColor'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -61,6 +13,11 @@ const itemVariants = {
 }
 
 export default function Experience() {
+  // Theme-coloured glow for the timeline dot and card hover shadow.
+  const primary = useThemeColor('primary')
+  const glow = (alpha: number) =>
+    hexToRgba(primary ?? '#00d4ff', alpha) || `rgba(0, 212, 255, ${alpha})`
+
   return (
     <section
       id="experience"
@@ -127,7 +84,7 @@ export default function Experience() {
                   style={{
                     left: 'calc(50% - 20px)',
                     top: '24px',
-                    boxShadow: '0 0 0 4px rgba(0, 212, 255, 0.3)',
+                    boxShadow: `0 0 0 4px ${glow(0.3)}`,
                   }}
                   aria-hidden="true"
                 >
@@ -142,7 +99,7 @@ export default function Experience() {
                   className={`w-full md:w-[calc(50%-40px)] p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all ${
                     index % 2 === 0 ? 'md:pr-16' : 'md:pl-16'
                   }`}
-                  whileHover={{ y: -4, boxShadow: '0 20px 40px -20px rgba(0, 212, 255, 0.15)' }}
+                  whileHover={{ y: -4, boxShadow: `0 20px 40px -20px ${glow(0.15)}` }}
                 >
                   <div className="flex flex-wrap items-center gap-3 mb-4">
                     <motion.span
