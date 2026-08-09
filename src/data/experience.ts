@@ -71,6 +71,6 @@ export const experienceData: ExperienceEntry[] = [
       "SMOTE",
       "Data Visualization",
     ],
-    link: "/PsychiatricDiagnoses.pdf",
+    link: "/portfolio/PsychiatricDiagnoses.pdf",
   },
 ];
