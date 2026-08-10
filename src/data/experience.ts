@@ -24,7 +24,7 @@ export const experienceData: ExperienceEntry[] = [
   {
     role: "Software Engineering Intern",
     company: "Synerz Technologies",
-    period: "Jan 2023 - Dec 2023",
+    period: "Jan 2025 - Dec 2025",
     location: "Remote",
     type: "Internship",
     description:
