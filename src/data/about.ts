@@ -52,7 +52,7 @@ export const aboutData: AboutData = {
   ],
   lookingFor: {
     title: "What I'm Looking For",
-    body: "I'm actively seeking opportunities where I can leverage my data engineering expertise to build scalable, reliable systems that solve real-world problems. Particularly interested in roles involving ",
+    body: "I'm actively seeking opportunities where I can leverage my data engineering expertise to build scalable, reliable systems that solve real-world problems. I am particularly interested in roles involving ",
     emphasize: "data platform engineering, MLOps, or backend systems",
   },
 };
