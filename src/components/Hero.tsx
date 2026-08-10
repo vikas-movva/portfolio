@@ -62,7 +62,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden scroll-mt-20"
       aria-labelledby="hero-title"
     >
       <div className="absolute inset-0 z-0" aria-hidden="true">

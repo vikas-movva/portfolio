@@ -29,10 +29,21 @@ export default function Header() {
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-      setMobileMenuOpen(false)
-    }
+    if (!element) return
+
+    // Close the mobile menu BEFORE starting the smooth scroll.
+    // Closing it here (rather than after) means the menu's height-collapse
+    // doesn't mutate the document layout mid-scroll and cancel the
+    // in-flight smooth-scroll animation — which is why mobile menu links
+    // worked locally (desktop viewport, menu not rendered) but not on the
+    // deployed GitHub Pages site (mobile viewport, menu rendered).
+    // `setMobileMenuOpen(false)` unmounts via AnimatePresence; to keep the
+    // layout shift from racing the scroll we skip the exit animation below.
+    setMobileMenuOpen(false)
+
+    // Defer the scroll one frame so the menu's unmount has flushed and the
+    // browser computes the section's position against the final layout.
+    requestAnimationFrame(() => element.scrollIntoView({ behavior: 'smooth' }))
   }
 
   return (
@@ -111,11 +122,11 @@ export default function Header() {
           {mobileMenuOpen && (
             <motion.div
               id="mobile-menu"
-              className="md:hidden mt-4 pb-4 border-t border-primary/20 bg-dark/95 backdrop-blur-md"
+              className="md:hidden mt-4 pb-4 border-t border-primary/20 bg-dark/95 backdrop-blur-md overflow-hidden"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
             >
               <div className="flex flex-col space-y-4 pt-4">
                 {navLinks.map((link, index) => (

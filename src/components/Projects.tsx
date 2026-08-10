@@ -33,7 +33,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="py-24 md:py-32 px-6 bg-dark"
+      className="py-24 md:py-32 px-6 bg-dark scroll-mt-20"
       aria-labelledby="projects-title"
     >
       <div className="max-w-7xl mx-auto">

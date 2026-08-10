@@ -48,11 +48,11 @@ const skillVariants = {
 
 export default function Skills() {
   return (
-    <section
-      id="skills"
-      className="py-24 md:py-32 px-6 bg-dark"
-      aria-labelledby="skills-title"
-    >
+      <section
+        id="skills"
+        className="py-24 md:py-32 px-6 bg-darker scroll-mt-20"
+        aria-labelledby="skills-title"
+      >
       <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-16"

@@ -74,7 +74,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-24 md:py-32 px-6 bg-darker"
+      className="py-24 md:py-32 px-6 bg-darker scroll-mt-20"
       aria-labelledby="contact-title"
     >
       <div className="max-w-7xl mx-auto">

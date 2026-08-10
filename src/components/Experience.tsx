@@ -21,7 +21,7 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="py-24 md:py-32 px-6 bg-darker"
+      className="py-24 md:py-32 px-6 bg-darker scroll-mt-20"
       aria-labelledby="experience-title"
     >
       <div className="max-w-7xl mx-auto">
