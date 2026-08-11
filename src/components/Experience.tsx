@@ -75,6 +75,23 @@ export default function Experience() {
                 viewport={{ once: true, margin: "-50px" }}
                 className={`relative flex-${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} md:items-start gap-8`}
               >
+                {/* Date sits beside the timeline dot in the empty half (desktop only). */}
+                <motion.span
+                  className="hidden md:block absolute text-sm font-semibold text-primary whitespace-nowrap leading-none"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                  style={{
+                    top: '32px',
+                    [index % 2 === 0 ? 'left' : 'right']: 'calc(50% + 28px)',
+                    textAlign: index % 2 === 0 ? 'left' : 'right',
+                  }}
+                  aria-hidden="true"
+                >
+                  {exp.period}
+                </motion.span>
+
                 <motion.div
                   className="relative z-10 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary border-4 border-transparent flex-shrink-0"
                   initial={{ scale: 0 }}
@@ -118,7 +135,7 @@ export default function Experience() {
                       {exp.location}
                     </motion.span>
                     <motion.span
-                      className="px-3 py-1 text-xs text-gray-400 bg-gray-800 rounded-full"
+                      className="px-3 py-1 text-xs text-gray-400 bg-gray-800 rounded-full md:hidden"
                       whileInView={{ scale: [0, 1] }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.1 }}
