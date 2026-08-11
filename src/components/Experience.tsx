@@ -57,11 +57,20 @@ export default function Experience() {
 
         <div className="relative">
           <motion.div
-            className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/50 to-transparent"
+            className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5"
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
             transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
-            style={{ transformOrigin: 'top' }}
+            style={{
+              transformOrigin: 'top',
+              // Gradient built from the theme CSS variable directly. Using a
+              // raw `bg-gradient-to-b from-primary/50` utility fails because
+              // Tailwind can't apply the /50 opacity modifier to a color that
+              // resolves to a CSS `var()`, so the stop was never generated and
+              // the line rendered invisible.
+              background:
+                'linear-gradient(to bottom, var(--color-primary, #00d4ff), transparent)',
+            }}
             aria-hidden="true"
           />
 
