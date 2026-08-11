@@ -57,7 +57,7 @@ export default function Experience() {
 
         <div className="relative">
           <motion.div
-            className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5"
+            className="absolute left-8 md:left-1/2 top-10 md:top-11 bottom-0 w-0.5"
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
             transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
