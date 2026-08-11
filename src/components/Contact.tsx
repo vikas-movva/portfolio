@@ -56,10 +56,15 @@ export default function Contact() {
       const response = await fetch(form.action, {
         method: 'POST',
         body: formData,
-        headers: { 'Accept': 'application/json' }
+        headers: { Accept: 'application/json' },
       })
 
-      if (response.ok) {
+      // FormSubmit's AJAX endpoint returns JSON { success, message }.
+      // The plain (non-AJAX) endpoint also returns HTTP 200 but with an HTML
+      // page when the form isn't activated yet, which made the UI report
+      // success while no email was actually sent. So we must check data.success.
+      const data = await response.json().catch(() => null)
+      if (response.ok && data?.success) {
         setSubmitStatus('success')
         form.reset()
         setTimeout(() => setSubmitStatus('idle'), 5000)
@@ -199,7 +204,7 @@ export default function Contact() {
           >
             <motion.form
               onSubmit={handleSubmit}
-              action="https://formsubmit.co/vikas.s.movva@gmail.com"
+              action="https://formsubmit.co/ajax/vikas.s.movva@gmail.com"
               method="POST"
               variants={itemVariants}
               className="p-8 rounded-2xl bg-dark/50 border border-gray-700/50"
