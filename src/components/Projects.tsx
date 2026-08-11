@@ -25,6 +25,7 @@ function ProjectCard({
 }) {
   const [expanded, setExpanded] = useState(false)
   const [isTruncated, setIsTruncated] = useState(false)
+  const [showAllTech, setShowAllTech] = useState(false)
   const descRef = useRef<HTMLParagraphElement>(null)
 
   // Show the toggle only when the description is actually clipped by the
@@ -148,21 +149,33 @@ function ProjectCard({
         )}
 
         <div className="flex flex-wrap gap-1.5 pt-2">
-          {project.technologies.slice(0, 5).map((tech) => (
-            <motion.span
-              key={tech}
-              className="px-2 py-0.5 text-xs text-gray-300 bg-gray-800 rounded border border-gray-700"
-              whileHover={{ borderColor: 'primary', color: 'primary' }}
-            >
-              {tech}
-            </motion.span>
-          ))}
+          {(showAllTech ? project.technologies : project.technologies.slice(0, 5)).map(
+            (tech) => (
+              <motion.span
+                key={tech}
+                className="px-2 py-0.5 text-xs text-gray-300 bg-gray-800 rounded border border-gray-700"
+                whileHover={{ borderColor: 'primary', color: 'primary' }}
+              >
+                {tech}
+              </motion.span>
+            )
+          )}
           {project.technologies.length > 5 && (
-            <motion.span
-              className="px-2 py-0.5 text-xs text-gray-500 bg-gray-800 rounded border border-gray-700"
+            <button
+              type="button"
+              onClick={() => setShowAllTech((v) => !v)}
+              className="px-2 py-0.5 text-xs font-medium text-primary bg-gray-800 hover:bg-gray-700 rounded border border-gray-700 hover:border-primary/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-darker"
+              aria-expanded={showAllTech}
+              aria-label={
+                showAllTech
+                  ? `Show fewer technologies for ${project.title}`
+                  : `Show all ${project.technologies.length} technologies for ${project.title}`
+              }
             >
-              +{project.technologies.length - 5}
-            </motion.span>
+              {showAllTech
+                ? 'Show less'
+                : `+${project.technologies.length - 5} more`}
+            </button>
           )}
         </div>
       </motion.div>
