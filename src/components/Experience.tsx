@@ -76,24 +76,29 @@ export default function Experience() {
                 className={`relative flex-${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} md:items-start gap-8`}
               >
                 {/* Date sits beside the timeline dot (desktop only). Defaults to the
-                    empty half, but a per-entry `dateSide` can override it. */}
-                <motion.span
-                  className="hidden md:block absolute text-sm font-semibold text-primary whitespace-nowrap leading-none"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                  style={{
-                    top: '32px',
-                    [(exp.dateSide ?? (index % 2 === 0 ? 'right' : 'left')) === 'right' ? 'left' : 'right']:
-                      'calc(50% + 28px)',
-                    textAlign:
-                      (exp.dateSide ?? (index % 2 === 0 ? 'right' : 'left')) === 'right' ? 'left' : 'right',
-                  }}
-                  aria-hidden="true"
-                >
-                  {exp.period}
-                </motion.span>
+                    empty half, but a per-entry `dateSide` can override it. It
+                    slides in from the dot's direction and fades up into place. */}
+                {(() => {
+                  const side =
+                    exp.dateSide ?? (index % 2 === 0 ? 'right' : 'left')
+                  return (
+                    <motion.span
+                      className="hidden md:block absolute text-sm font-semibold text-primary whitespace-nowrap leading-none"
+                      initial={{ opacity: 0, x: side === 'right' ? -24 : 24, y: 4 }}
+                      whileInView={{ opacity: 1, x: 0, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3, duration: 0.5, ease: 'easeOut' }}
+                      style={{
+                        top: '32px',
+                        [side === 'right' ? 'left' : 'right']: 'calc(50% + 48px)',
+                        textAlign: side === 'right' ? 'left' : 'right',
+                      }}
+                      aria-hidden="true"
+                    >
+                      {exp.period}
+                    </motion.span>
+                  )
+                })()}
 
                 <motion.div
                   className="relative z-10 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary border-4 border-transparent flex-shrink-0"
