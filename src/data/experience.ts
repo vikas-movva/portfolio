@@ -18,6 +18,8 @@ export interface ExperienceEntry {
   technologies: string[];
   /** Optional external link (paper, project, etc.). Renders a "View Paper" button. */
   link?: string;
+  /** Which side of the timeline dot the desktop date label sits on. Defaults to the empty half (left for right-side cards, right for left-side cards). */
+  dateSide?: 'left' | 'right';
 }
 
 export const experienceData: ExperienceEntry[] = [
@@ -49,9 +51,10 @@ export const experienceData: ExperienceEntry[] = [
   {
     role: "Machine Learning Research (Co-Author)",
     company: "Wilfrid Laurier University",
-    period: "2024",
+    period: "June 2024 to Dec 2024",
     location: "Waterloo, ON",
     type: "Research",
+    dateSide: "right",
     description:
       "Co-authored a peer-reviewed IEEE publication applying machine learning to predict psychiatric diagnoses among undergraduate students using demographic, lifestyle, and psychometric survey data collected during the COVID-19 pandemic. ",
     descriptionHighlight: "IEEE CCECE 2025 [Accepted]",
