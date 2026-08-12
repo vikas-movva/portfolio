@@ -82,7 +82,7 @@ export default function Experience() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-50px" }}
-                className={`relative flex-row ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} md:items-start gap-8`}
+                className={`relative pr-16 md:pr-0 flex-row ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} md:items-start gap-8`}
               >
                 {/* Date sits beside the timeline dot (desktop only). Defaults to the
                     empty half, but a per-entry `dateSide` can override it. It
@@ -129,7 +129,7 @@ export default function Experience() {
                 </motion.div>
 
                 <motion.div
-                  className={`mr-16 md:mr-0 w-full md:w-[calc(50%-40px)] p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all ${
+                  className={`w-full md:w-[calc(50%-40px)] p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all ${
                     index % 2 === 0 ? 'md:pr-16' : 'md:pl-16'
                   }`}
                   whileHover={{ y: -4, boxShadow: `0 20px 40px -20px ${glow(0.15)}` }}
