@@ -110,13 +110,12 @@ export default function Experience() {
                 })()}
 
                 <motion.div
-                  className="relative z-10 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary border-4 border-transparent flex-shrink-0"
+                  className="absolute z-10 left-8 md:left-1/2 -translate-x-1/2 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary border-4 border-transparent flex-shrink-0"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
                   style={{
-                    left: 'calc(50% - 20px)',
                     top: '24px',
                     boxShadow: `0 0 0 4px ${glow(0.3)}`,
                   }}
@@ -130,7 +129,7 @@ export default function Experience() {
                 </motion.div>
 
                 <motion.div
-                  className={`w-full md:w-[calc(50%-40px)] p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all ${
+                  className={`ml-16 md:ml-0 w-full md:w-[calc(50%-40px)] p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all ${
                     index % 2 === 0 ? 'md:pr-16' : 'md:pl-16'
                   }`}
                   whileHover={{ y: -4, boxShadow: `0 20px 40px -20px ${glow(0.15)}` }}
