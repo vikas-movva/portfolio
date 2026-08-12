@@ -24,7 +24,7 @@ function App() {
             Built with React, TypeScript, Tailwind CSS & Framer Motion
           </p>
           <p className="text-gray-600 text-sm mt-1">
-            © {new Date().getFullYear()} Vikas. All rights reserved.
+            © {new Date().getFullYear()} Vikas Movva. All rights reserved.
           </p>
         </div>
       </footer>
