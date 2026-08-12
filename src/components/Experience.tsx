@@ -57,7 +57,7 @@ export default function Experience() {
 
         <div className="relative">
           <motion.div
-            className="absolute left-8 md:left-1/2 top-10 md:top-11 bottom-0 w-0.5"
+            className="absolute right-8 md:right-auto md:left-1/2 top-10 md:top-11 bottom-0 w-0.5"
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
             transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
@@ -110,7 +110,7 @@ export default function Experience() {
                 })()}
 
                 <motion.div
-                  className="absolute z-10 left-8 md:left-1/2 -translate-x-1/2 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary border-4 border-transparent flex-shrink-0"
+                  className="absolute z-10 right-[17px] md:right-auto md:left-1/2 md:-ml-5 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary border-4 border-transparent flex-shrink-0"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
@@ -129,7 +129,7 @@ export default function Experience() {
                 </motion.div>
 
                 <motion.div
-                  className={`ml-16 md:ml-0 w-full md:w-[calc(50%-40px)] p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all ${
+                  className={`mr-16 md:mr-0 w-full md:w-[calc(50%-40px)] p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all ${
                     index % 2 === 0 ? 'md:pr-16' : 'md:pl-16'
                   }`}
                   whileHover={{ y: -4, boxShadow: `0 20px 40px -20px ${glow(0.15)}` }}
