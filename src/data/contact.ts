@@ -5,13 +5,14 @@
  * icon names as strings keeps this file JSX-free for easy editing.
  */
 
-export type ContactIconName = 'email' | 'linkedin' | 'github' | 'twitter'
+export type ContactIconName = 'email' | 'linkedin' | 'github' | 'twitter' | 'obsidian'
 
 export interface ContactInfo {
   email: string
   linkedin: string
   github: string
   twitter: string
+  obsidian: string
   location: string
   availability: string
 }
@@ -21,6 +22,7 @@ export const contactData: ContactInfo = {
   linkedin: "https://linkedin.com/in/vikas-movva",
   github: "https://github.com/vikas-movva",
   twitter: "https://twitter.com/vikasmovva",
+  obsidian: "https://vikas-movva.github.io/Obsidian/",
   location: "Mississauga, ON",
   availability: "Open to opportunities",
 }
@@ -30,7 +32,7 @@ export interface SocialLink {
   /** Key into socialIcons in the Contact component. */
   icon: ContactIconName
   /** Built from email/href in the component via deriveSocialHref(). */
-  source: 'email' | 'linkedin' | 'github' | 'twitter'
+  source: 'email' | 'linkedin' | 'github' | 'twitter' | 'obsidian'
   description: string
 }
 
@@ -39,6 +41,7 @@ export const socialLinks: SocialLink[] = [
   { name: "LinkedIn", icon: 'linkedin', source: 'linkedin', description: "Professional network & updates" },
   { name: "GitHub", icon: 'github', source: 'github', description: "Code & open source projects" },
   { name: "Twitter", icon: 'twitter', source: 'twitter', description: "Thoughts & tech discussions" },
+  { name: "Obsidian Notes", icon: 'obsidian', source: 'obsidian', description: "My published notes & writing" },
 ]
 
 /** Map a social source to its URL using contactData. */
@@ -51,6 +54,7 @@ export function deriveSocialHref(
     case 'linkedin': return data.linkedin
     case 'github': return data.github
     case 'twitter': return data.twitter
+    case 'obsidian': return data.obsidian
   }
 }
 
