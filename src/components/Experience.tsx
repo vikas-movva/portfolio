@@ -82,7 +82,7 @@ export default function Experience() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-50px" }}
-                className={`relative flex-${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} md:items-start gap-8`}
+                className={`relative flex-row ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} md:items-start gap-8`}
               >
                 {/* Date sits beside the timeline dot (desktop only). Defaults to the
                     empty half, but a per-entry `dateSide` can override it. It
