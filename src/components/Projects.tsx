@@ -141,7 +141,7 @@ function ProjectCard({
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
-            className="text-sm font-medium text-primary hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-darker rounded"
+            className="text-sm font-medium text-primary hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-darker rounded"
             aria-expanded={expanded}
           >
             {expanded ? 'Show less' : 'Read more'}
@@ -164,7 +164,7 @@ function ProjectCard({
             <button
               type="button"
               onClick={() => setShowAllTech((v) => !v)}
-              className="px-2 py-0.5 text-xs font-medium text-primary bg-gray-800 hover:bg-gray-700 rounded border border-gray-700 hover:border-primary/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-darker"
+              className="px-2 py-0.5 text-xs font-medium text-primary bg-gray-800 hover:bg-gray-700 rounded border border-gray-700 hover:border-primary/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-darker"
               aria-expanded={showAllTech}
               aria-label={
                 showAllTech
