@@ -1,22 +1,22 @@
-import { motion } from 'framer-motion'
-import { experienceData } from '../data'
-import { useThemeColor, hexToRgba } from '../theme/useThemeColor'
+import { motion } from "framer-motion";
+import { experienceData } from "../data";
+import { useThemeColor, hexToRgba } from "../theme/useThemeColor";
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-}
+  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+};
 
 const itemVariants = {
   hidden: { opacity: 0, x: -50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } }
-}
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
 
 export default function Experience() {
   // Theme-coloured glow for the timeline dot and card hover shadow.
-  const primary = useThemeColor('primary')
+  const primary = useThemeColor("primary");
   const glow = (alpha: number) =>
-    hexToRgba(primary ?? '#00d4ff', alpha) || `rgba(0, 212, 255, ${alpha})`
+    hexToRgba(primary ?? "#00d4ff", alpha) || `rgba(0, 212, 255, ${alpha})`;
 
   return (
     <section
@@ -51,25 +51,26 @@ export default function Experience() {
             variants={itemVariants}
             className="text-lg text-gray-400 max-w-2xl mx-auto"
           >
-            Building scalable systems, leading data initiatives, and delivering impact across diverse domains.
+            Building scalable systems, leading data initiatives, and delivering
+            impact across diverse domains.
           </motion.p>
         </motion.div>
 
         <div className="relative">
           <motion.div
-            className="absolute right-8 md:right-auto md:left-1/2 top-10 md:top-11 bottom-0 w-0.5"
+            className="absolute right-4 md:right-auto md:left-1/2 top-10 md:top-11 bottom-0 w-0.5"
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
-            transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
             style={{
-              transformOrigin: 'top',
+              transformOrigin: "top",
               // Gradient built from the theme CSS variable directly. Using a
               // raw `bg-gradient-to-b from-primary/50` utility fails because
               // Tailwind can't apply the /50 opacity modifier to a color that
               // resolves to a CSS `var()`, so the stop was never generated and
               // the line rendered invisible.
               background:
-                'linear-gradient(to bottom, var(--color-primary, #00d4ff), transparent)',
+                "linear-gradient(to bottom, var(--color-primary, #00d4ff), transparent)",
             }}
             aria-hidden="true"
           />
@@ -82,41 +83,55 @@ export default function Experience() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-50px" }}
-                className={`relative pr-16 md:pr-0 flex-row ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} md:items-start gap-8`}
+                className={`relative pr-16 md:pr-0 flex-row ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} md:items-start gap-8`}
               >
                 {/* Date sits beside the timeline dot (desktop only). Defaults to the
                     empty half, but a per-entry `dateSide` can override it. It
                     slides in from the dot's direction and fades up into place. */}
                 {(() => {
                   const side =
-                    exp.dateSide ?? (index % 2 === 0 ? 'right' : 'left')
+                    exp.dateSide ?? (index % 2 === 0 ? "right" : "left");
                   return (
                     <motion.span
                       className="hidden md:block absolute text-sm font-semibold text-primary whitespace-nowrap leading-none"
-                      initial={{ opacity: 0, x: side === 'right' ? -24 : 24, y: 4 }}
+                      initial={{
+                        opacity: 0,
+                        x: side === "right" ? -24 : 24,
+                        y: 4,
+                      }}
                       whileInView={{ opacity: 1, x: 0, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ delay: 0.3, duration: 0.5, ease: 'easeOut' }}
+                      transition={{
+                        delay: 0.3,
+                        duration: 0.5,
+                        ease: "easeOut",
+                      }}
                       style={{
-                        top: '32px',
-                        [side === 'right' ? 'left' : 'right']: 'calc(50% + 48px)',
-                        textAlign: side === 'right' ? 'left' : 'right',
+                        top: "32px",
+                        [side === "right" ? "left" : "right"]:
+                          "calc(50% + 48px)",
+                        textAlign: side === "right" ? "left" : "right",
                       }}
                       aria-hidden="true"
                     >
                       {exp.period}
                     </motion.span>
-                  )
+                  );
                 })()}
 
                 <motion.div
-                  className="absolute z-10 right-[17px] md:right-auto md:left-1/2 md:-ml-5 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary border-4 border-transparent flex-shrink-0"
+                  className="absolute z-10 right-[1px] md:right-auto md:left-1/2 md:-ml-5 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary border-4 border-transparent flex-shrink-0"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 15,
+                    delay: 0.2,
+                  }}
                   style={{
-                    top: '24px',
+                    top: "24px",
                     boxShadow: `0 0 0 4px ${glow(0.3)}`,
                   }}
                   aria-hidden="true"
@@ -124,15 +139,22 @@ export default function Experience() {
                   <motion.div
                     className="w-full h-full rounded-full bg-primary"
                     animate={{ scale: [1, 1.3, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   />
                 </motion.div>
 
                 <motion.div
                   className={`w-full md:w-[calc(50%-40px)] p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all ${
-                    index % 2 === 0 ? 'md:pr-16' : 'md:pl-16'
+                    index % 2 === 0 ? "md:pr-16" : "md:pl-16"
                   }`}
-                  whileHover={{ y: -4, boxShadow: `0 20px 40px -20px ${glow(0.15)}` }}
+                  whileHover={{
+                    y: -4,
+                    boxShadow: `0 20px 40px -20px ${glow(0.15)}`,
+                  }}
                 >
                   <div className="flex flex-wrap items-center gap-3 mb-4">
                     <motion.span
@@ -166,7 +188,9 @@ export default function Experience() {
                     viewport={{ once: true }}
                   >
                     <h3 className="text-xl font-bold text-white">{exp.role}</h3>
-                    <span className="text-primary font-medium">{exp.company}</span>
+                    <span className="text-primary font-medium">
+                      {exp.company}
+                    </span>
                   </motion.div>
 
                   <motion.p
@@ -175,11 +199,13 @@ export default function Experience() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 }}
                   >
-                                        {exp.description}
-                                        {exp.descriptionHighlight && (
-                                          <strong className="font-bold text-primary">{exp.descriptionHighlight}</strong>
-                                        )}
-                                      </motion.p>
+                    {exp.description}
+                    {exp.descriptionHighlight && (
+                      <strong className="font-bold text-primary">
+                        {exp.descriptionHighlight}
+                      </strong>
+                    )}
+                  </motion.p>
 
                   <motion.ul
                     className="space-y-3 mb-6"
@@ -202,9 +228,15 @@ export default function Experience() {
                           viewBox="0 0 20 20"
                           aria-hidden="true"
                         >
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
                         </motion.svg>
-                        <span className="text-sm leading-relaxed">{achievement}</span>
+                        <span className="text-sm leading-relaxed">
+                          {achievement}
+                        </span>
                       </motion.li>
                     ))}
                   </motion.ul>
@@ -235,8 +267,19 @@ export default function Experience() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
                       </svg>
                       View Paper
                     </motion.a>
@@ -248,5 +291,5 @@ export default function Experience() {
         </div>
       </div>
     </section>
-  )
+  );
 }
