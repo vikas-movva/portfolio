@@ -58,7 +58,7 @@ export default function Experience() {
 
         <div className="relative">
           <motion.div
-            className="absolute right-4 md:right-auto md:left-1/2 top-10 md:top-11 bottom-0 w-0.5"
+            className="absolute left-5 top-[34px] bottom-0 w-0.5"
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
             transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
@@ -76,51 +76,18 @@ export default function Experience() {
           />
 
           <div className="space-y-12">
-            {experienceData.map((exp, index) => (
+            {experienceData.map((exp) => (
               <motion.div
                 key={exp.role}
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-50px" }}
-                className={`relative pr-16 md:pr-0 flex-row ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} md:items-start gap-8`}
+                className="relative pl-12 md:pl-12"
               >
-                {/* Date sits beside the timeline dot (desktop only). Defaults to the
-                    empty half, but a per-entry `dateSide` can override it. It
-                    slides in from the dot's direction and fades up into place. */}
-                {(() => {
-                  const side =
-                    exp.dateSide ?? (index % 2 === 0 ? "right" : "left");
-                  return (
-                    <motion.span
-                      className="hidden md:block absolute text-sm font-semibold text-primary whitespace-nowrap leading-none"
-                      initial={{
-                        opacity: 0,
-                        x: side === "right" ? -24 : 24,
-                        y: 4,
-                      }}
-                      whileInView={{ opacity: 1, x: 0, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{
-                        delay: 0.3,
-                        duration: 0.5,
-                        ease: "easeOut",
-                      }}
-                      style={{
-                        top: "32px",
-                        [side === "right" ? "left" : "right"]:
-                          "calc(50% + 48px)",
-                        textAlign: side === "right" ? "left" : "right",
-                      }}
-                      aria-hidden="true"
-                    >
-                      {exp.period}
-                    </motion.span>
-                  );
-                })()}
 
                 <motion.div
-                  className="absolute z-10 right-[1px] md:right-auto md:left-1/2 md:-ml-5 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary border-4 border-transparent flex-shrink-0"
+                  className="absolute z-10 left-[11px] w-5 h-5 rounded-full bg-primary border-4 border-transparent flex-shrink-0"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
@@ -148,33 +115,33 @@ export default function Experience() {
                 </motion.div>
 
                 <motion.div
-                  className={`w-full md:w-[calc(50%-40px)] p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all ${
-                    index % 2 === 0 ? "md:pr-16" : "md:pl-16"
-                  }`}
+                  className="w-full p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all"
                   whileHover={{
                     y: -4,
                     boxShadow: `0 20px 40px -20px ${glow(0.15)}`,
                   }}
                 >
-                  <div className="flex flex-wrap items-center gap-3 mb-4">
+                  <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <motion.span
+                        className="px-3 py-1 text-xs font-semibold text-primary bg-primary/10 rounded-full"
+                        whileInView={{ scale: [0, 1] }}
+                        viewport={{ once: true }}
+                      >
+                        {exp.type}
+                      </motion.span>
+                      <motion.span
+                        className="px-3 py-1 text-xs text-gray-400 bg-gray-800 rounded-full"
+                        whileInView={{ scale: [0, 1] }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.05 }}
+                      >
+                        {exp.location}
+                      </motion.span>
+                    </div>
                     <motion.span
-                      className="px-3 py-1 text-xs font-semibold text-primary bg-primary/10 rounded-full"
-                      whileInView={{ scale: [0, 1] }}
-                      viewport={{ once: true }}
-                    >
-                      {exp.type}
-                    </motion.span>
-                    <motion.span
-                      className="px-3 py-1 text-xs text-gray-400 bg-gray-800 rounded-full"
-                      whileInView={{ scale: [0, 1] }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.05 }}
-                    >
-                      {exp.location}
-                    </motion.span>
-                    <motion.span
-                      className="px-3 py-1 text-xs text-gray-400 bg-gray-800 rounded-full md:hidden"
-                      whileInView={{ scale: [0, 1] }}
+                      className="hidden md:block text-sm font-semibold text-primary whitespace-nowrap"
+                      whileInView={{ opacity: [0, 1] }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.1 }}
                     >
