@@ -225,7 +225,7 @@ export default function Hero() {
         >
           <motion.span
             variants={variants.item}
-            className="inline-block px-4 py-2 rounded-xl bg-primary/10 text-primary text-sm font-medium mb-6 border border-primary/20"
+            className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 border border-primary/20"
           >
             {heroData.badge}
           </motion.span>
@@ -378,7 +378,7 @@ export default function Hero() {
               </motion.svg>
 
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-[512px] h-[512px]">
+                <div className="relative w-full max-w-[512px] aspect-square shrink-0">
                   {orbitRings.map((ring, i) => (
                     <OrbitRing key={i} {...ring} />
                   ))}
