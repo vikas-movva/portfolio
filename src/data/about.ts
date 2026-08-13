@@ -10,16 +10,8 @@ export interface AboutHighlight {
   value: string;
 }
 
-export interface AboutEducation {
-  degree: string;
-  institution: string;
-  year: string;
-  details: string;
-}
-
 export interface AboutData {
   summary: string[];
-  education: AboutEducation[];
   highlights: AboutHighlight[];
   /** Optional callout box shown under the highlights grid. */
   lookingFor: {
@@ -36,15 +28,6 @@ export const aboutData: AboutData = {
     "Currently, I'm focused on architecting robust data infrastructure using modern tools like Apache Airflow, dbt, and Spark, while also building clean, performant web applications with React and TypeScript.",
     "I have a strong foundation in both software engineering and data science, allowing me to bridge the gap between technical implementation and business needs.",
     "When I'm not coding, you'll find me exploring new ML architectures, contributing to open-source projects, or playing volleyball!",
-  ],
-  education: [
-    {
-      degree: "Honours Bachelor of Science, Computer Science",
-      institution: "Wilfrid Laurier University",
-      year: "2021 - 2026",
-      details:
-        "Relevant coursework: Data Structures & Algorithms, Database Systems, Machine Learning, Distributed Systems, Software Engineering.",
-    },
   ],
   highlights: [
     { label: "Years Experience", value: "2+" },

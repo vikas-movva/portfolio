@@ -1,6 +1,8 @@
 /** Barrel re-export so components import from a single 'data' module. */
 export { aboutData } from './about'
-export type { AboutData, AboutEducation, AboutHighlight } from './about'
+export type { AboutData, AboutHighlight } from './about'
+export { educationData } from './education'
+export type { AboutEducation } from './education'
 export { projectsData } from './projects'
 export type { Project, ProjectLink } from './projects'
 export { experienceData } from './experience'

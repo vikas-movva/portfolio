@@ -92,38 +92,11 @@ export default function About() {
                 ))}
               </div>
 
-              <motion.div
-                variants={itemVariants}
-                className="pt-6 border-t border-gray-700"
-              >
-                <h3 className="text-2xl font-bold text-white flex items-center gap-3 mb-4">
-                  <span className="w-1 h-8 bg-primary rounded-full"></span>
-                  Education
-                </h3>
-                <div className="space-y-4">
-                  {aboutData.education.map((edu, index) => (
-                    <motion.div
-                      key={index}
-                      variants={cardVariants}
-                      className="p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all"
-                    >
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                        <h4 className="text-xl font-semibold text-white">{edu.degree}</h4>
-                        <span className="px-3 py-1 text-sm bg-primary/10 text-primary rounded-full font-medium">
-                          {edu.year}
-                        </span>
-                      </div>
-                      <p className="text-primary font-medium">{edu.institution}</p>
-                      <p className="text-gray-400 text-sm mt-2">{edu.details}</p>
-                    </motion.div>
-                  ))}
-                </div>
               </motion.div>
-            </motion.div>
-          </motion.div>
+              </motion.div>
 
-          <motion.div
-            variants={containerVariants}
+              <motion.div
+              variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
