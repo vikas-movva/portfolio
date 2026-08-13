@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { heroData } from '../data'
 import { useThemeColor, hexToRgba } from '../theme/useThemeColor'
+import vikasImg from '../assets/Vikas.jpg'
 
 /** Clock icon used for the "Years Experience" quick stat. */
 const statIcons = {
@@ -183,7 +184,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
         >
           <div className="relative z-10">
-            <div className="aspect-square max-w-md mx-auto relative">
+            <div className="aspect-square max-w-xl mx-auto relative">
               <motion.svg
                 className="absolute inset-0 w-full h-full"
                 viewBox="0 0 400 400"
@@ -228,7 +229,7 @@ export default function Hero() {
               </motion.svg>
 
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-64 h-64">
+                <div className="relative w-[512px] h-[512px]">
                   <motion.div
                     className="absolute inset-0 rounded-full border-4 border-primary/30"
                     animate={{ scale: [1, 1.05, 1], borderColor: borderColorFrames }}
@@ -239,16 +240,23 @@ export default function Hero() {
                     animate={{ rotate: [0, 360] }}
                     transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                   />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <motion.span
-                        className="text-4xl md:text-5xl lg:text-6xl font-bold text-white"
-                        animate={{ scale: [1, 1.02, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                      >
-                        {heroData.visualText}
-                      </motion.span>
-                    </div>
+                  <div className="absolute inset-6 flex items-center justify-center">
+                    <motion.div
+                      className="w-full h-full rounded-full overflow-hidden border-2 border-primary/40 shadow-xl shadow-primary/20"
+                      initial={{ scale: 0.85, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
+                      whileHover={{ scale: 1.04 }}
+                    >
+                      <motion.img
+                        src={vikasImg}
+                        alt={`${heroData.name}, ${heroData.badge}`}
+                        className="w-full h-full object-cover"
+                        initial={{ scale: 1.15 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 1, delay: 0.6, ease: 'easeOut' }}
+                      />
+                    </motion.div>
                   </div>
                 </div>
               </div>
