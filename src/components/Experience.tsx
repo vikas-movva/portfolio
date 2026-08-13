@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { experienceData } from "../data";
+import { experienceData, educationData } from "../data";
 import { useThemeColor, hexToRgba } from "../theme/useThemeColor";
 
 const containerVariants = {
@@ -36,7 +36,7 @@ export default function Experience() {
             variants={itemVariants}
             className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 border border-primary/20"
           >
-            Experience
+            Experience & Education
           </motion.span>
           <motion.h2
             id="experience-title"
@@ -45,14 +45,14 @@ export default function Experience() {
           >
             <span className="text-white">My Professional </span>
             <br />
-            <span className="text-primary">Journey</span>
+            <span className="text-primary">Journey & Education</span>
           </motion.h2>
           <motion.p
             variants={itemVariants}
             className="text-lg text-gray-400 max-w-2xl mx-auto"
           >
-            Building scalable systems, leading data initiatives, and delivering
-            impact across diverse domains.
+            Building scalable systems and the academic foundation behind my
+            engineering and data work.
           </motion.p>
         </motion.div>
 
@@ -289,6 +289,44 @@ export default function Experience() {
             ))}
           </div>
         </div>
+
+        {/* Education subsection, rendered as part of the same section. */}
+        <motion.div
+          className="mt-24"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <motion.h3
+            variants={itemVariants}
+            className="text-3xl md:text-4xl font-bold mb-10 text-center"
+          >
+            <span className="text-white">Academic </span>
+            <span className="text-primary">Background</span>
+          </motion.h3>
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {educationData.map((edu) => (
+              <motion.div
+                key={edu.degree}
+                variants={itemVariants}
+                className="p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all text-left"
+                whileHover={{ y: -4 }}
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                  <h4 className="text-xl font-semibold text-white">
+                    {edu.degree}
+                  </h4>
+                  <span className="px-3 py-1 text-sm bg-primary/10 text-primary rounded-full font-medium">
+                    {edu.year}
+                  </span>
+                </div>
+                <p className="text-primary font-medium">{edu.institution}</p>
+                <p className="text-gray-400 text-sm mt-2">{edu.details}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
