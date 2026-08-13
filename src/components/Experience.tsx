@@ -272,7 +272,7 @@ export default function Experience() {
             <span className="text-white">Academic </span>
             <span className="text-primary">Background</span>
           </motion.h3>
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="space-y-6">
             {educationData.map((edu) => (
               <motion.div
                 key={edu.degree}
