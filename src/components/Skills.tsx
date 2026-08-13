@@ -125,14 +125,6 @@ export default function Skills() {
                   >
                     <div className="flex justify-between mb-2">
                       <span className="text-gray-200 font-medium">{skill.name}</span>
-                      <motion.span
-                        className="text-primary font-mono text-sm"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                      >
-                        {skill.level}%
-                      </motion.span>
                     </div>
                     <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
                       <motion.div
