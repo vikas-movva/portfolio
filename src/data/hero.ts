@@ -8,6 +8,8 @@
 export interface HeroStat {
   icon: "clock" | "projects" | "stack";
   text: string;
+  /** When true, the stat is rendered as a prominent highlighted pill. */
+  highlight?: boolean;
 }
 
 export const heroData = {
@@ -27,7 +29,8 @@ export const heroData = {
   visualText: "Code & Data",
   /** Quick stats row under the buttons. */
   stats: [
-    { icon: "clock" as const, text: "2+ Years Experience" },
-    { icon: "stack" as const, text: "10+ Technologies" },
+    { icon: "clock" as const, text: "2+ Years Experience", highlight: true },
   ] satisfies HeroStat[],
+  /** Top three technologies, highlighted in the hero as skill pills. */
+  topTech: ["Python", "SQL", "React/Next.js"],
 };

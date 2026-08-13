@@ -141,12 +141,36 @@ export default function Hero() {
 
           <motion.div
             variants={variants.item}
-            className="flex flex-wrap justify-center lg:justify-start gap-8 mt-12 text-sm text-gray-400"
+            className="flex flex-wrap justify-center lg:justify-start gap-8 mt-12"
           >
-            {heroData.stats.map((stat) => (
-              <span key={stat.text} className="flex items-center gap-2">
-                {statIcons[stat.icon]}
-                {stat.text}
+            {heroData.stats.map((stat) =>
+              stat.highlight ? (
+                <span
+                  key={stat.text}
+                  className="flex items-center gap-2.5 px-6 py-3 rounded-full bg-primary/15 text-primary font-bold text-base md:text-lg border border-primary/40 shadow-lg shadow-primary/10"
+                >
+                  {statIcons[stat.icon]}
+                  {stat.text}
+                </span>
+              ) : (
+                <span key={stat.text} className="flex items-center gap-2">
+                  {statIcons[stat.icon]}
+                  {stat.text}
+                </span>
+              )
+            )}
+          </motion.div>
+
+          <motion.div
+            variants={variants.item}
+            className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mt-6"
+          >
+            {heroData.topTech.map((tech) => (
+              <span
+                key={tech}
+                className="px-4 py-2 rounded-lg bg-dark/60 border border-primary/30 text-primary text-base md:text-lg font-semibold hover:bg-primary/10 transition-colors"
+              >
+                {tech}
               </span>
             ))}
           </motion.div>
