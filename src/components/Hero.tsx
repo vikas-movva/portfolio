@@ -173,12 +173,14 @@ export default function Hero() {
               className="mt-4 flex flex-wrap justify-center lg:justify-start gap-3"
             >
               {heroData.stats.map((stat) => (
-                <span
+                <motion.span
                   key={stat.text}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold border border-accent/20"
+                  whileHover={reduce ? undefined : { y: -4, scale: 1.05 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold border border-accent/20 transition-colors duration-300 cursor-default hover:bg-accent/20 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/30"
                 >
                   {stat.text}
-                </span>
+                </motion.span>
               ))}
             </motion.div>
           )}
