@@ -44,24 +44,24 @@ export const themes: Record<ThemeName, ThemeTokens> = {
     'primary-hover': '#00b8e0',
     dark: '#0a0f1a',
     darker: '#050810',
-    'primary-light': '#0891b2', // cyan-600: contrast-safe on white
-    'primary-light-hover': '#0e7490', // cyan-700
+    'primary-light': '#0369a1', // cyan-700: WCAG AA on slate-200
+    'primary-light-hover': '#025482', // cyan-800
   },
   violet: {
     primary: '#a78bfa',
     'primary-hover': '#8b5cf6',
     dark: '#0f0a1a',
     darker: '#0a0510',
-    'primary-light': '#7c3aed', // violet-600
-    'primary-light-hover': '#6d28d9', // violet-700
+    'primary-light': '#6d28d9', // violet-700
+    'primary-light-hover': '#5b21b6', // violet-800
   },
   emerald: {
     primary: '#34d399',
     'primary-hover': '#10b981',
     dark: '#0a1a14',
     darker: '#05100b',
-    'primary-light': '#059669', // emerald-600
-    'primary-light-hover': '#047857', // emerald-700
+    'primary-light': '#047857', // emerald-700
+    'primary-light-hover': '#065f46', // emerald-800
   },
   amber: {
     primary: '#fbbf24',
@@ -76,8 +76,8 @@ export const themes: Record<ThemeName, ThemeTokens> = {
     'primary-hover': '#f43f5e',
     dark: '#1a0a0e',
     darker: '#100507',
-    'primary-light': '#e11d48', // rose-600
-    'primary-light-hover': '#be123c', // rose-700
+    'primary-light': '#be123c', // rose-700
+    'primary-light-hover': '#9f1239', // rose-800
   },
 }
 

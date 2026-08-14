@@ -70,7 +70,9 @@ export default function Skills() {
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: catIndex * 0.1 }}
-              className="p-6 rounded-2xl bg-card border border-border hover:border-accent/30 transition-all"
+              className={`p-6 rounded-2xl bg-card border border-border hover:border-accent/30 transition-all ${
+                catIndex === skillsCategories.length - 1 ? 'lg:col-span-2' : ''
+              }`}
             >
               <div className="flex items-center gap-3 mb-6">
                 <motion.div

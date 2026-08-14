@@ -1,25 +1,18 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { heroData } from '../data'
 import { useThemeColor } from '../theme/useThemeColor'
 import { fadeUp, stagger } from '../theme/anim'
-import heroImg from '../assets/Hero-Image-noBG.png'
+import heroImg from '../assets/Hero-Image-chestup.png'
 
 const scrollToSection = (href: string) => {
   document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
 }
 
-/** Small tech chips that float around the portrait for a bit of personality. */
-const floatingChips = [
-  { label: 'Python', className: 'top-6 -left-2 md:-left-6' },
-  { label: 'SQL', className: 'bottom-28 -left-3 md:-left-8' },
-  { label: 'React', className: 'top-16 -right-2 md:-right-6' },
-  { label: 'Spark', className: 'bottom-10 -right-3 md:-right-8' },
-]
-
 export default function Hero() {
   const primary = useThemeColor('accent')
   const primaryRgb = primary ?? 'rgb(0 212 255)'
+  const reduce = useReducedMotion()
 
   // Motion-forward role rotator: "I build <role>" cycles every few seconds.
   const roles = heroData.roles
@@ -35,7 +28,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden scroll-mt-20"
+      className="relative min-h-[90vh] flex items-center pt-28 pb-16 overflow-hidden scroll-mt-20"
       aria-labelledby="hero-title"
     >
       {/* Dotted grid backdrop, masked to fade at the edges. */}
@@ -44,18 +37,18 @@ export default function Hero() {
       {/* Drifting accent blobs for depth. */}
       <motion.div
         className="absolute -top-24 -left-24 w-[28rem] h-[28rem] rounded-full bg-accent/10 blur-3xl -z-10"
-        animate={{ x: [0, 40, 0], y: [0, 30, 0] }}
+        animate={reduce ? undefined : { x: [0, 40, 0], y: [0, 30, 0] }}
         transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
         aria-hidden="true"
       />
       <motion.div
         className="absolute -bottom-28 -right-20 w-[32rem] h-[32rem] rounded-full bg-accent/5 blur-3xl -z-10"
-        animate={{ x: [0, -30, 0], y: [0, 30, 0] }}
+        animate={reduce ? undefined : { x: [0, -30, 0], y: [0, 30, 0] }}
         transition={{ duration: 26, repeat: Infinity, ease: 'linear' }}
         aria-hidden="true"
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-[1.05fr_0.95fr] gap-12 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-[1fr_1.05fr] gap-8 items-center">
         {/* ---- LEFT: copy ---- */}
         <motion.div
           className="text-center lg:text-left"
@@ -159,12 +152,12 @@ export default function Hero() {
 
         {/* ---- RIGHT: background-less portrait cutout ---- */}
         <motion.div
-          className="relative mx-auto w-full max-w-sm lg:max-w-none"
+          className="relative mx-auto w-full max-w-md sm:max-w-lg lg:max-w-2xl"
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="relative aspect-square">
+          <div className="relative aspect-[4/5]">
             {/* Soft accent aura behind the cutout. */}
             <div
               className="absolute inset-0 aura -z-10"
@@ -178,13 +171,13 @@ export default function Hero() {
             {/* Two counter-rotating rings for subtle motion. */}
             <motion.div
               className="absolute inset-6 rounded-full border border-dashed border-accent/30"
-              animate={{ rotate: 360 }}
+              animate={reduce ? undefined : { rotate: 360 }}
               transition={{ duration: 44, repeat: Infinity, ease: 'linear' }}
               aria-hidden="true"
             />
             <motion.div
               className="absolute inset-12 rounded-full border border-accent/10"
-              animate={{ rotate: -360 }}
+              animate={reduce ? undefined : { rotate: -360 }}
               transition={{ duration: 32, repeat: Infinity, ease: 'linear' }}
               aria-hidden="true"
             />
@@ -193,32 +186,29 @@ export default function Hero() {
             <motion.img
               src={heroImg}
               alt={`${heroData.name}, ${heroData.badge}`}
-              className="absolute inset-0 w-full h-full object-contain drop-shadow-2xl"
+              className="absolute inset-0 w-full h-full object-contain"
+              style={{ filter: 'drop-shadow(0 22px 32px rgb(var(--color-primary-rgb) / 0.35))' }}
               initial={{ y: 24, opacity: 0 }}
-              animate={{ y: [0, -12, 0], opacity: 1 }}
+              animate={reduce ? { y: 0, opacity: 1 } : { y: [0, -12, 0], opacity: 1 }}
               transition={{
-                y: { duration: 6, repeat: Infinity, ease: 'easeInOut' },
+                y: reduce ? { duration: 0.8, delay: 0.4 } : { duration: 6, repeat: Infinity, ease: 'easeInOut' },
                 opacity: { duration: 0.8, delay: 0.4 },
               }}
               whileHover={{ scale: 1.03 }}
             />
 
-            {/* Floating tech chips. */}
-            {floatingChips.map((chip, i) => (
-              <motion.span
-                key={chip.label}
-                className={`absolute ${chip.className} px-3 py-1.5 rounded-full bg-card border border-accent/30 text-accent text-xs font-semibold shadow-lg shadow-accent/10`}
-                animate={{ y: [0, -8, 0] }}
-                transition={{
-                  duration: 4 + i,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  delay: i * 0.3,
-                }}
-              >
-                {chip.label}
-              </motion.span>
-            ))}
+            {/* Soft ground glow to anchor the floating portrait. */}
+            <div
+              className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-16 rounded-full -z-10"
+              style={{
+                background: `radial-gradient(ellipse, ${primaryRgb.replace(
+                  'rgb',
+                  'rgba',
+                ).replace(')', ', 0.18)')} 0%, transparent 70%)`,
+                filter: 'blur(12px)',
+              }}
+              aria-hidden="true"
+            />
           </div>
         </motion.div>
       </div>
@@ -232,10 +222,10 @@ export default function Hero() {
         }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 text-content-faint hover:text-accent transition-colors"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 10, 0] }}
+        animate={reduce ? { opacity: 1 } : { opacity: 1, y: [0, 10, 0] }}
         transition={{
           duration: 1.6,
-          repeat: Infinity,
+          repeat: reduce ? 0 : Infinity,
           delay: 1.4,
           ease: 'easeInOut',
         }}

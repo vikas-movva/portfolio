@@ -20,10 +20,10 @@ function App() {
       </main>
       <footer className="py-8 px-6 bg-surface-alt border-t border-border">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-content-faint text-sm">
+          <p className="text-content-muted text-sm">
             Built with React, TypeScript, Tailwind CSS & Framer Motion
           </p>
-          <p className="text-content-faint text-sm mt-1">
+          <p className="text-content-muted text-sm mt-1">
             © {new Date().getFullYear()} Vikas Movva. All rights reserved.
           </p>
         </div>

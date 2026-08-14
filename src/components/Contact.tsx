@@ -197,7 +197,10 @@ export default function Contact() {
               className="p-8 rounded-2xl bg-card border border-border"
               noValidate
             >
-              <h3 className="text-xl font-bold text-content mb-6">Send a Message</h3>
+              <h3 className="text-xl font-bold text-content mb-6 flex items-center gap-3">
+                  <span className="w-1 h-8 bg-accent rounded-full"></span>
+                  Send a Message
+                </h3>
               
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
@@ -209,7 +212,7 @@ export default function Contact() {
                     id="name"
                     name="name"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-field border border-border text-content placeholder-content-faint focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-field border border-border-strong text-content placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
                     whileFocus={{ scale: 1.01 }}
                   />
                 </div>
@@ -222,7 +225,7 @@ export default function Contact() {
                     id="email"
                     name="email"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-field border border-border text-content placeholder-content-faint focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-field border border-border-strong text-content placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
                     whileFocus={{ scale: 1.01 }}
                   />
                 </div>
@@ -236,7 +239,7 @@ export default function Contact() {
                   id="subject"
                   name="subject"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-field border border-border text-content focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all appearance-none"
+                  className="w-full px-4 py-3 rounded-xl bg-field border border-border-strong text-content focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all appearance-none"
                   whileFocus={{ scale: 1.01 }}
                 >
                   <option value="" disabled>Select a topic</option>
@@ -255,7 +258,7 @@ export default function Contact() {
                   name="message"
                   required
                   rows={5}
-                  className="w-full px-4 py-3 rounded-xl bg-field border border-border text-content placeholder-content-faint focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl bg-field border border-border-strong text-content placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-none"
                   whileFocus={{ scale: 1.01 }}
                   placeholder="Tell me about your project, role, or just say hi..."
                 />

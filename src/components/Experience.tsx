@@ -112,7 +112,7 @@ export default function Experience() {
                       </motion.span>
                     </div>
                     <motion.span
-                      className="hidden md:block text-sm font-semibold text-accent whitespace-nowrap"
+                      className="text-sm font-semibold text-accent whitespace-nowrap"
                       whileInView={{ opacity: [0, 1] }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.1 }}

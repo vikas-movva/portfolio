@@ -60,7 +60,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   })
   const [mode, setModeState] = useState<ThemeMode>(() => {
     const fromDom = document.documentElement.dataset.themeMode as ThemeMode | undefined
-    return fromDom ?? readStored(MODE_KEY, ['dark', 'light'] as const, 'dark')
+    return fromDom ?? readStored(MODE_KEY, ['dark', 'light'] as const, 'light')
   })
 
   // Push state to the DOM whenever it changes (and persist).

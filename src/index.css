@@ -23,8 +23,8 @@
   --color-primary-hover-rgb: 0 184 224;
   --color-dark-rgb: 10 15 26;
   --color-darker-rgb: 5 8 16;
-  --color-primary-light-rgb: 8 145 178;
-  --color-primary-light-hover-rgb: 14 116 144;
+  --color-primary-light-rgb: 3 105 161;   /* cyan-700: WCAG AA on slate-200 */
+  --color-primary-light-hover-rgb: 2 84 130; /* cyan-800 */
 }
 
 :root[data-theme="violet"] {
@@ -32,8 +32,8 @@
   --color-primary-hover-rgb: 139 92 246;
   --color-dark-rgb: 15 10 26;
   --color-darker-rgb: 10 5 16;
-  --color-primary-light-rgb: 124 58 237;
-  --color-primary-light-hover-rgb: 109 40 217;
+  --color-primary-light-rgb: 109 40 217;  /* violet-700 */
+  --color-primary-light-hover-rgb: 91 33 182; /* violet-800 */
 }
 
 :root[data-theme="emerald"] {
@@ -41,8 +41,8 @@
   --color-primary-hover-rgb: 16 185 129;
   --color-dark-rgb: 10 26 20;
   --color-darker-rgb: 5 16 11;
-  --color-primary-light-rgb: 5 150 105;
-  --color-primary-light-hover-rgb: 4 120 87;
+  --color-primary-light-rgb: 4 120 87;    /* emerald-700 */
+  --color-primary-light-hover-rgb: 6 95 70; /* emerald-800 */
 }
 
 :root[data-theme="amber"] {
@@ -50,8 +50,8 @@
   --color-primary-hover-rgb: 245 158 11;
   --color-dark-rgb: 26 20 10;
   --color-darker-rgb: 16 12 5;
-  --color-primary-light-rgb: 180 83 9;
-  --color-primary-light-hover-rgb: 146 64 14;
+  --color-primary-light-rgb: 180 83 9;    /* amber-700 (600 fails AA on white) */
+  --color-primary-light-hover-rgb: 146 64 14; /* amber-800 */
 }
 
 :root[data-theme="rose"] {
@@ -59,8 +59,8 @@
   --color-primary-hover-rgb: 244 63 94;
   --color-dark-rgb: 26 10 14;
   --color-darker-rgb: 16 5 7;
-  --color-primary-light-rgb: 225 29 72;
-  --color-primary-light-hover-rgb: 190 18 60;
+  --color-primary-light-rgb: 190 18 60;  /* rose-700 */
+  --color-primary-light-hover-rgb: 159 18 57; /* rose-800 */
 }
 
 /* ============================================================
@@ -100,10 +100,21 @@
   --color-field-rgb: 255 255 255;       /* inputs (white on slate-100) */
   --color-field-hover-rgb: 241 245 249;
   /* The bright brand accent is too faint on white, so shift to the
-     darker, contrast-safe shade in light mode. */
+     darker, contrast-safe shade in light mode.
+     Tokens are set to meet WCAG AA (4.5:1) for small text on slate-200. */
   --color-accent-rgb: var(--color-primary-light-rgb);
   --color-accent-hover-rgb: var(--color-primary-light-hover-rgb);
   --color-on-accent-rgb: 255 255 255;
+}
+
+/* The dotted grid is built from --color-border-rgb; in light mode that token
+   is near-white (slate-200) and vanishes against white, so use the darker
+   border-strong token for visible-but-subtle dots. */
+:root[data-theme-mode="light"] .bg-grid {
+  background-image: radial-gradient(
+    rgb(var(--color-border-strong-rgb, 203 213 225) / 0.6) 1px,
+    transparent 1px
+  );
 }
 
 * {

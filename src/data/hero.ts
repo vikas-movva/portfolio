@@ -25,8 +25,6 @@ export const heroData = {
   primaryCta: "View Projects",
   /** Secondary CTA button text. */
   secondaryCta: "Get In Touch",
-  /** Decorative "Code & Data" text inside the circular animation. */
-  visualText: "Code & Data",
   /** Quick stats row under the buttons. */
   stats: [
     { icon: "clock" as const, text: "2+ Years Experience", highlight: true },
