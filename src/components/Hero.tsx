@@ -56,13 +56,6 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
         >
-          <motion.span
-            variants={fadeUp}
-            className="eyebrow inline-block text-accent border border-accent/30 rounded-full px-4 py-1.5 bg-accent/5"
-          >
-            {heroData.badge}
-          </motion.span>
-
           <motion.h1
             id="hero-title"
             variants={fadeUp}

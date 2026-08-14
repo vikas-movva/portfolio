@@ -13,7 +13,7 @@ export interface HeroStat {
 }
 
 export const heroData = {
-  /** Badge text above the headline. */
+  /** Badge text above the headline (Removed for now). */
   badge: "Software Engineer • Data Engineer • ML Enthusiast",
   /** Headline — split into the white part and the coloured part. */
   headlinePrefix: "Hi, I'm",
@@ -33,9 +33,9 @@ export const heroData = {
   topTech: ["Python", "SQL", "React/Next.js"],
   /** Roles cycled under "I build ..." in the motion-forward hero. */
   roles: [
-    "data pipelines",
-    "ML systems",
-    "web apps",
-    "clean architecture",
+    "Data Pipelines",
+    "ML Systems",
+    "Web Apps",
+    "Data Visualizations",
   ],
 };
