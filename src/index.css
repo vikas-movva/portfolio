@@ -223,3 +223,11 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Hero rotating roles use a distinctive display face (Space Grotesk) so the
+   cycled phrases stand out from the body copy. Falls back to the system sans. */
+.font-roles {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-feature-settings: 'ss01' 1, 'ss02' 1;
+  letter-spacing: -0.01em;
+}
