@@ -33,4 +33,11 @@ export const heroData = {
   ] satisfies HeroStat[],
   /** Top three technologies, highlighted in the hero as skill pills. */
   topTech: ["Python", "SQL", "React/Next.js"],
+  /** Roles cycled under "I build ..." in the motion-forward hero. */
+  roles: [
+    "data pipelines",
+    "ML systems",
+    "web apps",
+    "clean architecture",
+  ],
 };

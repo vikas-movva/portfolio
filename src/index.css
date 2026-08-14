@@ -144,3 +144,71 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(var(--color-accent-hover-rgb, 0 184 224));
 }
+
+/* ============================================================
+   UI refresh — bold editorial design system
+   (shared across the redesigned sections)
+
+   These utilities are additive: they layer on top of the existing
+   token-based Tailwind classes so every section can share one
+   typographic voice (large fluid display type, uppercase eyebrows,
+   accent gradient words, dotted-grid backdrop).
+   ============================================================ */
+
+/* Fluid display headings — clamp keeps them large but never overflowing. */
+.display {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+/* Small uppercase kicker above each section title. */
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Accent gradient text for key words in headings. */
+.text-gradient {
+  background: linear-gradient(
+    135deg,
+    rgb(var(--color-accent-rgb, 0 212 255)),
+    rgb(var(--color-accent-hover-rgb, 0 184 224))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Dotted grid backdrop — fades toward the edges via a radial mask. */
+.bg-grid {
+  background-image: radial-gradient(
+    rgb(var(--color-border-rgb, 51 65 85) / 0.5) 1px,
+    transparent 1px
+  );
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 40%, transparent 100%);
+}
+
+/* Soft glow halo used behind the hero portrait cutout. */
+.aura {
+  filter: blur(8px);
+  opacity: 0.7;
+}
+
+/* Respect users who prefer reduced motion: kill the looping animations. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

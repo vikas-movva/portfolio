@@ -1,17 +1,13 @@
 import { useState, useRef, useLayoutEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { projectsData } from '../data'
+import SectionHeading from './SectionHeading'
 import type { Project } from '../data'
 import { useThemeColor, hexToRgba } from '../theme/useThemeColor'
 
 // Resolve the accent to a real colour string so Framer Motion can interpolate
 // border/colour animations (it cannot animate to the literal token "primary").
 const ACCENT_FALLBACK = 'rgb(0 212 255)'
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-}
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -204,35 +200,16 @@ export default function Projects() {
       aria-labelledby="projects-title"
     >
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          className="text-center mb-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.span
-            variants={cardVariants}
-            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4 border border-accent/20"
-          >
-            Featured Work
-          </motion.span>
-          <motion.h2
-            id="projects-title"
-            variants={cardVariants}
-            className="text-4xl md:text-5xl font-bold mb-4"
-          >
-            <span className="text-content">Projects & </span>
-            <br />
-            <span className="text-accent">Case Studies</span>
-          </motion.h2>
-          <motion.p
-            variants={cardVariants}
-            className="text-lg text-content-muted max-w-2xl mx-auto"
-          >
-            A selection of projects showcasing my expertise across data engineering, ML, and full-stack development.
-          </motion.p>
-        </motion.div>
+        <SectionHeading
+          id="projects-title"
+          eyebrow="Featured Work"
+          title={
+            <>
+              Projects & <span className="text-accent">Case Studies</span>
+            </>
+          }
+          subtitle="A selection of projects showcasing my expertise across data engineering, ML, and full-stack development."
+        />
 
         <motion.div
           className="flex flex-wrap justify-center gap-3 mb-12"

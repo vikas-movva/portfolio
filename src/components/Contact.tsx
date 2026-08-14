@@ -7,6 +7,7 @@ import {
   contactSubjects,
 } from '../data'
 import type { ContactIconName } from '../data'
+import SectionHeading from './SectionHeading'
 
 /** Icon map keyed by the string names used in src/data/contact.ts. */
 const socialIcons: Record<ContactIconName, React.ReactNode> = {
@@ -88,35 +89,16 @@ export default function Contact() {
       aria-labelledby="contact-title"
     >
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          className="text-center mb-16"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.span
-            variants={itemVariants}
-            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4 border border-accent/20"
-          >
-            Get In Touch
-          </motion.span>
-          <motion.h2
-            id="contact-title"
-            variants={itemVariants}
-            className="text-4xl md:text-5xl font-bold mb-4"
-          >
-            <span className="text-content">Let's Work </span>
-            <br />
-            <span className="text-accent">Together</span>
-          </motion.h2>
-          <motion.p
-            variants={itemVariants}
-            className="text-lg text-content-muted max-w-2xl mx-auto"
-          >
-            Have a project in mind or just want to say hi? I'd love to hear from you.
-          </motion.p>
-        </motion.div>
+        <SectionHeading
+          id="contact-title"
+          eyebrow="Get In Touch"
+          title={
+            <>
+              Let's Work <span className="text-accent">Together</span>
+            </>
+          }
+          subtitle="Have a project in mind or just want to say hi? I'd love to hear from you."
+        />
 
         <div className="grid lg:grid-cols-2 gap-12">
           <motion.div

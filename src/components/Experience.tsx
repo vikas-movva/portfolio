@@ -1,11 +1,8 @@
 import { motion } from "framer-motion";
 import { experienceData, educationData } from "../data";
 import { useThemeColor, hexToRgba } from "../theme/useThemeColor";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
-};
+import SectionHeading from './SectionHeading'
+import { stagger, inViewOnce } from '../theme/anim'
 
 const itemVariants = {
   hidden: { opacity: 0, x: -50 },
@@ -25,36 +22,16 @@ export default function Experience() {
       aria-labelledby="experience-title"
     >
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          className="text-center mb-16"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.span
-            variants={itemVariants}
-            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4 border border-accent/20"
-          >
-            Experience & Education
-          </motion.span>
-          <motion.h2
-            id="experience-title"
-            variants={itemVariants}
-            className="text-4xl md:text-5xl font-bold mb-4"
-          >
-            <span className="text-content">My Professional </span>
-            <br />
-            <span className="text-accent">Journey & Education</span>
-          </motion.h2>
-          <motion.p
-            variants={itemVariants}
-            className="text-lg text-content-muted max-w-2xl mx-auto"
-          >
-            Building scalable systems and the academic foundation behind my
-            engineering and data work.
-          </motion.p>
-        </motion.div>
+        <SectionHeading
+          id="experience-title"
+          eyebrow="Experience & Education"
+          title={
+            <>
+              My Professional <span className="text-accent">Journey</span>
+            </>
+          }
+          subtitle="Building scalable systems and the academic foundation behind my engineering and data work."
+        />
 
         <div className="relative">
           <motion.div
@@ -255,10 +232,10 @@ export default function Experience() {
         {/* Education subsection, rendered as part of the same section. */}
         <motion.div
           className="mt-24"
-          variants={containerVariants}
+          variants={stagger}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={inViewOnce}
         >
           <motion.h3
             variants={itemVariants}

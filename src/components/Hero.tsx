@@ -1,506 +1,252 @@
-import { motion } from "framer-motion";
-import { heroData } from "../data";
-import { useThemeColor, hexToRgba } from "../theme/useThemeColor";
-import vikasImg from "../assets/Vikas.jpg";
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { heroData } from '../data'
+import { useThemeColor } from '../theme/useThemeColor'
+import { fadeUp, stagger } from '../theme/anim'
+import heroImg from '../assets/Hero-Image-noBG.png'
 
-/** Clock icon used for the "Years Experience" quick stat. */
-const statIcons = {
-  clock: (
-    <svg
-      className="w-4 h-4 text-accent"
-      fill="currentColor"
-      viewBox="0 0 20 20"
-      aria-hidden="true"
-    >
-      <path
-        fillRule="evenodd"
-        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-        clipRule="evenodd"
-      />
-    </svg>
-  ),
-  projects: (
-    <svg
-      className="w-4 h-4 text-accent"
-      fill="currentColor"
-      viewBox="0 0 20 20"
-      aria-hidden="true"
-    >
-      <path
-        fillRule="evenodd"
-        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-        clipRule="evenodd"
-      />
-    </svg>
-  ),
-  stack: (
-    <svg
-      className="w-4 h-4 text-accent"
-      fill="currentColor"
-      viewBox="0 0 20 20"
-      aria-hidden="true"
-    >
-      <path
-        fillRule="evenodd"
-        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-        clipRule="evenodd"
-      />
-    </svg>
-  ),
-} as const;
-
-/**
- * Icon paths (Heroicons-style, 24x24 viewBox) for the orbiting "planetary"
- * badges that circle the hero photo. Two concentric rings, each rotating in
- * opposite directions for a solar-system feel.
- */
-const orbitIconPaths = [
-  "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4", // code
-  "M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3z M4 7v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7 M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3", // database
-  "M5 19a4 4 0 010-8 5 5 0 019.6-1.5A4.5 4.5 0 0118 19H5z", // cloud
-  "M3 3v18h18 M7 14l4-4 3 3 5-6", // chart
-  "M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z", // shield
-  "M9 15l-3 3 3-1 1-3z M12 3c3 0 6 3 6 7 0 2-1 4-2 5l-3 7-3-7c-1-1-2-3-2-5 0-4 3-7 6-7z", // rocket
-];
-
-const orbitRings = [
-  {
-    radius: 300,
-    duration: 18,
-    reverse: false,
-    paths: orbitIconPaths.slice(0, 3),
-  },
-  {
-    radius: 360,
-    duration: 30,
-    reverse: true,
-    paths: orbitIconPaths.slice(3, 6),
-  },
-];
-
-/** A single orbiting tech badge (circular chip with an icon). */
-function OrbitBadge({ path }: { path: string }) {
-  return (
-    <div className="w-12 h-12 rounded-full bg-surface-alt/70 border border-accent/40 flex items-center justify-center shadow-lg shadow-accent/10 backdrop-blur-sm">
-      <svg
-        className="w-6 h-6 text-accent"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        aria-hidden="true"
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d={path} />
-      </svg>
-    </div>
-  );
+const scrollToSection = (href: string) => {
+  document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
 }
 
-/**
- * A ring that spins like an orbit, carrying evenly-spaced badges. The ring
- * itself rotates; each badge is counter-rotated so its icon stays upright.
- * Badges are positioned on a circle of `radius` px around the center.
- */
-function OrbitRing({
-  radius,
-  duration,
-  reverse,
-  paths,
-}: {
-  radius: number;
-  duration: number;
-  reverse: boolean;
-  paths: string[];
-}) {
-  return (
-    <motion.div
-      className="absolute left-1/2 top-1/2"
-      style={{ width: 0, height: 0 }}
-      animate={{ rotate: reverse ? [0, -360] : [0, 360] }}
-      transition={{ duration, repeat: Infinity, ease: "linear" }}
-      aria-hidden="true"
-    >
-      {paths.map((path, i) => {
-        const angle = (360 / paths.length) * i;
-        const rad = (angle * Math.PI) / 180;
-        const x = Math.cos(rad) * radius;
-        const y = Math.sin(rad) * radius;
-        return (
-          <motion.div
-            key={i}
-            className="absolute"
-            style={{
-              left: x,
-              top: y,
-              marginLeft: -24,
-              marginTop: -24,
-            }}
-            animate={{ rotate: reverse ? [0, 360] : [0, -360] }}
-            transition={{ duration, repeat: Infinity, ease: "linear" }}
-          >
-            <OrbitBadge path={path} />
-          </motion.div>
-        );
-      })}
-    </motion.div>
-  );
-}
+/** Small tech chips that float around the portrait for a bit of personality. */
+const floatingChips = [
+  { label: 'Python', className: 'top-6 -left-2 md:-left-6' },
+  { label: 'SQL', className: 'bottom-28 -left-3 md:-left-8' },
+  { label: 'React', className: 'top-16 -right-2 md:-right-6' },
+  { label: 'Spark', className: 'bottom-10 -right-3 md:-right-8' },
+]
 
 export default function Hero() {
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  // Theme-aware colour for the animated SVG strokes and the accent borders.
   const primary = useThemeColor('accent')
-  const primaryHex = primary ?? 'rgb(0 212 255)'
-  const borderColorFrames = [
-    hexToRgba(primaryHex, 0.3) || "rgba(0, 212, 255, 0.3)",
-    hexToRgba(primaryHex, 0.6) || "rgba(0, 212, 255, 0.6)",
-    hexToRgba(primaryHex, 0.3) || "rgba(0, 212, 255, 0.3)",
-  ];
+  const primaryRgb = primary ?? 'rgb(0 212 255)'
 
-  const variants = {
-    container: {
-      hidden: { opacity: 0 },
-      visible: {
-        opacity: 1,
-        transition: {
-          staggerChildren: 0.1,
-          delayChildren: 0.2,
-        },
-      },
-    },
-    item: {
-      hidden: { opacity: 0, y: 30 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.6, ease: "easeOut" },
-      },
-    },
-  };
+  // Motion-forward role rotator: "I build <role>" cycles every few seconds.
+  const roles = heroData.roles
+  const [roleIndex, setRoleIndex] = useState(0)
+  useEffect(() => {
+    const id = setInterval(
+      () => setRoleIndex((i) => (i + 1) % roles.length),
+      2600,
+    )
+    return () => clearInterval(id)
+  }, [roles.length])
 
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden scroll-mt-20"
+      className="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden scroll-mt-20"
       aria-labelledby="hero-title"
     >
-      <div className="absolute inset-0 z-0" aria-hidden="true">
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-accent/10 blur-3xl"
-          animate={{
-            x: [0, 50, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-accent/5 blur-3xl"
-          animate={{
-            x: [0, -40, 0],
-            y: [0, 40, 0],
-            scale: [1, 1.15, 1],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear",
-            delay: 5,
-          }}
-        />
-      </div>
+      {/* Dotted grid backdrop, masked to fade at the edges. */}
+      <div className="absolute inset-0 -z-10 bg-grid opacity-70" aria-hidden="true" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-12 items-center">
+      {/* Drifting accent blobs for depth. */}
+      <motion.div
+        className="absolute -top-24 -left-24 w-[28rem] h-[28rem] rounded-full bg-accent/10 blur-3xl -z-10"
+        animate={{ x: [0, 40, 0], y: [0, 30, 0] }}
+        transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
+        aria-hidden="true"
+      />
+      <motion.div
+        className="absolute -bottom-28 -right-20 w-[32rem] h-[32rem] rounded-full bg-accent/5 blur-3xl -z-10"
+        animate={{ x: [0, -30, 0], y: [0, 30, 0] }}
+        transition={{ duration: 26, repeat: Infinity, ease: 'linear' }}
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-[1.05fr_0.95fr] gap-12 items-center">
+        {/* ---- LEFT: copy ---- */}
         <motion.div
           className="text-center lg:text-left"
-          variants={variants.container}
+          variants={stagger}
           initial="hidden"
           animate="visible"
         >
           <motion.span
-            variants={variants.item}
-            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6 border border-accent/20"
+            variants={fadeUp}
+            className="eyebrow inline-block text-accent border border-accent/30 rounded-full px-4 py-1.5 bg-accent/5"
           >
             {heroData.badge}
           </motion.span>
 
           <motion.h1
             id="hero-title"
-            variants={variants.item}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
+            variants={fadeUp}
+            className="display mt-6 text-content"
           >
-            <span className="text-content">{heroData.headlinePrefix} </span>
-            <br />
-            <span className="text-accent">{heroData.name}</span>
+            Hi, I&apos;m{' '}
+            <span className="text-gradient">{heroData.name}</span>
           </motion.h1>
 
+          <div className="mt-4 text-2xl md:text-3xl font-semibold text-content-soft">
+            <span className="text-content-faint">I build </span>
+            <span className="relative inline-flex h-[1.2em] overflow-hidden align-bottom">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={roleIndex}
+                  className="text-accent whitespace-nowrap"
+                  initial={{ y: '100%', opacity: 0 }}
+                  animate={{ y: '0%', opacity: 1 }}
+                  exit={{ y: '-100%', opacity: 0 }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {roles[roleIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </span>
+          </div>
+
           <motion.p
-            variants={variants.item}
-            className="text-lg md:text-xl text-content-muted mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+            variants={fadeUp}
+            className="mt-6 text-lg text-content-muted max-w-xl mx-auto lg:mx-0 leading-relaxed"
           >
             {heroData.intro}
           </motion.p>
 
           <motion.div
-            variants={variants.item}
-            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+            variants={fadeUp}
+            className="mt-9 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
           >
             <motion.button
-              onClick={() => scrollToSection("#projects")}
-              whileHover={{ scale: 1.02 }}
+              onClick={() => scrollToSection('#projects')}
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 rounded-xl bg-accent text-on-accent font-semibold text-lg hover:bg-accent-hover transition-all shadow-lg shadow-accent/25 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface"
+              className="px-8 py-4 rounded-xl bg-accent text-on-accent font-semibold text-lg shadow-lg shadow-accent/25 hover:bg-accent-hover transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface"
             >
               {heroData.primaryCta}
             </motion.button>
             <motion.button
-              onClick={() => scrollToSection("#contact")}
-              whileHover={{ scale: 1.02 }}
+              onClick={() => scrollToSection('#contact')}
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 rounded-xl bg-transparent border-2 border-accent/50 text-accent font-semibold text-lg hover:bg-accent/10 transition-all focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface"
+              className="px-8 py-4 rounded-xl bg-transparent border-2 border-accent/50 text-accent font-semibold text-lg hover:bg-accent/10 transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface"
             >
               {heroData.secondaryCta}
             </motion.button>
           </motion.div>
 
           <motion.div
-            variants={variants.item}
-            className="flex flex-wrap justify-center lg:justify-start gap-8 mt-12"
-          >
-            {heroData.stats.map((stat) =>
-              stat.highlight ? (
-                <span
-                  key={stat.text}
-                  className="flex items-center gap-2.5 px-6 py-3 bg-accent/15 text-accent font-bold text-base md:text-lg border-accent/40 shadow-lg shadow-accent/10"
-                >
-                  {statIcons[stat.icon]}
-                  {stat.text}
-                </span>
-              ) : (
-                <span key={stat.text} className="flex items-center gap-2">
-                  {statIcons[stat.icon]}
-                  {stat.text}
-                </span>
-              ),
-            )}
-          </motion.div>
-
-          <motion.div
-            variants={variants.item}
-            className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mt-6"
+            variants={fadeUp}
+            className="mt-8 flex flex-wrap justify-center lg:justify-start gap-2.5"
           >
             {heroData.topTech.map((tech) => (
               <span
                 key={tech}
-                className="px-4 py-2 rounded-lg bg-surface-alt/60 border border-accent/30 text-accent text-base md:text-lg font-semibold hover:bg-accent/10 transition-colors"
+                className="px-4 py-2 rounded-lg bg-card border border-border text-content-soft text-sm font-medium"
               >
                 {tech}
               </span>
             ))}
           </motion.div>
+
+          {heroData.stats.length > 0 && (
+            <motion.div
+              variants={fadeUp}
+              className="mt-4 flex flex-wrap justify-center lg:justify-start gap-3"
+            >
+              {heroData.stats.map((stat) => (
+                <span
+                  key={stat.text}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold border border-accent/20"
+                >
+                  {stat.text}
+                </span>
+              ))}
+            </motion.div>
+          )}
         </motion.div>
 
+        {/* ---- RIGHT: background-less portrait cutout ---- */}
         <motion.div
-          className="relative"
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          className="relative mx-auto w-full max-w-sm lg:max-w-none"
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="relative z-10">
-            <div className="aspect-square max-w-xl mx-auto relative">
-              <motion.svg
-                className="absolute inset-0 w-full h-full"
-                viewBox="0 0 400 400"
-                aria-hidden="true"
+          <div className="relative aspect-square">
+            {/* Soft accent aura behind the cutout. */}
+            <div
+              className="absolute inset-0 aura -z-10"
+              style={{ background: `radial-gradient(circle, ${primaryRgb.replace(
+                'rgb',
+                'rgba',
+              ).replace(')', ', 0.35)')} 0%, transparent 65%)` }}
+              aria-hidden="true"
+            />
+
+            {/* Two counter-rotating rings for subtle motion. */}
+            <motion.div
+              className="absolute inset-6 rounded-full border border-dashed border-accent/30"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 44, repeat: Infinity, ease: 'linear' }}
+              aria-hidden="true"
+            />
+            <motion.div
+              className="absolute inset-12 rounded-full border border-accent/10"
+              animate={{ rotate: -360 }}
+              transition={{ duration: 32, repeat: Infinity, ease: 'linear' }}
+              aria-hidden="true"
+            />
+
+            {/* The portrait itself. */}
+            <motion.img
+              src={heroImg}
+              alt={`${heroData.name}, ${heroData.badge}`}
+              className="absolute inset-0 w-full h-full object-contain drop-shadow-2xl"
+              initial={{ y: 24, opacity: 0 }}
+              animate={{ y: [0, -12, 0], opacity: 1 }}
+              transition={{
+                y: { duration: 6, repeat: Infinity, ease: 'easeInOut' },
+                opacity: { duration: 0.8, delay: 0.4 },
+              }}
+              whileHover={{ scale: 1.03 }}
+            />
+
+            {/* Floating tech chips. */}
+            {floatingChips.map((chip, i) => (
+              <motion.span
+                key={chip.label}
+                className={`absolute ${chip.className} px-3 py-1.5 rounded-full bg-card border border-accent/30 text-accent text-xs font-semibold shadow-lg shadow-accent/10`}
+                animate={{ y: [0, -8, 0] }}
+                transition={{
+                  duration: 4 + i,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: i * 0.3,
+                }}
               >
-                <defs>
-                  <radialGradient id="gradient" cx="50%" cy="50%" r="50%">
-                    <stop
-                      offset="0%"
-                      stopColor={primaryHex}
-                      stopOpacity="0.3"
-                    />
-                    <stop
-                      offset="100%"
-                      stopColor={primaryHex}
-                      stopOpacity="0"
-                    />
-                  </radialGradient>
-                </defs>
-                <motion.circle
-                  cx="200"
-                  cy="200"
-                  r="180"
-                  fill="url(#gradient)"
-                  animate={{ r: [180, 200, 180] }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                <motion.circle
-                  cx="200"
-                  cy="200"
-                  r="140"
-                  stroke={primaryHex}
-                  strokeWidth="1"
-                  fill="none"
-                  strokeDasharray="10, 10"
-                  animate={{ rotate: [0, 360], strokeDashoffset: [0, -20] }}
-                  transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                />
-                <motion.circle
-                  cx="200"
-                  cy="200"
-                  r="100"
-                  stroke={primaryHex}
-                  strokeWidth="2"
-                  fill="none"
-                  strokeDasharray="5, 15"
-                  animate={{ rotate: [360, 0], strokeDashoffset: [0, 20] }}
-                  transition={{
-                    duration: 15,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                />
-              </motion.svg>
-
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-full max-w-[512px] aspect-square shrink-0">
-                  {orbitRings.map((ring, i) => (
-                    <OrbitRing key={i} {...ring} />
-                  ))}
-
-                  <motion.div
-                    className="absolute inset-0 rounded-full border-4 border-accent/30"
-                    animate={{
-                      scale: [1, 1.05, 1],
-                      borderColor: borderColorFrames,
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-                  <motion.div
-                    className="absolute inset-4 rounded-full border-2 border-accent/20"
-                    animate={{ rotate: [0, 360] }}
-                    transition={{
-                      duration: 20,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  />
-                  <div className="absolute inset-6 flex items-center justify-center">
-                    <motion.div
-                      className="w-full h-full rounded-full overflow-hidden border-2 border-accent/40 shadow-xl shadow-accent/20"
-                      initial={{ scale: 0.85, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{
-                        duration: 0.8,
-                        delay: 0.6,
-                        ease: "easeOut",
-                      }}
-                      whileHover={{ scale: 1.04 }}
-                    >
-                      <motion.img
-                        src={vikasImg}
-                        alt={`${heroData.name}, ${heroData.badge}`}
-                        className="w-full h-full object-cover"
-                        initial={{ scale: 1.15 }}
-                        animate={{ scale: 1 }}
-                        transition={{
-                          duration: 1,
-                          delay: 0.6,
-                          ease: "easeOut",
-                        }}
-                      />
-                    </motion.div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                {chip.label}
+              </motion.span>
+            ))}
           </div>
-
-          <motion.div
-            className="absolute -bottom-8 -right-8 w-32 h-32 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center"
-            animate={{ rotate: [0, 2, -2, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <svg
-              className="w-12 h-12 text-accent"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-              />
-            </svg>
-          </motion.div>
-
-          <motion.div
-            className="absolute -top-8 -left-8 w-24 h-24 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center"
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-          >
-            <svg
-              className="w-10 h-10 text-accent"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-              />
-            </svg>
-          </motion.div>
         </motion.div>
       </div>
 
-      <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+      {/* Scroll cue. */}
+      <motion.a
+        href="#about"
+        onClick={(e) => {
+          e.preventDefault()
+          scrollToSection('#about')
+        }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-content-faint hover:text-accent transition-colors"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 10, 0] }}
         transition={{
-          duration: 1.5,
+          duration: 1.6,
           repeat: Infinity,
-          delay: 1.5,
-          ease: "easeInOut",
+          delay: 1.4,
+          ease: 'easeInOut',
         }}
-        aria-hidden="true"
+        aria-label="Scroll to about section"
       >
         <svg
-          className="w-6 h-6 text-content-faint"
+          className="w-6 h-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -509,7 +255,7 @@ export default function Hero() {
             d="M19 14l-7 7m0 0l-7-7m7 7V3"
           />
         </svg>
-      </motion.div>
+      </motion.a>
     </section>
-  );
+  )
 }

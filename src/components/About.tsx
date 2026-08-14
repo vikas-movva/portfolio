@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { aboutData } from '../data'
+import SectionHeading from './SectionHeading'
 
 export default function About() {
   const containerVariants = {
@@ -35,35 +36,16 @@ export default function About() {
       aria-labelledby="about-title"
     >
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          className="text-center mb-16"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.span
-            variants={itemVariants}
-            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4 border border-accent/20"
-          >
-            About Me
-          </motion.span>
-          <motion.h2
-            id="about-title"
-            variants={itemVariants}
-            className="text-4xl md:text-5xl font-bold mb-4"
-          >
-            <span className="text-content">Get to Know </span>
-            <br />
-            <span className="text-accent">Me Better</span>
-          </motion.h2>
-          <motion.p
-            variants={itemVariants}
-            className="text-lg text-content-muted max-w-2xl mx-auto"
-          >
-            A snapshot of my journey, education, and what drives me as an engineer.
-          </motion.p>
-        </motion.div>
+        <SectionHeading
+          id="about-title"
+          eyebrow="About Me"
+          title={
+            <>
+              Get to Know <span className="text-accent">Me Better</span>
+            </>
+          }
+          subtitle="A snapshot of my journey, education, and what drives me as an engineer."
+        />
 
         <div className="grid lg:grid-cols-2 gap-12">
           <motion.div

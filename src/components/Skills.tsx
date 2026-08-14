@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { skillsCategories, exploringSkills } from '../data'
 import type { SkillIconName } from '../data'
+import SectionHeading from './SectionHeading'
 
 /** Icon map keyed by the string names used in src/data/skills.ts. */
 const skillIcons: Record<SkillIconName, React.ReactNode> = {
@@ -31,11 +32,6 @@ const skillIcons: Record<SkillIconName, React.ReactNode> = {
   ),
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-}
-
 const categoryVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
@@ -54,35 +50,16 @@ export default function Skills() {
         aria-labelledby="skills-title"
       >
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          className="text-center mb-16"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.span
-            variants={categoryVariants}
-            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4 border border-accent/20"
-          >
-            Technical Skills
-          </motion.span>
-          <motion.h2
-            id="skills-title"
-            variants={categoryVariants}
-            className="text-4xl md:text-5xl font-bold mb-4"
-          >
-            <span className="text-content">Technologies & </span>
-            <br />
-            <span className="text-accent">Tools I Use</span>
-          </motion.h2>
-          <motion.p
-            variants={categoryVariants}
-            className="text-lg text-content-muted max-w-2xl mx-auto"
-          >
-            A curated stack built through real-world projects and continuous learning.
-          </motion.p>
-        </motion.div>
+        <SectionHeading
+          id="skills-title"
+          eyebrow="Technical Skills"
+          title={
+            <>
+              Technologies & <span className="text-accent">Tools I Use</span>
+            </>
+          }
+          subtitle="A curated stack built through real-world projects and continuous learning."
+        />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillsCategories.map((cat, catIndex) => (
