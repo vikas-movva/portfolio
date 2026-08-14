@@ -86,7 +86,7 @@ export const themes: Record<ThemeName, ThemeTokens> = {
  * retheme the whole site default. To switch accents at runtime instead, the
  * theme picker sets `document.documentElement.dataset.theme = 'violet'`.
  */
-export const activeTheme: ThemeName = 'cyan'
+export const activeTheme: ThemeName = 'rose'
 
 /** human-readable label for each theme — used by the theme picker UI. */
 export const themeLabels: Record<ThemeName, string> = {
