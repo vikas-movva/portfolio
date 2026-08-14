@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { navLinks, sectionIds, brandName } from '../data'
+import ThemeControls from './ThemeControls'
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -52,14 +53,14 @@ export default function Header() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-dark/95 backdrop-blur-md border-b border-primary/20' : 'bg-transparent'
-      }`}
+                scrolled ? 'bg-surface/95 backdrop-blur-md border-b border-border' : 'bg-transparent'
+              }`}
     >
       <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Main navigation">
         <div className="flex items-center justify-between">
           <motion.a
             href="#hero"
-            className="text-2xl font-bold text-primary tracking-tight"
+            className="text-2xl font-bold text-accent tracking-tight"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             aria-label="Go to home"
@@ -78,8 +79,8 @@ export default function Header() {
                 }}
                 className={`relative py-2 text-sm font-medium transition-colors ${
                   activeSection === link.href.replace('#', '') 
-                    ? 'text-primary' 
-                    : 'text-gray-300 hover:text-primary'
+                    ? 'text-accent' 
+                    : 'text-content-muted hover:text-accent'
                 }`}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -88,7 +89,7 @@ export default function Header() {
               >
                 {link.label}
                 <motion.span
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent"
                   initial={{ scaleX: 0 }}
                   animate={{ 
                     scaleX: activeSection === link.href.replace('#', '') ? 1 : 0 
@@ -99,8 +100,12 @@ export default function Header() {
             ))}
           </div>
 
+          <div className="hidden md:flex items-center">
+            <ThemeControls variant="desktop" />
+          </div>
+
           <motion.button
-            className="md:hidden p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+            className="md:hidden p-2 rounded-lg bg-accent/10 text-accent hover:bg-accent/20 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
@@ -122,7 +127,7 @@ export default function Header() {
           {mobileMenuOpen && (
             <motion.div
               id="mobile-menu"
-              className="md:hidden mt-4 pb-4 border-t border-primary/20 bg-dark/95 backdrop-blur-md overflow-hidden"
+              className={`md:hidden mt-4 pb-4 border-t border-border bg-surface/95 backdrop-blur-md ${mobileMenuOpen ? 'overflow-visible' : 'overflow-hidden'}`}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0 }}
@@ -135,8 +140,8 @@ export default function Header() {
                     onClick={() => scrollToSection(link.href)}
                     className={`px-4 py-2 rounded-lg text-center font-medium transition-colors text-left ${
                       activeSection === link.href.replace('#', '')
-                        ? 'bg-primary/20 text-primary'
-                        : 'text-gray-300 hover:bg-primary/10 hover:text-primary'
+                        ? 'bg-accent/20 text-accent'
+                        : 'text-content-muted hover:bg-accent/10 hover:text-accent'
                     }`}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -147,6 +152,9 @@ export default function Header() {
                     {link.label}
                   </motion.button>
                 ))}
+                <div className="pt-2 flex items-center justify-center border-t border-accent/20">
+                  <ThemeControls variant="mobile" />
+                </div>
               </div>
             </motion.div>
           )}

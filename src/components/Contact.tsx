@@ -84,7 +84,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-24 md:py-32 px-6 bg-darker scroll-mt-20"
+      className="py-24 md:py-32 px-6 bg-surface-alt scroll-mt-20"
       aria-labelledby="contact-title"
     >
       <div className="max-w-7xl mx-auto">
@@ -97,7 +97,7 @@ export default function Contact() {
         >
           <motion.span
             variants={itemVariants}
-            className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 border border-primary/20"
+            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4 border border-accent/20"
           >
             Get In Touch
           </motion.span>
@@ -106,13 +106,13 @@ export default function Contact() {
             variants={itemVariants}
             className="text-4xl md:text-5xl font-bold mb-4"
           >
-            <span className="text-white">Let's Work </span>
+            <span className="text-content">Let's Work </span>
             <br />
-            <span className="text-primary">Together</span>
+            <span className="text-accent">Together</span>
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className="text-lg text-gray-400 max-w-2xl mx-auto"
+            className="text-lg text-content-muted max-w-2xl mx-auto"
           >
             Have a project in mind or just want to say hi? I'd love to hear from you.
           </motion.p>
@@ -131,10 +131,10 @@ export default function Contact() {
             >
               <motion.div
                 variants={itemVariants}
-                className="p-6 rounded-2xl bg-dark/50 border border-gray-700/50"
+                className="p-6 rounded-2xl bg-card border border-border"
               >
-                <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
-                  <span className="w-1 h-8 bg-primary rounded-full"></span>
+                <h3 className="text-xl font-bold text-content mb-6 flex items-center gap-3">
+                  <span className="w-1 h-8 bg-accent rounded-full"></span>
                   Let's Connect
                 </h3>
                 <div className="space-y-4">
@@ -144,7 +144,7 @@ export default function Contact() {
                       href={deriveSocialHref(social.source, contactData)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-center gap-4 p-4 rounded-xl bg-gray-800/50 border border-gray-700/50 hover:border-primary/30 hover:bg-gray-800 transition-all"
+                      className="group flex items-center gap-4 p-4 rounded-xl bg-field/50 border border-border hover:border-accent/30 hover:bg-field transition-all"
                       whileHover={{ x: 4 }}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -152,18 +152,18 @@ export default function Contact() {
                       transition={{ delay: index * 0.1 }}
                     >
                       <motion.div
-                        className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-dark transition-all"
+                        className="p-3 rounded-xl bg-accent/10 text-accent group-hover:bg-accent group-hover:text-on-accent transition-all"
                         whileHover={{ scale: 1.1, rotate: 5 }}
                       >
                         {socialIcons[social.icon]}
                       </motion.div>
                       <div className="flex-1">
-                        <p className="font-semibold text-white group-hover:text-primary transition-colors">
+                        <p className="font-semibold text-content group-hover:text-accent transition-colors">
                           {social.name}
                         </p>
-                        <p className="text-sm text-gray-400">{social.description}</p>
+                        <p className="text-sm text-content-muted">{social.description}</p>
                       </div>
-                      <svg className="w-5 h-5 text-gray-500 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <svg className="w-5 h-5 text-content-faint group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                       </svg>
                     </motion.a>
@@ -173,10 +173,10 @@ export default function Contact() {
 
               <motion.div
                 variants={itemVariants}
-                className="p-6 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20"
+                className="p-6 rounded-2xl bg-gradient-to-br from-accent/10 to-accent/5 border border-accent/20"
               >
-                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-3">
-                  <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <h3 className="text-xl font-bold text-content mb-4 flex items-center gap-3">
+                  <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   Availability
@@ -190,10 +190,10 @@ export default function Contact() {
                   />
                   <span className="text-green-400 font-medium">{contactData.availability}</span>
                 </div>
-                <p className="text-gray-400 text-sm">
+                <p className="text-content-muted text-sm">
                   Based in {contactData.location} • Open to remote & hybrid roles
                 </p>
-                <p className="text-gray-500 text-sm mt-2">
+                <p className="text-content-faint text-sm mt-2">
                   Typically responds within 24 hours
                 </p>
               </motion.div>
@@ -212,14 +212,14 @@ export default function Contact() {
               action="https://formsubmit.co/ajax/vikas.s.movva@gmail.com"
               method="POST"
               variants={itemVariants}
-              className="p-8 rounded-2xl bg-dark/50 border border-gray-700/50"
+              className="p-8 rounded-2xl bg-card border border-border"
               noValidate
             >
-              <h3 className="text-xl font-bold text-white mb-6">Send a Message</h3>
+              <h3 className="text-xl font-bold text-content mb-6">Send a Message</h3>
               
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-content-soft mb-2">
                     Name *
                   </label>
                   <motion.input
@@ -227,12 +227,12 @@ export default function Contact() {
                     id="name"
                     name="name"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-field border border-border text-content placeholder-content-faint focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
                     whileFocus={{ scale: 1.01 }}
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-content-soft mb-2">
                     Email *
                   </label>
                   <motion.input
@@ -240,21 +240,21 @@ export default function Contact() {
                     id="email"
                     name="email"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-field border border-border text-content placeholder-content-faint focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
                     whileFocus={{ scale: 1.01 }}
                   />
                 </div>
               </div>
 
               <div className="mb-6">
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
+                <label htmlFor="subject" className="block text-sm font-medium text-content-soft mb-2">
                   Subject *
                 </label>
                 <motion.select
                   id="subject"
                   name="subject"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none"
+                  className="w-full px-4 py-3 rounded-xl bg-field border border-border text-content focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all appearance-none"
                   whileFocus={{ scale: 1.01 }}
                 >
                   <option value="" disabled>Select a topic</option>
@@ -265,7 +265,7 @@ export default function Contact() {
               </div>
 
               <div className="mb-6">
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                <label htmlFor="message" className="block text-sm font-medium text-content-soft mb-2">
                   Message *
                 </label>
                 <motion.textarea
@@ -273,7 +273,7 @@ export default function Contact() {
                   name="message"
                   required
                   rows={5}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl bg-field border border-border text-content placeholder-content-faint focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-none"
                   whileFocus={{ scale: 1.01 }}
                   placeholder="Tell me about your project, role, or just say hi..."
                 />
@@ -282,13 +282,13 @@ export default function Contact() {
               <motion.button
                 type="submit"
                 disabled={submitStatus === 'submitting'}
-                className="w-full px-8 py-4 rounded-xl bg-primary text-dark font-semibold text-lg hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-darker"
+                className="w-full px-8 py-4 rounded-xl bg-accent text-on-accent font-semibold text-lg hover:bg-accent-hover transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
                 {submitStatus === 'submitting' ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-dark" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-on-accent" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
@@ -296,7 +296,7 @@ export default function Contact() {
                   </>
                 ) : submitStatus === 'success' ? (
                   <>
-                    <svg className="-ml-1 mr-3 h-5 w-5 text-dark" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <svg className="-ml-1 mr-3 h-5 w-5 text-on-accent" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     Message Sent!
@@ -317,13 +317,13 @@ export default function Contact() {
               )}
 
               <motion.p
-                className="mt-6 text-center text-sm text-gray-500"
+                className="mt-6 text-center text-sm text-content-faint"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
               >
                 Or email me directly at{' '}
-                <a href={`mailto:${contactData.email}`} className="text-primary hover:underline font-medium">
+                <a href={`mailto:${contactData.email}`} className="text-accent hover:underline font-medium">
                   {contactData.email}
                 </a>
               </motion.p>

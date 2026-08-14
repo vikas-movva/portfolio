@@ -4,6 +4,10 @@ import { projectsData } from '../data'
 import type { Project } from '../data'
 import { useThemeColor, hexToRgba } from '../theme/useThemeColor'
 
+// Resolve the accent to a real colour string so Framer Motion can interpolate
+// border/colour animations (it cannot animate to the literal token "primary").
+const ACCENT_FALLBACK = 'rgb(0 212 255)'
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
@@ -27,7 +31,7 @@ function ProjectCard({
   const [isTruncated, setIsTruncated] = useState(false)
   const [showAllTech, setShowAllTech] = useState(false)
   const descRef = useRef<HTMLParagraphElement>(null)
-
+  const accent = useThemeColor('accent') ?? ACCENT_FALLBACK
   // Show the toggle only when the description is actually clipped by the
   // line-clamp. Re-measure after layout and whenever the viewport resizes.
   useLayoutEffect(() => {
@@ -46,15 +50,15 @@ function ProjectCard({
       whileInView="visible"
       viewport={{ once: true, margin: '-50px' }}
       transition={{ delay: index * 0.05 }}
-      className={`relative group p-6 rounded-2xl bg-darker border border-gray-700/50 hover:border-primary/30 transition-all ${
-        project.featured ? 'ring-1 ring-primary/20' : ''
+      className={`relative group p-6 rounded-2xl bg-card border border-border hover:border-accent/30 transition-all ${
+        project.featured ? 'ring-1 ring-accent/20' : ''
       }`}
       whileHover={{ y: -8, boxShadow: `0 25px 50px -20px ${glow(0.15)}` }}
       role="listitem"
     >
       {project.featured && (
         <motion.span
-          className="absolute -top-3 left-4 px-3 py-1 text-xs font-bold text-dark bg-primary rounded-full"
+          className="absolute -top-3 left-4 px-3 py-1 text-xs font-bold text-on-accent bg-accent rounded-full"
           initial={{ scale: 0, rotate: -90 }}
           whileInView={{ scale: 1, rotate: 0 }}
           viewport={{ once: true }}
@@ -64,12 +68,12 @@ function ProjectCard({
         </motion.span>
       )}
 
-      <div className="relative aspect-video mb-4 rounded-xl overflow-hidden bg-gray-800/50">
+      <div className="relative aspect-video mb-4 rounded-xl overflow-hidden bg-field/50">
         <div className="absolute inset-0 flex items-center justify-center text-6xl">
           {project.image}
         </div>
         <motion.div
-          className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         />
         <motion.div
           className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300 flex gap-2 justify-center"
@@ -79,7 +83,7 @@ function ProjectCard({
               href={project.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center p-3 rounded-xl bg-dark/90 backdrop-blur text-primary hover:bg-primary hover:text-dark hover:scale-110 active:scale-95 transition-all"
+              className="inline-flex items-center justify-center p-3 rounded-xl bg-surface-alt/90 backdrop-blur text-accent hover:bg-accent hover:text-on-accent hover:scale-110 active:scale-95 transition-all"
               aria-label={`View ${project.title} on GitHub`}
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -92,7 +96,7 @@ function ProjectCard({
               href={project.links.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center p-3 rounded-xl bg-dark/90 backdrop-blur text-primary hover:bg-primary hover:text-dark hover:scale-110 active:scale-95 transition-all"
+              className="inline-flex items-center justify-center p-3 rounded-xl bg-surface-alt/90 backdrop-blur text-accent hover:bg-accent hover:text-on-accent hover:scale-110 active:scale-95 transition-all"
               aria-label={`View ${project.title} demo`}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -112,7 +116,7 @@ function ProjectCard({
       >
         <div className="flex items-center gap-2">
           <motion.span
-            className="px-2 py-1 text-xs font-medium text-primary bg-primary/10 rounded-full"
+            className="px-2 py-1 text-xs font-medium text-accent bg-accent/10 rounded-full"
             whileInView={{ scale: [0, 1] }}
             viewport={{ once: true }}
           >
@@ -120,13 +124,13 @@ function ProjectCard({
           </motion.span>
         </div>
 
-        <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors">
+        <h3 className="text-xl font-bold text-content group-hover:text-accent transition-colors">
           {project.title}
         </h3>
 
         <p
           ref={descRef}
-          className={`text-gray-400 text-sm leading-relaxed ${
+          className={`text-content-muted text-sm leading-relaxed ${
             expanded ? '' : 'line-clamp-3'
           }`}
         >
@@ -137,7 +141,7 @@ function ProjectCard({
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
-            className="text-sm font-medium text-primary hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-darker rounded"
+            className="text-sm font-medium text-accent hover:text-content transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-alt rounded"
             aria-expanded={expanded}
           >
             {expanded ? 'Show less' : 'Read more'}
@@ -149,8 +153,8 @@ function ProjectCard({
             (tech) => (
               <motion.span
                 key={tech}
-                className="px-2 py-0.5 text-xs text-gray-300 bg-gray-800 rounded border border-gray-700"
-                whileHover={{ borderColor: 'primary', color: 'primary' }}
+                className="px-2 py-0.5 text-xs text-content-soft bg-field rounded border border-border"
+                whileHover={{ borderColor: accent, color: accent }}
               >
                 {tech}
               </motion.span>
@@ -160,7 +164,7 @@ function ProjectCard({
             <button
               type="button"
               onClick={() => setShowAllTech((v) => !v)}
-              className="px-2 py-0.5 text-xs font-medium text-primary bg-gray-800 hover:bg-gray-700 rounded border border-gray-700 hover:border-primary/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-darker"
+              className="px-2 py-0.5 text-xs font-medium text-accent bg-field hover:bg-field-hover rounded border border-border hover:border-accent/50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-alt"
               aria-expanded={showAllTech}
               aria-label={
                 showAllTech
@@ -183,11 +187,9 @@ export default function Projects() {
   const [filter, setFilter] = useState('all')
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
-  // Theme-coloured glow used in the hover shadow; falls back to the cyan value
-  // from theme.ts before the CSS variable is available on the first paint.
-  const primary = useThemeColor('primary')
+  const primary = useThemeColor('accent') ?? ACCENT_FALLBACK
   const glow = (alpha: number) =>
-    hexToRgba(primary ?? '#00d4ff', alpha) || `rgba(0, 212, 255, ${alpha})`
+    hexToRgba(primary, alpha) || `rgba(0, 212, 255, ${alpha})`
 
   const categories = ['all', ...Array.from(new Set(projectsData.map(p => p.category)))]
 
@@ -198,7 +200,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="py-24 md:py-32 px-6 bg-dark scroll-mt-20"
+      className="py-24 md:py-32 px-6 bg-surface scroll-mt-20"
       aria-labelledby="projects-title"
     >
       <div className="max-w-7xl mx-auto">
@@ -211,7 +213,7 @@ export default function Projects() {
         >
           <motion.span
             variants={cardVariants}
-            className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 border border-primary/20"
+            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4 border border-accent/20"
           >
             Featured Work
           </motion.span>
@@ -220,13 +222,13 @@ export default function Projects() {
             variants={cardVariants}
             className="text-4xl md:text-5xl font-bold mb-4"
           >
-            <span className="text-white">Projects & </span>
+            <span className="text-content">Projects & </span>
             <br />
-            <span className="text-primary">Case Studies</span>
+            <span className="text-accent">Case Studies</span>
           </motion.h2>
           <motion.p
             variants={cardVariants}
-            className="text-lg text-gray-400 max-w-2xl mx-auto"
+            className="text-lg text-content-muted max-w-2xl mx-auto"
           >
             A selection of projects showcasing my expertise across data engineering, ML, and full-stack development.
           </motion.p>
@@ -245,10 +247,10 @@ export default function Projects() {
             <motion.button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-dark ${
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface ${
                 filter === cat
-                  ? 'bg-primary text-dark shadow-lg shadow-primary/25'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white border border-gray-700'
+                  ? 'bg-accent text-on-accent shadow-lg shadow-accent/25'
+                  : 'bg-field text-content-soft hover:bg-field-hover hover:text-content border border-border'
               }`}
               whileHover={{ scale: filter === cat ? 1 : 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -276,7 +278,7 @@ export default function Projects() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <p className="text-gray-500">No projects found in this category.</p>
+            <p className="text-content-faint">No projects found in this category.</p>
           </motion.div>
         )}
       </div>
@@ -294,7 +296,7 @@ export default function Projects() {
             aria-labelledby="modal-title"
           >
             <motion.div
-              className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-darker rounded-2xl border border-gray-700 p-6"
+              className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-card rounded-2xl border border-border p-6"
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -303,7 +305,7 @@ export default function Projects() {
             >
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 p-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 transition-colors"
+                className="absolute top-4 right-4 p-2 rounded-lg bg-field text-content-muted hover:text-content hover:bg-field-hover transition-colors"
                 aria-label="Close project details"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -314,9 +316,9 @@ export default function Projects() {
               <div className="space-y-6">
                 <div className="text-center">
                   <div className="text-8xl mb-4">{selectedProject.image}</div>
-                  <h2 id="modal-title" className="text-3xl font-bold text-white mb-2">{selectedProject.title}</h2>
+                  <h2 id="modal-title" className="text-3xl font-bold text-content mb-2">{selectedProject.title}</h2>
                   <motion.span
-                    className="px-3 py-1 text-sm font-medium text-primary bg-primary/10 rounded-full"
+                    className="px-3 py-1 text-sm font-medium text-accent bg-accent/10 rounded-full"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                   >
@@ -324,10 +326,10 @@ export default function Projects() {
                   </motion.span>
                 </div>
 
-                <p className="text-gray-300 leading-relaxed text-lg">{selectedProject.longDescription}</p>
+                <p className="text-content-soft leading-relaxed text-lg">{selectedProject.longDescription}</p>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-white mb-3">Key Highlights</h3>
+                  <h3 className="text-lg font-semibold text-content mb-3">Key Highlights</h3>
                   <ul className="space-y-2">
                     {selectedProject.highlights.map((highlight, i) => (
                       <motion.li
@@ -335,9 +337,9 @@ export default function Projects() {
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.05 }}
-                        className="flex items-center gap-3 text-gray-300"
+                        className="flex items-center gap-3 text-content-soft"
                       >
-                        <svg className="w-5 h-5 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <svg className="w-5 h-5 text-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                         {highlight}
@@ -347,13 +349,13 @@ export default function Projects() {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-white mb-3">Technologies</h3>
+                  <h3 className="text-lg font-semibold text-content mb-3">Technologies</h3>
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.technologies.map((tech) => (
                       <motion.span
                         key={tech}
-                        className="px-3 py-1 text-sm font-medium text-gray-200 bg-gray-800 rounded-full border border-gray-700"
-                        whileHover={{ borderColor: 'primary', color: 'primary' }}
+                        className="px-3 py-1 text-sm font-medium text-content-soft bg-field rounded-full border border-border"
+                        whileHover={{ borderColor: primary, color: primary }}
                       >
                         {tech}
                       </motion.span>
@@ -361,13 +363,13 @@ export default function Projects() {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-4 pt-4 border-t border-gray-700">
+                  <div className="flex flex-wrap gap-4 pt-4 border-t border-border">
                   {selectedProject.links.github && (
                     <motion.a
                       href={selectedProject.links.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-6 py-3 rounded-xl bg-primary text-dark font-semibold hover:bg-primary/90 transition-all flex items-center gap-2"
+              className="px-6 py-3 rounded-xl bg-accent text-on-accent font-semibold hover:bg-accent-hover transition-all flex items-center gap-2"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -382,7 +384,7 @@ export default function Projects() {
                       href={selectedProject.links.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-6 py-3 rounded-xl bg-transparent border-2 border-primary text-primary font-semibold hover:bg-primary/10 transition-all flex items-center gap-2"
+                      className="px-6 py-3 rounded-xl bg-transparent border-2 border-accent text-accent font-semibold hover:bg-accent/10 transition-all flex items-center gap-2"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >

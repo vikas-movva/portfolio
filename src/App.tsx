@@ -18,12 +18,12 @@ function App() {
         <Experience />
         <Contact />
       </main>
-      <footer className="py-8 px-6 bg-darker border-t border-gray-800">
+      <footer className="py-8 px-6 bg-surface-alt border-t border-border">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-gray-500 text-sm">
+          <p className="text-content-faint text-sm">
             Built with React, TypeScript, Tailwind CSS & Framer Motion
           </p>
-          <p className="text-gray-600 text-sm mt-1">
+          <p className="text-content-faint text-sm mt-1">
             © {new Date().getFullYear()} Vikas Movva. All rights reserved.
           </p>
         </div>

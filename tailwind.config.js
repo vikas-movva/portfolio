@@ -7,13 +7,30 @@ export default {
   theme: {
     extend: {
       colors: {
-        // CSS variables let us re-theme at runtime; the fallback hex keeps
-        // the build identical when the variables are not yet set.
-        // See src/theme/theme.ts and the :root blocks in src/index.css.
-        primary: 'var(--color-primary, #00d4ff)',
-        'primary-hover': 'var(--color-primary-hover, #00b8e0)',
-        dark: 'var(--color-dark, #0a0f1a)',
-        darker: 'var(--color-darker, #050810)',
+        // RGB-triplet bridge: each token is `rgb(var(--name-rgb) / <alpha-value>)`
+        // so Tailwind can apply opacity modifiers (bg-primary/10, surface/95, ...).
+        // Values come from the :root blocks in src/index.css.
+        primary: 'rgb(var(--color-primary-rgb, 0 212 255) / <alpha-value>)',
+        'primary-hover': 'rgb(var(--color-primary-hover-rgb, 0 184 224) / <alpha-value>)',
+        'primary-light': 'rgb(var(--color-primary-light-rgb, 8 145 178) / <alpha-value>)',
+        'primary-light-hover': 'rgb(var(--color-primary-light-hover-rgb, 14 116 144) / <alpha-value>)',
+        dark: 'rgb(var(--color-dark-rgb, 10 15 26) / <alpha-value>)',
+        darker: 'rgb(var(--color-darker-rgb, 5 8 16) / <alpha-value>)',
+        // Mode-aware semantic tokens (re-themed by [data-theme-mode]).
+        accent: 'rgb(var(--color-accent-rgb, 0 212 255) / <alpha-value>)',
+        'accent-hover': 'rgb(var(--color-accent-hover-rgb, 0 184 224) / <alpha-value>)',
+        'on-accent': 'rgb(var(--color-on-accent-rgb, 5 8 16) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface-rgb, 5 8 16) / <alpha-value>)',
+        'surface-alt': 'rgb(var(--color-surface-alt-rgb, 10 15 26) / <alpha-value>)',
+        card: 'rgb(var(--color-card-rgb, 19 28 46) / <alpha-value>)',
+        content: 'rgb(var(--color-content-rgb, 226 232 240) / <alpha-value>)',
+        'content-soft': 'rgb(var(--color-content-soft-rgb, 203 213 225) / <alpha-value>)',
+        'content-muted': 'rgb(var(--color-content-muted-rgb, 148 163 184) / <alpha-value>)',
+        'content-faint': 'rgb(var(--color-content-faint-rgb, 100 116 139) / <alpha-value>)',
+        border: 'rgb(var(--color-border-rgb, 51 65 85) / <alpha-value>)',
+        'border-strong': 'rgb(var(--color-border-strong-rgb, 71 85 105) / <alpha-value>)',
+        field: 'rgb(var(--color-field-rgb, 30 41 59) / <alpha-value>)',
+        'field-hover': 'rgb(var(--color-field-hover-rgb, 51 65 85) / <alpha-value>)',
       },
       animation: {
         'fade-in': 'fadeIn 0.8s ease-out',

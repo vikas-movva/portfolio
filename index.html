@@ -5,11 +5,13 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vikas Portfolio</title>
-    <!-- Set the active colour theme before first paint to avoid a flash.
+    <!-- Set the active colour theme AND mode before first paint to avoid a flash.
          Change the value below (or src/theme/theme.ts → activeTheme) to retheme.
-         Valid values: cyan | violet | emerald | amber | rose -->
+         Valid themes: cyan | violet | emerald | amber | rose
+         Valid modes:  dark | light -->
     <script>
       document.documentElement.dataset.theme = 'cyan'
+      document.documentElement.dataset.themeMode = 'dark'
     </script>
   </head>
   <body>

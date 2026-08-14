@@ -4,46 +4,106 @@
 
 /* ============================================================
    Theme tokens — driven by CSS custom properties.
-   To add a theme: copy a [data-theme="..."] block below and
-   change the colour values. See src/theme/theme.ts.
-   The default theme is set by the inline script in index.html
-   so there is no flash of the wrong colour on first paint.
+
+   Two axes:
+     1. Accent colour: set by [data-theme="<name>"] (cyan|violet|...)
+     2. Light/dark mode: set by [data-theme-mode="dark"|"light"]
+
+   Colours are stored as space-separated RGB triplets (e.g. "0 212 255")
+   so Tailwind can apply opacity modifiers (bg-primary/10, surface/95, ...)
+   via the `rgb(var(--x) / <alpha-value>)` bridge in tailwind.config.js.
+
+   The default theme/mode are applied by the inline script in index.html
+   BEFORE first paint to avoid a flash of the wrong colours.
    ============================================================ */
 
 :root,
 :root[data-theme="cyan"] {
-  --color-primary: #00d4ff;
-  --color-primary-hover: #00b8e0;
-  --color-dark: #0a0f1a;
-  --color-darker: #050810;
+  --color-primary-rgb: 0 212 255;
+  --color-primary-hover-rgb: 0 184 224;
+  --color-dark-rgb: 10 15 26;
+  --color-darker-rgb: 5 8 16;
+  --color-primary-light-rgb: 8 145 178;
+  --color-primary-light-hover-rgb: 14 116 144;
 }
 
 :root[data-theme="violet"] {
-  --color-primary: #a78bfa;
-  --color-primary-hover: #8b5cf6;
-  --color-dark: #0f0a1a;
-  --color-darker: #0a0510;
+  --color-primary-rgb: 167 139 250;
+  --color-primary-hover-rgb: 139 92 246;
+  --color-dark-rgb: 15 10 26;
+  --color-darker-rgb: 10 5 16;
+  --color-primary-light-rgb: 124 58 237;
+  --color-primary-light-hover-rgb: 109 40 217;
 }
 
 :root[data-theme="emerald"] {
-  --color-primary: #34d399;
-  --color-primary-hover: #10b981;
-  --color-dark: #0a1a14;
-  --color-darker: #05100b;
+  --color-primary-rgb: 52 211 153;
+  --color-primary-hover-rgb: 16 185 129;
+  --color-dark-rgb: 10 26 20;
+  --color-darker-rgb: 5 16 11;
+  --color-primary-light-rgb: 5 150 105;
+  --color-primary-light-hover-rgb: 4 120 87;
 }
 
 :root[data-theme="amber"] {
-  --color-primary: #fbbf24;
-  --color-primary-hover: #f59e0b;
-  --color-dark: #1a140a;
-  --color-darker: #100c05;
+  --color-primary-rgb: 251 191 36;
+  --color-primary-hover-rgb: 245 158 11;
+  --color-dark-rgb: 26 20 10;
+  --color-darker-rgb: 16 12 5;
+  --color-primary-light-rgb: 180 83 9;
+  --color-primary-light-hover-rgb: 146 64 14;
 }
 
 :root[data-theme="rose"] {
-  --color-primary: #fb7185;
-  --color-primary-hover: #f43f5e;
-  --color-dark: #1a0a0e;
-  --color-darker: #100507;
+  --color-primary-rgb: 251 113 133;
+  --color-primary-hover-rgb: 244 63 94;
+  --color-dark-rgb: 26 10 14;
+  --color-darker-rgb: 16 5 7;
+  --color-primary-light-rgb: 225 29 72;
+  --color-primary-light-hover-rgb: 190 18 60;
+}
+
+/* ============================================================
+   Light / dark mode — semantic tokens consumed by Tailwind
+   (see tailwind.config.js). Components reference these so a
+   single attribute flip re-themes the whole site.
+   ============================================================ */
+
+:root,
+:root[data-theme-mode="dark"] {
+  --color-surface-rgb: var(--color-dark-rgb);
+  --color-surface-alt-rgb: var(--color-darker-rgb);
+  --color-card-rgb: 19 28 46;          /* panels / chips */
+  --color-content-rgb: 226 232 240;     /* primary text */
+  --color-content-soft-rgb: 203 213 225;/* secondary text */
+  --color-content-muted-rgb: 148 163 184;/* tertiary text */
+  --color-content-faint-rgb: 100 116 139;/* captions */
+  --color-border-rgb: 51 65 85;         /* default borders */
+  --color-border-strong-rgb: 71 85 105;
+  --color-field-rgb: 30 41 59;          /* inputs / chips */
+  --color-field-hover-rgb: 51 65 85;
+  --color-accent-rgb: var(--color-primary-rgb);
+  --color-accent-hover-rgb: var(--color-primary-hover-rgb);
+  --color-on-accent-rgb: var(--color-darker-rgb); /* text on filled accent */
+}
+
+:root[data-theme-mode="light"] {
+  --color-surface-rgb: 255 255 255;     /* white sections */
+  --color-surface-alt-rgb: 226 232 240; /* slate-200 page */
+  --color-card-rgb: 241 245 249;        /* slate-100 panels / chips */
+  --color-content-rgb: 15 23 42;        /* slate-900 */
+  --color-content-soft-rgb: 51 65 85;   /* slate-700 */
+  --color-content-muted-rgb: 71 85 105; /* slate-600 */
+  --color-content-faint-rgb: 100 116 139;/* slate-500 */
+  --color-border-rgb: 226 232 240;      /* slate-200 */
+  --color-border-strong-rgb: 203 213 225;/* slate-300 */
+  --color-field-rgb: 255 255 255;       /* inputs (white on slate-100) */
+  --color-field-hover-rgb: 241 245 249;
+  /* The bright brand accent is too faint on white, so shift to the
+     darker, contrast-safe shade in light mode. */
+  --color-accent-rgb: var(--color-primary-light-rgb);
+  --color-accent-hover-rgb: var(--color-primary-light-hover-rgb);
+  --color-on-accent-rgb: 255 255 255;
 }
 
 * {
@@ -58,14 +118,14 @@ html {
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  background-color: var(--color-darker, #050810);
-  color: #e2e8f0;
+  background-color: rgb(var(--color-surface-alt-rgb, 5 8 16));
+  color: rgb(var(--color-content-rgb, 226 232 240));
   line-height: 1.6;
 }
 
 ::selection {
-  background-color: var(--color-primary, #00d4ff);
-  color: var(--color-darker, #0a0f1a);
+  background-color: rgb(var(--color-accent-rgb, 0 212 255));
+  color: rgb(var(--color-on-accent-rgb, 5 8 16));
 }
 
 ::-webkit-scrollbar {
@@ -73,14 +133,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-darker, #050810);
+  background: rgb(var(--color-surface-alt-rgb, 5 8 16));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary, #00d4ff);
+  background: rgb(var(--color-accent-rgb, 0 212 255));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary-hover, #00b8e0);
+  background: rgb(var(--color-accent-hover-rgb, 0 184 224));
 }

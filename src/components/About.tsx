@@ -31,7 +31,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="py-24 md:py-32 px-6 bg-darker scroll-mt-20"
+      className="py-24 md:py-32 px-6 bg-surface-alt scroll-mt-20"
       aria-labelledby="about-title"
     >
       <div className="max-w-7xl mx-auto">
@@ -44,7 +44,7 @@ export default function About() {
         >
           <motion.span
             variants={itemVariants}
-            className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 border border-primary/20"
+            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4 border border-accent/20"
           >
             About Me
           </motion.span>
@@ -53,13 +53,13 @@ export default function About() {
             variants={itemVariants}
             className="text-4xl md:text-5xl font-bold mb-4"
           >
-            <span className="text-white">Get to Know </span>
+            <span className="text-content">Get to Know </span>
             <br />
-            <span className="text-primary">Me Better</span>
+            <span className="text-accent">Me Better</span>
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className="text-lg text-gray-400 max-w-2xl mx-auto"
+            className="text-lg text-content-muted max-w-2xl mx-auto"
           >
             A snapshot of my journey, education, and what drives me as an engineer.
           </motion.p>
@@ -76,11 +76,11 @@ export default function About() {
               variants={itemVariants}
               className="space-y-6"
             >
-              <h3 className="text-2xl font-bold text-white flex items-center gap-3">
-                <span className="w-1 h-8 bg-primary rounded-full"></span>
+              <h3 className="text-2xl font-bold text-content flex items-center gap-3">
+                <span className="w-1 h-8 bg-accent rounded-full"></span>
                 Professional Summary
               </h3>
-              <div className="space-y-4 text-gray-300 leading-relaxed">
+              <div className="space-y-4 text-content-soft leading-relaxed">
                 {aboutData.summary.map((paragraph, index) => (
                   <motion.p
                     key={index}
@@ -109,20 +109,20 @@ export default function About() {
                 <motion.div
                   key={highlight.label}
                   variants={cardVariants}
-                  className="p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all text-center group"
+                  className="p-6 rounded-2xl bg-card border border-border hover:border-accent/30 transition-all text-center group"
                   whileHover={{ y: -4, scale: 1.02 }}
                 >
                   <motion.div
-                    className="text-4xl md:text-5xl font-bold text-primary mb-2"
+                    className="text-4xl md:text-5xl font-bold text-accent mb-2"
                     whileInView={{ scale: [0, 1.2, 1] }}
                     viewport={{ once: true }}
                     transition={{ type: 'spring', stiffness: 200, damping: 15 }}
                   >
                     {highlight.value}
                   </motion.div>
-                  <p className="text-gray-400 font-medium">{highlight.label}</p>
+                  <p className="text-content-muted font-medium">{highlight.label}</p>
                   <motion.div
-                    className="w-0 h-0.5 bg-primary mx-auto mt-4 group-hover:w-full transition-all duration-300"
+                    className="w-0 h-0.5 bg-accent mx-auto mt-4 group-hover:w-full transition-all duration-300"
                   />
                 </motion.div>
               ))}
@@ -130,17 +130,17 @@ export default function About() {
 
             <motion.div
               variants={itemVariants}
-              className="mt-10 p-6 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20"
+              className="mt-10 p-6 rounded-2xl bg-gradient-to-br from-accent/10 to-accent/5 border border-accent/20"
             >
-              <h4 className="text-lg font-semibold text-primary mb-3 flex items-center gap-2">
+              <h4 className="text-lg font-semibold text-accent mb-3 flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
                 {aboutData.lookingFor.title}
               </h4>
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-content-soft leading-relaxed">
                 {aboutData.lookingFor.body}
-                <span className="text-primary font-medium">{aboutData.lookingFor.emphasize}</span>
+                <span className="text-accent font-medium">{aboutData.lookingFor.emphasize}</span>
                 {' '}at companies that value clean code, thoughtful architecture, and continuous learning.
               </p>
             </motion.div>

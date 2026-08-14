@@ -50,7 +50,7 @@ export default function Skills() {
   return (
       <section
         id="skills"
-        className="py-24 md:py-32 px-6 bg-darker scroll-mt-20"
+        className="py-24 md:py-32 px-6 bg-surface-alt scroll-mt-20"
         aria-labelledby="skills-title"
       >
       <div className="max-w-7xl mx-auto">
@@ -63,7 +63,7 @@ export default function Skills() {
         >
           <motion.span
             variants={categoryVariants}
-            className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 border border-primary/20"
+            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4 border border-accent/20"
           >
             Technical Skills
           </motion.span>
@@ -72,13 +72,13 @@ export default function Skills() {
             variants={categoryVariants}
             className="text-4xl md:text-5xl font-bold mb-4"
           >
-            <span className="text-white">Technologies & </span>
+            <span className="text-content">Technologies & </span>
             <br />
-            <span className="text-primary">Tools I Use</span>
+            <span className="text-accent">Tools I Use</span>
           </motion.h2>
           <motion.p
             variants={categoryVariants}
-            className="text-lg text-gray-400 max-w-2xl mx-auto"
+            className="text-lg text-content-muted max-w-2xl mx-auto"
           >
             A curated stack built through real-world projects and continuous learning.
           </motion.p>
@@ -93,18 +93,18 @@ export default function Skills() {
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: catIndex * 0.1 }}
-              className="p-6 rounded-2xl bg-darker border border-gray-700/50 hover:border-primary/30 transition-all"
+              className="p-6 rounded-2xl bg-card border border-border hover:border-accent/30 transition-all"
             >
               <div className="flex items-center gap-3 mb-6">
                 <motion.div
-                  className="p-3 rounded-xl bg-primary/10 text-primary"
+                  className="p-3 rounded-xl bg-accent/10 text-accent"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
                   {skillIcons[cat.icon]}
                 </motion.div>
                 <motion.h3
-                  className="text-xl font-bold text-white"
+                  className="text-xl font-bold text-content"
                   whileInView={{ x: [ -20, 0 ] }}
                   viewport={{ once: true }}
                 >
@@ -124,11 +124,11 @@ export default function Skills() {
                     className="group"
                   >
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-200 font-medium">{skill.name}</span>
+                      <span className="text-content-soft font-medium">{skill.name}</span>
                     </div>
-                    <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
+                    <div className="h-2 bg-field rounded-full overflow-hidden">
                       <motion.div
-                        className="h-full rounded-full bg-gradient-to-r from-primary to-primary/70"
+                        className="h-full rounded-full bg-gradient-to-r from-accent to-accent/70"
                         initial={{ width: 0 }}
                         whileInView={{ width: `${skill.level}%` }}
                         viewport={{ once: true }}
@@ -149,14 +149,14 @@ export default function Skills() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-gray-500 mb-4">
+          <p className="text-content-faint mb-4">
             Always expanding my toolkit — currently exploring:
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             {exploringSkills.map((tech) => (
               <motion.span
                 key={tech}
-                className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20 hover:bg-primary/20 transition-all cursor-default"
+                className="px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium border border-accent/20 hover:bg-accent/20 transition-all cursor-default"
                 whileHover={{ scale: 1.05, y: -2 }}
               >
                 {tech}

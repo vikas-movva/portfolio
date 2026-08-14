@@ -7,7 +7,7 @@ import vikasImg from "../assets/Vikas.jpg";
 const statIcons = {
   clock: (
     <svg
-      className="w-4 h-4 text-primary"
+      className="w-4 h-4 text-accent"
       fill="currentColor"
       viewBox="0 0 20 20"
       aria-hidden="true"
@@ -21,7 +21,7 @@ const statIcons = {
   ),
   projects: (
     <svg
-      className="w-4 h-4 text-primary"
+      className="w-4 h-4 text-accent"
       fill="currentColor"
       viewBox="0 0 20 20"
       aria-hidden="true"
@@ -35,7 +35,7 @@ const statIcons = {
   ),
   stack: (
     <svg
-      className="w-4 h-4 text-primary"
+      className="w-4 h-4 text-accent"
       fill="currentColor"
       viewBox="0 0 20 20"
       aria-hidden="true"
@@ -81,9 +81,9 @@ const orbitRings = [
 /** A single orbiting tech badge (circular chip with an icon). */
 function OrbitBadge({ path }: { path: string }) {
   return (
-    <div className="w-12 h-12 rounded-full bg-dark/70 border border-primary/40 flex items-center justify-center shadow-lg shadow-primary/10 backdrop-blur-sm">
+    <div className="w-12 h-12 rounded-full bg-surface-alt/70 border border-accent/40 flex items-center justify-center shadow-lg shadow-accent/10 backdrop-blur-sm">
       <svg
-        className="w-6 h-6 text-primary"
+        className="w-6 h-6 text-accent"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -155,8 +155,8 @@ export default function Hero() {
   };
 
   // Theme-aware colour for the animated SVG strokes and the accent borders.
-  const primary = useThemeColor("primary");
-  const primaryHex = primary ?? "#00d4ff";
+  const primary = useThemeColor('accent')
+  const primaryHex = primary ?? 'rgb(0 212 255)'
   const borderColorFrames = [
     hexToRgba(primaryHex, 0.3) || "rgba(0, 212, 255, 0.3)",
     hexToRgba(primaryHex, 0.6) || "rgba(0, 212, 255, 0.6)",
@@ -192,7 +192,7 @@ export default function Hero() {
     >
       <div className="absolute inset-0 z-0" aria-hidden="true">
         <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary/10 blur-3xl"
+          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-accent/10 blur-3xl"
           animate={{
             x: [0, 50, 0],
             y: [0, -30, 0],
@@ -201,7 +201,7 @@ export default function Hero() {
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-primary/5 blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-accent/5 blur-3xl"
           animate={{
             x: [0, -40, 0],
             y: [0, 40, 0],
@@ -225,7 +225,7 @@ export default function Hero() {
         >
           <motion.span
             variants={variants.item}
-            className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 border border-primary/20"
+            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6 border border-accent/20"
           >
             {heroData.badge}
           </motion.span>
@@ -235,14 +235,14 @@ export default function Hero() {
             variants={variants.item}
             className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
           >
-            <span className="text-white">{heroData.headlinePrefix} </span>
+            <span className="text-content">{heroData.headlinePrefix} </span>
             <br />
-            <span className="text-primary">{heroData.name}</span>
+            <span className="text-accent">{heroData.name}</span>
           </motion.h1>
 
           <motion.p
             variants={variants.item}
-            className="text-lg md:text-xl text-gray-300 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+            className="text-lg md:text-xl text-content-muted mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
           >
             {heroData.intro}
           </motion.p>
@@ -255,7 +255,7 @@ export default function Hero() {
               onClick={() => scrollToSection("#projects")}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 rounded-xl bg-primary text-dark font-semibold text-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-dark"
+              className="px-8 py-4 rounded-xl bg-accent text-on-accent font-semibold text-lg hover:bg-accent-hover transition-all shadow-lg shadow-accent/25 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface"
             >
               {heroData.primaryCta}
             </motion.button>
@@ -263,7 +263,7 @@ export default function Hero() {
               onClick={() => scrollToSection("#contact")}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 rounded-xl bg-transparent border-2 border-primary/50 text-primary font-semibold text-lg hover:bg-primary/10 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-dark"
+              className="px-8 py-4 rounded-xl bg-transparent border-2 border-accent/50 text-accent font-semibold text-lg hover:bg-accent/10 transition-all focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface"
             >
               {heroData.secondaryCta}
             </motion.button>
@@ -277,7 +277,7 @@ export default function Hero() {
               stat.highlight ? (
                 <span
                   key={stat.text}
-                  className="flex items-center gap-2.5 px-6 py-3 bg-primary/15 text-primary font-bold text-base md:text-lg border-primary/40 shadow-lg shadow-primary/10"
+                  className="flex items-center gap-2.5 px-6 py-3 bg-accent/15 text-accent font-bold text-base md:text-lg border-accent/40 shadow-lg shadow-accent/10"
                 >
                   {statIcons[stat.icon]}
                   {stat.text}
@@ -298,7 +298,7 @@ export default function Hero() {
             {heroData.topTech.map((tech) => (
               <span
                 key={tech}
-                className="px-4 py-2 rounded-lg bg-dark/60 border border-primary/30 text-primary text-base md:text-lg font-semibold hover:bg-primary/10 transition-colors"
+                className="px-4 py-2 rounded-lg bg-surface-alt/60 border border-accent/30 text-accent text-base md:text-lg font-semibold hover:bg-accent/10 transition-colors"
               >
                 {tech}
               </span>
@@ -384,7 +384,7 @@ export default function Hero() {
                   ))}
 
                   <motion.div
-                    className="absolute inset-0 rounded-full border-4 border-primary/30"
+                    className="absolute inset-0 rounded-full border-4 border-accent/30"
                     animate={{
                       scale: [1, 1.05, 1],
                       borderColor: borderColorFrames,
@@ -396,7 +396,7 @@ export default function Hero() {
                     }}
                   />
                   <motion.div
-                    className="absolute inset-4 rounded-full border-2 border-primary/20"
+                    className="absolute inset-4 rounded-full border-2 border-accent/20"
                     animate={{ rotate: [0, 360] }}
                     transition={{
                       duration: 20,
@@ -406,7 +406,7 @@ export default function Hero() {
                   />
                   <div className="absolute inset-6 flex items-center justify-center">
                     <motion.div
-                      className="w-full h-full rounded-full overflow-hidden border-2 border-primary/40 shadow-xl shadow-primary/20"
+                      className="w-full h-full rounded-full overflow-hidden border-2 border-accent/40 shadow-xl shadow-accent/20"
                       initial={{ scale: 0.85, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{
@@ -436,12 +436,12 @@ export default function Hero() {
           </div>
 
           <motion.div
-            className="absolute -bottom-8 -right-8 w-32 h-32 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center"
+            className="absolute -bottom-8 -right-8 w-32 h-32 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center"
             animate={{ rotate: [0, 2, -2, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           >
             <svg
-              className="w-12 h-12 text-primary"
+              className="w-12 h-12 text-accent"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -457,7 +457,7 @@ export default function Hero() {
           </motion.div>
 
           <motion.div
-            className="absolute -top-8 -left-8 w-24 h-24 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center"
+            className="absolute -top-8 -left-8 w-24 h-24 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center"
             animate={{ scale: [1, 1.1, 1] }}
             transition={{
               duration: 3,
@@ -467,7 +467,7 @@ export default function Hero() {
             }}
           >
             <svg
-              className="w-10 h-10 text-primary"
+              className="w-10 h-10 text-accent"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -497,7 +497,7 @@ export default function Hero() {
         aria-hidden="true"
       >
         <svg
-          className="w-6 h-6 text-gray-500"
+          className="w-6 h-6 text-content-faint"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

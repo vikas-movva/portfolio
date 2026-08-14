@@ -14,14 +14,14 @@ const itemVariants = {
 
 export default function Experience() {
   // Theme-coloured glow for the timeline dot and card hover shadow.
-  const primary = useThemeColor("primary");
+  const primary = useThemeColor("accent");
   const glow = (alpha: number) =>
-    hexToRgba(primary ?? "#00d4ff", alpha) || `rgba(0, 212, 255, ${alpha})`;
+    hexToRgba(primary ?? 'rgb(0 212 255)', alpha) || `rgba(0, 212, 255, ${alpha})`
 
   return (
     <section
       id="experience"
-      className="py-24 md:py-32 px-6 bg-darker scroll-mt-20"
+      className="py-24 md:py-32 px-6 bg-surface-alt scroll-mt-20"
       aria-labelledby="experience-title"
     >
       <div className="max-w-7xl mx-auto">
@@ -34,7 +34,7 @@ export default function Experience() {
         >
           <motion.span
             variants={itemVariants}
-            className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 border border-primary/20"
+            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4 border border-accent/20"
           >
             Experience & Education
           </motion.span>
@@ -43,13 +43,13 @@ export default function Experience() {
             variants={itemVariants}
             className="text-4xl md:text-5xl font-bold mb-4"
           >
-            <span className="text-white">My Professional </span>
+            <span className="text-content">My Professional </span>
             <br />
-            <span className="text-primary">Journey & Education</span>
+            <span className="text-accent">Journey & Education</span>
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className="text-lg text-gray-400 max-w-2xl mx-auto"
+            className="text-lg text-content-muted max-w-2xl mx-auto"
           >
             Building scalable systems and the academic foundation behind my
             engineering and data work.
@@ -64,13 +64,8 @@ export default function Experience() {
             transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
             style={{
               transformOrigin: "top",
-              // Gradient built from the theme CSS variable directly. Using a
-              // raw `bg-gradient-to-b from-primary/50` utility fails because
-              // Tailwind can't apply the /50 opacity modifier to a color that
-              // resolves to a CSS `var()`, so the stop was never generated and
-              // the line rendered invisible.
-              background:
-                "linear-gradient(to bottom, var(--color-primary, #00d4ff), transparent)",
+              // Follows the selected accent via the mode-aware token, fading to transparent.
+              background: `linear-gradient(to bottom, ${glow(0.6)}, transparent)`,
             }}
             aria-hidden="true"
           />
@@ -87,7 +82,7 @@ export default function Experience() {
               >
 
                 <motion.div
-                  className="absolute z-10 left-[11px] w-5 h-5 rounded-full bg-primary border-4 border-transparent flex-shrink-0"
+                  className="absolute z-10 left-[11px] w-5 h-5 rounded-full bg-accent border-4 border-transparent flex-shrink-0"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
@@ -104,7 +99,7 @@ export default function Experience() {
                   aria-hidden="true"
                 >
                   <motion.div
-                    className="w-full h-full rounded-full bg-primary"
+                    className="w-full h-full rounded-full bg-accent"
                     animate={{ scale: [1, 1.3, 1] }}
                     transition={{
                       duration: 2,
@@ -115,7 +110,7 @@ export default function Experience() {
                 </motion.div>
 
                 <motion.div
-                  className="w-full p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all"
+                  className="w-full p-6 rounded-2xl bg-card border border-border hover:border-accent/30 transition-all"
                   whileHover={{
                     y: -4,
                     boxShadow: `0 20px 40px -20px ${glow(0.15)}`,
@@ -124,14 +119,14 @@ export default function Experience() {
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                     <div className="flex flex-wrap items-center gap-3">
                       <motion.span
-                        className="px-3 py-1 text-xs font-semibold text-primary bg-primary/10 rounded-full"
+                        className="px-3 py-1 text-xs font-semibold text-accent bg-accent/10 rounded-full"
                         whileInView={{ scale: [0, 1] }}
                         viewport={{ once: true }}
                       >
                         {exp.type}
                       </motion.span>
                       <motion.span
-                        className="px-3 py-1 text-xs text-gray-400 bg-gray-800 rounded-full"
+                        className="px-3 py-1 text-xs text-content-muted bg-field rounded-full"
                         whileInView={{ scale: [0, 1] }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.05 }}
@@ -140,7 +135,7 @@ export default function Experience() {
                       </motion.span>
                     </div>
                     <motion.span
-                      className="hidden md:block text-sm font-semibold text-primary whitespace-nowrap"
+                      className="hidden md:block text-sm font-semibold text-accent whitespace-nowrap"
                       whileInView={{ opacity: [0, 1] }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.1 }}
@@ -154,21 +149,21 @@ export default function Experience() {
                     whileInView={{ opacity: [0, 1], y: [20, 0] }}
                     viewport={{ once: true }}
                   >
-                    <h3 className="text-xl font-bold text-white">{exp.role}</h3>
-                    <span className="text-primary font-medium">
+                    <h3 className="text-xl font-bold text-content">{exp.role}</h3>
+                    <span className="text-accent font-medium">
                       {exp.company}
                     </span>
                   </motion.div>
 
                   <motion.p
-                    className="text-gray-300 mb-6 leading-relaxed"
+                    className="text-content-soft mb-6 leading-relaxed"
                     whileInView={{ opacity: [0, 1], y: [10, 0] }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 }}
                   >
                     {exp.description}
                     {exp.descriptionHighlight && (
-                      <strong className="font-bold text-primary">
+                      <strong className="font-bold text-accent">
                         {exp.descriptionHighlight}
                       </strong>
                     )}
@@ -187,10 +182,10 @@ export default function Experience() {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: achIndex * 0.05 }}
-                        className="flex items-start gap-3 text-gray-300"
+                        className="flex items-start gap-3 text-content-soft"
                       >
                         <motion.svg
-                          className="w-5 h-5 text-primary flex-shrink-0 mt-0.5"
+                          className="w-5 h-5 text-accent flex-shrink-0 mt-0.5"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                           aria-hidden="true"
@@ -217,7 +212,7 @@ export default function Experience() {
                     {exp.technologies.map((tech) => (
                       <motion.span
                         key={tech}
-                        className="px-3 py-1 text-xs font-medium text-gray-200 bg-gray-800 rounded-full border border-gray-700 hover:border-primary/50 hover:text-primary transition-all"
+                        className="px-3 py-1 text-xs font-medium text-content-soft bg-field rounded-full border border-border hover:border-accent/50 hover:text-accent transition-all"
                         whileHover={{ scale: 1.05 }}
                       >
                         {tech}
@@ -230,7 +225,7 @@ export default function Experience() {
                       href={exp.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-dark font-medium text-sm hover:bg-primary/90 transition-all"
+                      className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent text-on-accent font-medium text-sm hover:bg-accent-hover transition-all"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -269,27 +264,27 @@ export default function Experience() {
             variants={itemVariants}
             className="text-3xl md:text-4xl font-bold mb-10 text-center"
           >
-            <span className="text-white">Academic </span>
-            <span className="text-primary">Background</span>
+            <span className="text-content">Academic </span>
+            <span className="text-accent">Background</span>
           </motion.h3>
           <div className="space-y-6">
             {educationData.map((edu) => (
               <motion.div
                 key={edu.degree}
                 variants={itemVariants}
-                className="p-6 rounded-2xl bg-dark/50 border border-gray-700/50 hover:border-primary/30 transition-all text-left"
+                className="p-6 rounded-2xl bg-card border border-border hover:border-accent/30 transition-all text-left"
                 whileHover={{ y: -4 }}
               >
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                  <h4 className="text-xl font-semibold text-white">
+                  <h4 className="text-xl font-semibold text-content">
                     {edu.degree}
                   </h4>
-                  <span className="px-3 py-1 text-sm bg-primary/10 text-primary rounded-full font-medium">
+                  <span className="px-3 py-1 text-sm bg-accent/10 text-accent rounded-full font-medium">
                     {edu.year}
                   </span>
                 </div>
-                <p className="text-primary font-medium">{edu.institution}</p>
-                <p className="text-gray-400 text-sm mt-2">{edu.details}</p>
+                <p className="text-accent font-medium">{edu.institution}</p>
+                <p className="text-content-muted text-sm mt-2">{edu.details}</p>
               </motion.div>
             ))}
           </div>
