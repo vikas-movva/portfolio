@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { heroData } from '../data'
 import { useThemeColor } from '../theme/useThemeColor'
@@ -25,6 +25,30 @@ export default function Hero() {
     )
     return () => clearInterval(id)
   }, [roles.length])
+
+  // Measure the CURRENTLY-shown role's width and apply it to the box. The
+  // hero line is centered, so as the width changes the "I build" prefix
+  // slides horizontally to keep the whole phrase centered. The width
+  // transition (below) turns that slide into a smooth glide instead of a
+  // sudden jump. Re-measure once Space Grotesk finishes loading (it changes
+  // widths) and whenever the role changes.
+  const roleMeasureRef = useRef<HTMLSpanElement>(null)
+  const [roleWidth, setRoleWidth] = useState<number | undefined>(undefined)
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = roleMeasureRef.current
+      if (!el) return
+      // The sizer renders every role; pick the one matching the current index.
+      const current = el.children[roleIndex] as HTMLElement | undefined
+      const w = current?.getBoundingClientRect().width ?? 0
+      if (w > 0) setRoleWidth(w)
+    }
+    measure()
+    // Re-measure once webfonts (Space Grotesk) finish loading - they change widths.
+    if (typeof document !== 'undefined' && document.fonts?.ready) {
+      document.fonts.ready.then(measure)
+    }
+  }, [roles, roleIndex])
 
   return (
     <section
@@ -68,7 +92,10 @@ export default function Hero() {
 
           <div className="mt-4 text-xl sm:text-2xl md:text-3xl font-semibold text-content-soft leading-tight">
             <span className="text-content-faint">I build </span>
-            <span className="relative inline-flex h-[1.2em] overflow-hidden align-bottom">
+            <span
+              className="relative inline-flex h-[1.2em] overflow-hidden align-bottom transition-[width] duration-300 ease-out"
+              style={{ width: roleWidth ? `${roleWidth}px` : undefined, minWidth: '1ch' }}
+            >
               <AnimatePresence mode="wait">
                 <motion.span
                   key={roleIndex}
@@ -81,6 +108,18 @@ export default function Hero() {
                   {roles[roleIndex]}
                 </motion.span>
               </AnimatePresence>
+            </span>
+            {/* Off-screen sizer: holds every role so we can measure the widest one. */}
+            <span
+              ref={roleMeasureRef}
+              aria-hidden
+              className="invisible absolute pointer-events-none whitespace-nowrap"
+            >
+              {roles.map((r) => (
+                <span key={r} className="font-roles">
+                  {r}
+                </span>
+              ))}
             </span>
           </div>
 
