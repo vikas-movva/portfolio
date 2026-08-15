@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { aboutData } from '../data'
 import SectionHeading from './SectionHeading'
+import RotatingRings from './RotatingRings'
 
 export default function About() {
   const containerVariants = {
@@ -36,6 +37,7 @@ export default function About() {
       aria-labelledby="about-title"
     >
       <div className="section-aurora" aria-hidden="true" />
+      <RotatingRings position="top-left" size={320} />
       <div className="relative z-10 max-w-7xl mx-auto">
         <SectionHeading
           id="about-title"

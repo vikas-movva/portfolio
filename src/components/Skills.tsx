@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { skillsCategories, exploringSkills } from '../data'
 import type { SkillIconName } from '../data'
 import SectionHeading from './SectionHeading'
+import RotatingRings from './RotatingRings'
 
 /** Icon map keyed by the string names used in src/data/skills.ts. */
 const skillIcons: Record<SkillIconName, React.ReactNode> = {
@@ -50,6 +51,7 @@ export default function Skills() {
         aria-labelledby="skills-title"
       >
       <div className="section-aurora" aria-hidden="true" />
+      <RotatingRings position="bottom-right" size={300} />
       <div className="relative z-10 max-w-7xl mx-auto">
         <SectionHeading
           id="skills-title"

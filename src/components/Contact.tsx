@@ -8,6 +8,7 @@ import {
 } from '../data'
 import type { ContactIconName } from '../data'
 import SectionHeading from './SectionHeading'
+import RotatingRings from './RotatingRings'
 
 /** Icon map keyed by the string names used in src/data/contact.ts. */
 const socialIcons: Record<ContactIconName, React.ReactNode> = {
@@ -89,6 +90,7 @@ export default function Contact() {
       aria-labelledby="contact-title"
     >
       <div className="section-aurora" aria-hidden="true" />
+      <RotatingRings position="bottom-left" size={280} />
       <div className="relative z-10 max-w-7xl mx-auto">
         <SectionHeading
           id="contact-title"

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { experienceData, educationData } from "../data";
 import { useThemeColor, hexToRgba } from "../theme/useThemeColor";
 import SectionHeading from './SectionHeading'
+import RotatingRings from './RotatingRings'
 import { stagger, inViewOnce } from '../theme/anim'
 
 const itemVariants = {
@@ -23,6 +24,8 @@ export default function Experience() {
     >
       <div className="section-aurora" aria-hidden="true" />
       <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Rings centered behind the section title. */}
+        <RotatingRings position="center-top" size={300} />
         <SectionHeading
           id="experience-title"
           eyebrow="Experience & Education"

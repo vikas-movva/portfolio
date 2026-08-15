@@ -241,7 +241,8 @@ body {
 /* Animated aurora — one soft accent glow that slowly wanders around the whole
    Projects section (see the .section-aurora layer in Projects.tsx). It sits
    behind the cards (clipped by the section's overflow-hidden) and re-colours
-   with the theme accent. The global reduced-motion rule freezes it. */
+   with the theme accent. Kept faint outside Hero so it reads as ambient drift.
+   The global reduced-motion rule freezes it. */
 @keyframes sectionAurora {
   0%   { transform: translate(-10%, -8%) scale(1); }
   33%  { transform: translate(12%, 6%) scale(1.1); }
@@ -255,9 +256,9 @@ body {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(40% 40% at 30% 30%, rgb(var(--color-accent-rgb, 0 212 255) / 0.12), transparent 70%),
-    radial-gradient(36% 36% at 70% 60%, rgb(var(--color-accent-hover-rgb, 0 184 224) / 0.10), transparent 70%);
-  filter: blur(40px);
+    radial-gradient(40% 40% at 30% 30%, rgb(var(--color-accent-rgb, 0 212 255) / 0.07), transparent 70%),
+    radial-gradient(36% 36% at 70% 60%, rgb(var(--color-accent-hover-rgb, 0 184 224) / 0.06), transparent 70%);
+  filter: blur(48px);
   animation: sectionAurora 22s ease-in-out infinite;
 }
 
