@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useLayoutEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { heroData } from '../data'
 import { useThemeColor } from '../theme/useThemeColor'
@@ -16,29 +16,6 @@ export default function Hero() {
 
   // Motion-forward role rotator: "I build <role>" cycles every few seconds.
   const roles = heroData.roles
-
-  // Measure the widest role so the rotating box keeps a CONSTANT width.
-  // On mobile the hero line is center-aligned, so a variable-width box makes
-  // "I build" slide left/right as each role's length changes. Pinning the width
-  // stops that jump while keeping the vertical scroll animation.
-  const roleMeasureRef = useRef<HTMLSpanElement>(null)
-  const [roleWidth, setRoleWidth] = useState<number | undefined>(undefined)
-  useLayoutEffect(() => {
-    const measure = () => {
-      const el = roleMeasureRef.current
-      if (!el) return
-      let max = 0
-      el.querySelectorAll<HTMLElement>('span').forEach((s) => {
-        max = Math.max(max, s.getBoundingClientRect().width)
-      })
-      if (max > 0) setRoleWidth(max)
-    }
-    measure()
-    // Re-measure once webfonts (Space Grotesk) finish loading - they change widths.
-    if (typeof document !== 'undefined' && document.fonts?.ready) {
-      document.fonts.ready.then(measure)
-    }
-  }, [roles])
 
   const [roleIndex, setRoleIndex] = useState(0)
   useEffect(() => {
@@ -91,34 +68,19 @@ export default function Hero() {
 
           <div className="mt-4 text-xl sm:text-2xl md:text-3xl font-semibold text-content-soft leading-tight">
             <span className="text-content-faint">I build </span>
-            <span
-              className="relative inline-block h-[1.2em] overflow-hidden align-bottom text-left"
-              style={{ width: roleWidth ? `${roleWidth}px` : undefined, minWidth: '1ch' }}
-            >
-              <AnimatePresence initial={false}>
+            <span className="relative inline-flex h-[1.2em] overflow-hidden align-bottom">
+              <AnimatePresence mode="wait">
                 <motion.span
                   key={roleIndex}
-                  className="font-roles text-accent whitespace-nowrap absolute inset-x-0 top-0"
-                  initial={{ y: '-100%' }}
-                  animate={{ y: '0%' }}
-                  exit={{ y: '100%' }}
-                  transition={{ duration: 1, ease: [0.22, 1, 0.22, 1] }}
+                  className="text-accent whitespace-nowrap"
+                  initial={{ y: '-100%', opacity: 0 }}
+                  animate={{ y: '0%', opacity: 1 }}
+                  exit={{ y: '100%', opacity: 0 }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 >
                   {roles[roleIndex]}
                 </motion.span>
               </AnimatePresence>
-            </span>
-            {/* Off-screen sizer: holds every role so we can measure the widest one. */}
-            <span
-              ref={roleMeasureRef}
-              aria-hidden
-              className="invisible absolute pointer-events-none whitespace-nowrap"
-            >
-              {roles.map((r) => (
-                <span key={r} className="font-roles">
-                  {r}
-                </span>
-              ))}
             </span>
           </div>
 
