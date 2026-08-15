@@ -60,11 +60,13 @@ function ProjectCard({
         </span>
       )}
       {/* Bento grid: visual tile anchors the left, meta + title fill the right,
-          then full-width content rows (description, tech, action) below. */}
-      <div className="relative z-10 grid grid-cols-1 gap-3 p-3 sm:grid-cols-[8.5rem_1fr]">
+          then full-width content rows (description, tech, action) below.
+          Two-column on all sizes (smaller tile on phones) so mobile matches
+          the desktop card layout. */}
+      <div className="relative z-10 grid grid-cols-[5.5rem_1fr] gap-3 p-3 sm:grid-cols-[8.5rem_1fr]">
         {/* Visual tile — spans both right-hand rows on sm+; stacks on top of mobile */}
         <div className="relative row-span-2 flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-accent/10 via-field/40 to-field/60 sm:aspect-auto sm:self-stretch">
-          <div className="flex h-full w-full items-center justify-center text-7xl transition-transform duration-500 group-hover:scale-110">
+          <div className="flex h-full w-full items-center justify-center text-4xl transition-transform duration-500 group-hover:scale-110 sm:text-7xl">
             {project.image}
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -108,7 +110,7 @@ function ProjectCard({
 
         {/* Title tile */}
         <div className="flex items-start">
-          <h3 className="text-xl font-bold leading-tight text-content transition-colors group-hover:text-accent">
+          <h3 className="text-lg font-bold leading-tight text-content transition-colors group-hover:text-accent sm:text-xl">
             {project.title}
           </h3>
         </div>
@@ -300,7 +302,7 @@ export default function Projects() {
       <AnimatePresence>
         {selectedProject && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -310,7 +312,7 @@ export default function Projects() {
             aria-labelledby="modal-title"
           >
             <motion.div
-              className="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 bg-card/70 backdrop-blur-2xl backdrop-saturate-150 p-6"
+              className="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border border-white/50 bg-card/75 backdrop-blur-2xl backdrop-saturate-150 p-6"
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
