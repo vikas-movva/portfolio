@@ -72,7 +72,7 @@ export default function Hero() {
               <AnimatePresence mode="wait">
                 <motion.span
                   key={roleIndex}
-                  className="text-accent whitespace-nowrap"
+                  className="text-accent whitespace-nowrap font-roles"
                   initial={{ y: '-100%', opacity: 0 }}
                   animate={{ y: '0%', opacity: 1 }}
                   exit={{ y: '100%', opacity: 0 }}
