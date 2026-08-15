@@ -46,10 +46,11 @@ export default function Skills() {
   return (
       <section
         id="skills"
-        className="py-24 md:py-32 px-6 bg-surface-alt scroll-mt-20"
+        className="relative overflow-hidden py-24 md:py-32 px-6 bg-surface-alt scroll-mt-20"
         aria-labelledby="skills-title"
       >
-      <div className="max-w-7xl mx-auto">
+      <div className="section-aurora" aria-hidden="true" />
+      <div className="relative z-10 max-w-7xl mx-auto">
         <SectionHeading
           id="skills-title"
           eyebrow="Technical Skills"

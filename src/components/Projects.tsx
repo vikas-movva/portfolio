@@ -29,7 +29,6 @@ function ProjectCard({
   const [isTruncated, setIsTruncated] = useState(false)
   const [showAllTech, setShowAllTech] = useState(false)
   const descRef = useRef<HTMLParagraphElement>(null)
-  const accent = useThemeColor('accent') ?? ACCENT_FALLBACK
   // Show the toggle only when the description is actually clipped by the
   // line-clamp. Re-measure after layout and whenever the viewport resizes.
   useLayoutEffect(() => {
@@ -48,72 +47,78 @@ function ProjectCard({
       whileInView="visible"
       viewport={{ once: true, margin: '-50px' }}
       transition={{ delay: index * 0.05 }}
-      className={`group relative flex h-full flex-col overflow-hidden rounded-2xl bg-card border border-border transition-all hover:border-accent/40 ${
+      className={`group relative flex h-full flex-col overflow-hidden rounded-lg border border-white/10 bg-card/40 backdrop-blur-xl backdrop-saturate-150 transition-all hover:border-accent/40 ${
         project.featured ? 'ring-1 ring-accent/20' : ''
       }`}
       whileHover={{ y: -8, boxShadow: `0 25px 50px -20px ${glow(0.18)}` }}
     >
-      {/* Editorial index + category */}
-      <div className="flex items-center justify-between px-6 pt-6">
-        <span className="font-mono text-sm tracking-widest text-content-faint">
-          {String(index + 1).padStart(2, '0')}
+      {/* Featured ribbon — pinned to the card corner so it never overlaps the
+          centered project image. */}
+      {project.featured && (
+        <span className="absolute left-4 top-4 z-20 rounded-full bg-accent px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-on-accent shadow-lg shadow-accent/30">
+          Featured
         </span>
-        <span className="rounded-full bg-accent/10 px-2.5 py-1 text-xs font-medium text-accent">
-          {project.category}
-        </span>
-      </div>
+      )}
+      {/* Bento grid: visual tile anchors the left, meta + title fill the right,
+          then full-width content rows (description, tech, action) below. */}
+      <div className="relative z-10 grid grid-cols-1 gap-3 p-3 sm:grid-cols-[8.5rem_1fr]">
+        {/* Visual tile — spans both right-hand rows on sm+; stacks on top of mobile */}
+        <div className="relative row-span-2 flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-accent/10 via-field/40 to-field/60 sm:aspect-auto sm:self-stretch">
+          <div className="flex h-full w-full items-center justify-center text-7xl transition-transform duration-500 group-hover:scale-110">
+            {project.image}
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="absolute inset-x-3 bottom-3 flex translate-y-4 justify-center gap-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+            {project.links.github && (
+              <a
+                href={project.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-xl bg-surface-alt/90 p-3 text-accent backdrop-blur transition-all hover:scale-110 hover:bg-accent hover:text-on-accent active:scale-95"
+                aria-label={`View ${project.title} on GitHub`}
+              >
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                </svg>
+              </a>
+            )}
+            {project.links.demo && (
+              <a
+                href={project.links.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-xl bg-surface-alt/90 p-3 text-accent backdrop-blur transition-all hover:scale-110 hover:bg-accent hover:text-on-accent active:scale-95"
+                aria-label={`View ${project.title} demo`}
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </a>
+            )}
+          </div>
+        </div>
 
-      {/* Media */}
-      <div className="relative mx-6 mt-4 aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-accent/10 via-field/40 to-field/60">
-        {project.featured && (
-          <span className="absolute left-3 top-3 z-10 rounded-full bg-accent px-3 py-1 text-xs font-bold text-on-accent shadow-lg shadow-accent/30">
-            Featured
+        {/* Meta tile — category chip (index numbers removed) */}
+        <div className="flex items-center justify-end">
+          <span className="rounded-full bg-accent/10 px-2.5 py-1 text-xs font-medium text-accent">
+            {project.category}
           </span>
-        )}
-        <div className="absolute inset-0 flex items-center justify-center text-8xl transition-transform duration-500 group-hover:scale-110">
-          {project.image}
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-        <div className="absolute bottom-4 left-4 right-4 flex translate-y-4 justify-center gap-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-          {project.links.github && (
-            <a
-              href={project.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-xl bg-surface-alt/90 p-3 text-accent backdrop-blur transition-all hover:scale-110 hover:bg-accent hover:text-on-accent active:scale-95"
-              aria-label={`View ${project.title} on GitHub`}
-            >
-              <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-              </svg>
-            </a>
-          )}
-          {project.links.demo && (
-            <a
-              href={project.links.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-xl bg-surface-alt/90 p-3 text-accent backdrop-blur transition-all hover:scale-110 hover:bg-accent hover:text-on-accent active:scale-95"
-              aria-label={`View ${project.title} demo`}
-            >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-              </svg>
-            </a>
-          )}
+
+        {/* Title tile */}
+        <div className="flex items-start">
+          <h3 className="text-xl font-bold leading-tight text-content transition-colors group-hover:text-accent">
+            {project.title}
+          </h3>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="flex flex-1 flex-col px-6 pb-6 pt-4">
-        <h3 className="text-xl font-bold text-content transition-colors group-hover:text-accent">
-          {project.title}
-        </h3>
-
+      {/* Full-width content rows */}
+      <div className="relative z-10 flex flex-1 flex-col px-4 pb-4">
         <p
           ref={descRef}
-          className={`mt-2 text-sm leading-relaxed text-content-muted ${
+          className={`text-sm leading-relaxed text-content-muted ${
             expanded ? '' : 'line-clamp-3'
           }`}
         >
@@ -139,8 +144,7 @@ function ProjectCard({
             (tech) => (
               <motion.span
                 key={tech}
-                className="rounded border border-border bg-field px-2 py-0.5 text-xs text-content-soft"
-                whileHover={{ borderColor: accent, color: accent }}
+                className="cursor-default rounded border border-border bg-field px-2 py-0.5 text-xs text-content-soft transition-colors hover:border-accent/60 hover:text-accent"
               >
                 {tech}
               </motion.span>
@@ -226,10 +230,12 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="py-24 md:py-32 px-6 bg-surface scroll-mt-20"
+      className="relative overflow-hidden py-24 md:py-32 px-6 bg-surface scroll-mt-20"
       aria-labelledby="projects-title"
     >
-      <div className="max-w-7xl mx-auto">
+      {/* One soft accent glow that slowly wanders the whole section, behind all cards. */}
+      <div className="section-aurora" aria-hidden="true" />
+      <div className="relative z-10 max-w-7xl mx-auto">
         <SectionHeading
           id="projects-title"
           eyebrow="Featured Work"
@@ -268,7 +274,7 @@ export default function Projects() {
           ))}
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label="Projects">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2" role="list" aria-label="Projects">
           {filteredProjects.map((project, index) => (
             <ProjectCard
               key={project.title}
@@ -294,7 +300,7 @@ export default function Projects() {
       <AnimatePresence>
         {selectedProject && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -304,7 +310,7 @@ export default function Projects() {
             aria-labelledby="modal-title"
           >
             <motion.div
-              className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-card rounded-2xl border border-border p-6"
+              className="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 bg-card/70 backdrop-blur-2xl backdrop-saturate-150 p-6"
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -363,8 +369,7 @@ export default function Projects() {
                     {selectedProject.technologies.map((tech) => (
                       <motion.span
                         key={tech}
-                        className="px-3 py-1 text-sm font-medium text-content-soft bg-field rounded-full border border-border"
-                        whileHover={{ borderColor: primary, color: primary }}
+                        className="cursor-default px-3 py-1 text-sm font-medium text-content-soft bg-field rounded-full border border-border transition-colors hover:border-accent/60 hover:text-accent"
                       >
                         {tech}
                       </motion.span>
