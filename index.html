@@ -10,10 +10,14 @@
          Valid themes: cyan | violet | emerald | amber | rose
          Valid modes:  dark | light -->
     <script>
-      document.documentElement.dataset.theme = 'rose'
-      document.documentElement.dataset.themeMode = 'light'
-    </script>
-  </head>
+      const themes = ['cyan', 'violet', 'emerald', 'amber', 'rose'];
+      const modes = ['dark', 'light'];
+      const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+      const randomMode = modes[Math.floor(Math.random() * modes.length)];
+      document.documentElement.dataset.theme = randomTheme;
+      document.documentElement.dataset.themeMode = randomMode;
+      </script>
+    </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
