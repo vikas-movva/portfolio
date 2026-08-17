@@ -48,23 +48,23 @@ export const projectsData: Project[] = [
     featured: true,
   },
   {
-    title: "Credit Risk Analysis Pipeline",
+    title: "Worldgen - Local-First Worldbuilding Tool",
     description:
-      "Modular credit risk analysis pipeline in Python with data cleaning, feature engineering, model training, evaluation, and customer segmentation.",
+      "A procedural map generator for worldbuilding that runs 100% locally, with a deterministic Rust→WASM compute core and a GPU (PixiJS/WebGL2) renderer staying smooth at ≤60k cells / 60fps.",
     longDescription:
-      "Designed a modular credit risk pipeline that takes a credit risk dataset through the full ML lifecycle: loading, schema standardization, cleaning and preprocessing, feature engineering, exploratory data analysis, model training, evaluation, and prediction. The architecture is split into separate Python modules (loader, preprocessing, feature_engineering, eda, train, evaluate, predict, segmentation) so each stage is independently manageable and testable. Includes customer segmentation logic for clustering borrowers into groups based on financial characteristics, and generates predicted labels, probabilities, and risk levels as outputs.",
-    image: "💳",
-    technologies: ["Python", "pandas", "scikit-learn", "Jupyter", "Matplotlib"],
-    category: "Data Science",
+      "Worldgen is a local-first worldbuilding tool — an FMG-style (Azgaar's Fantasy Map Generator) procedural map generator geared to worldbuilding. Its differentiator is a deterministic Rust→WASM compute core that runs off-thread (seeded, byte-identical output per seed) handling Voronoi mesh generation, authored heightmaps, climate (temperature + precipitation), biome classification, and rivers with dependent recompute. A Web Worker bridge keeps the UI responsive during generation, while a PixiJS v8 WebGL2 renderer draws merged geometry per layer with viewport culling and pan/zoom at 60fps for up to 60k cells. The React + TypeScript + Zustand UI wraps it with an event-sourced timeline for procedurally generated history. Everything runs on-device; the optional LLM polish is strictly opt-in.",
+    image: "🗺️",
+    technologies: ["Rust", "WebAssembly", "PixiJS v8", "React", "TypeScript", "Vite", "Zustand"],
+    category: "Web App",
     highlights: [
-      "Modular architecture with 10+ independent pipeline stages",
-      "Automated feature engineering from raw credit data",
-      "Model evaluation with accuracy, precision, recall, F1, and confusion matrix",
-      "Customer segmentation via clustering on financial characteristics",
+      "Deterministic Rust→WASM core: byte-identical output for a given seed",
+      "Voronoi mesh, authored heightmaps, climate, biomes, rivers with dependent recompute",
+      "PixiJS v8 WebGL2 renderer: 60fps at ≤60k cells with viewport culling",
+      "Event-sourced timeline + opt-in LLM history polish, 100% local",
     ],
     links: {
-      github: "https://github.com/vikas-movva/credit_risk",
-      demo: null,
+      github: "https://github.com/vikas-movva/worldgen",
+      demo: "https://vikas-movva.github.io/worldgen/",
     },
     featured: true,
   },
@@ -90,6 +90,27 @@ export const projectsData: Project[] = [
     featured: true,
   },
   {
+    title: "Credit Risk Analysis Pipeline",
+    description:
+      "Modular credit risk analysis pipeline in Python with data cleaning, feature engineering, model training, evaluation, and customer segmentation.",
+    longDescription:
+      "Designed a modular credit risk pipeline that takes a credit risk dataset through the full ML lifecycle: loading, schema standardization, cleaning and preprocessing, feature engineering, exploratory data analysis, model training, evaluation, and prediction. The architecture is split into separate Python modules (loader, preprocessing, feature_engineering, eda, train, evaluate, predict, segmentation) so each stage is independently manageable and testable. Includes customer segmentation logic for clustering borrowers into groups based on financial characteristics, and generates predicted labels, probabilities, and risk levels as outputs.",
+    image: "💳",
+    technologies: ["Python", "pandas", "scikit-learn", "Jupyter", "Matplotlib"],
+    category: "Data Science",
+    highlights: [
+      "Modular architecture with 10+ independent pipeline stages",
+      "Automated feature engineering from raw credit data",
+      "Model evaluation with accuracy, precision, recall, F1, and confusion matrix",
+      "Customer segmentation via clustering on financial characteristics",
+    ],
+    links: {
+      github: "https://github.com/vikas-movva/credit_risk",
+      demo: null,
+    },
+    featured: false,
+  },
+  {
     title: "MNIST Digit Recognition",
     description:
       "Handwritten digit recognition system trained on the MNIST dataset using neural networks implemented from scratch in Python.",
@@ -107,27 +128,6 @@ export const projectsData: Project[] = [
     links: {
       github: "https://github.com/vikas-movva/MNIST",
       demo: null,
-    },
-    featured: false,
-  },
-  {
-    title: "Worldgen - Local-First Worldbuilding Tool",
-    description:
-      "A procedural map generator for worldbuilding that runs 100% locally, with a deterministic Rust→WASM compute core and a GPU (PixiJS/WebGL2) renderer staying smooth at ≤60k cells / 60fps.",
-    longDescription:
-      "Worldgen is a local-first worldbuilding tool — an FMG-style (Azgaar's Fantasy Map Generator) procedural map generator geared to worldbuilding. Its differentiator is a deterministic Rust→WASM compute core that runs off-thread (seeded, byte-identical output per seed) handling Voronoi mesh generation, authored heightmaps, climate (temperature + precipitation), biome classification, and rivers with dependent recompute. A Web Worker bridge keeps the UI responsive during generation, while a PixiJS v8 WebGL2 renderer draws merged geometry per layer with viewport culling and pan/zoom at 60fps for up to 60k cells. The React + TypeScript + Zustand UI wraps it with an event-sourced timeline for procedurally generated history. Everything runs on-device; the optional LLM polish is strictly opt-in.",
-    image: "🗺️",
-    technologies: ["Rust", "WebAssembly", "PixiJS v8", "React", "TypeScript", "Vite", "Zustand"],
-    category: "Web App",
-    highlights: [
-      "Deterministic Rust→WASM core: byte-identical output for a given seed",
-      "Voronoi mesh, authored heightmaps, climate, biomes, rivers with dependent recompute",
-      "PixiJS v8 WebGL2 renderer: 60fps at ≤60k cells with viewport culling",
-      "Event-sourced timeline + opt-in LLM history polish, 100% local",
-    ],
-    links: {
-      github: "https://github.com/vikas-movva/worldgen",
-      demo: "https://vikas-movva.github.io/worldgen/",
     },
     featured: false,
   },
