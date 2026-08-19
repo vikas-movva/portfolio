@@ -8,7 +8,7 @@
   font-weight: 500 700;
   font-display: swap;
   src: url('./fonts/SpaceGrotesk-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+  unicode-range: U+0000-00FF, U+0131, U+0152-U+0153, U+02BB-U+02BC, U+02C6, U+02DA,
     U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
@@ -18,7 +18,7 @@
   font-weight: 500 700;
   font-display: swap;
   src: url('./fonts/SpaceGrotesk-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+  unicode-range: U+0100-02BA, U+02BD-U+02C5, U+02C7-U+02CC, U+02CE-U+02D7, U+02DD-U+02FF,
     U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
     U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
@@ -28,118 +28,108 @@
 @tailwind utilities;
 
 /* ============================================================
-   Theme tokens — driven by CSS custom properties.
+   Editorial design system — design tokens & reusable primitives.
 
-   Two axes:
-     1. Accent colour: set by [data-theme="<name>"] (cyan|violet|...)
-     2. Light/dark mode: set by [data-theme-mode="dark"|"light"]
+   Palette: warm white / near-black, black borders, one restrained accent
+   (the user-picked theme colour) used only for small details and interactive
+   states. No gradients. Typography-driven, spacious, asymmetric.
 
-   Colours are stored as space-separated RGB triplets (e.g. "0 212 255")
-   so Tailwind can apply opacity modifiers (bg-primary/10, surface/95, ...)
-   via the `rgb(var(--x) / <alpha-value>)` bridge in tailwind.config.js.
-
-   The default theme/mode are applied by the inline script in index.html
-   BEFORE first paint to avoid a flash of the wrong colours.
+   Two theme axes are preserved from the previous system so the existing
+   ThemeControls keep working:
+     [data-theme="cyan"|"violet"|"emerald"|"amber"|"rose"]  -> accent colour
+     [data-theme-mode="dark"|"light"]                       -> surface/text
    ============================================================ */
 
-:root,
+:root {
+  /* ---- neutral palette (light mode) ---- */
+  --color-surface-rgb: 250 247 242;        /* warm white */
+  --color-surface-alt-rgb: 240 236 229;    /* slightly warmer alternate */
+  --color-card-rgb: 255 255 255;
+  --color-content-rgb: 20 20 20;           /* near-black */
+  --color-content-soft-rgb: 58 58 58;
+  --color-content-muted-rgb: 118 118 118; /* muted gray */
+  --color-content-faint-rgb: 162 162 162;
+  --color-border-rgb: 20 20 20;            /* black borders */
+  --color-border-strong-rgb: 20 20 20;
+  --color-border-soft-rgb: 228 226 221;
+  --color-field-rgb: 255 255 255;
+  --color-field-hover-rgb: 245 243 239;
+
+  /* ---- accent per theme (only the accent shifts; surfaces stay neutral) ---- */
+  --color-primary-rgb: 0 212 255;
+  --color-primary-hover-rgb: 0 184 224;
+  --color-primary-light-rgb: 0 135 161;     /* dark accent for light mode */
+  --color-primary-light-hover-rgb: 0 110 135;
+  --color-dark-rgb: 20 20 20;
+  --color-darker-rgb: 10 10 10;
+
+  /* ---- layout / motion tokens ---- */
+  --container: min(100% - 4rem, 1400px);
+  --section-y: clamp(6rem, 12vw, 14rem);
+  --ease-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.15s;
+  --dur-med: 0.5s;
+  --dur-slow: 0.8s;
+}
+
+/* Accent colour per theme. Only the accent shifts; backgrounds stay neutral. */
 :root[data-theme="cyan"] {
   --color-primary-rgb: 0 212 255;
   --color-primary-hover-rgb: 0 184 224;
-  --color-dark-rgb: 10 15 26;
-  --color-darker-rgb: 5 8 16;
-  --color-primary-light-rgb: 3 105 161;   /* cyan-700: WCAG AA on slate-200 */
-  --color-primary-light-hover-rgb: 2 84 130; /* cyan-800 */
+  --color-primary-light-rgb: 0 135 161;
+  --color-primary-light-hover-rgb: 0 110 135;
 }
-
 :root[data-theme="violet"] {
   --color-primary-rgb: 167 139 250;
   --color-primary-hover-rgb: 139 92 246;
-  --color-dark-rgb: 15 10 26;
-  --color-darker-rgb: 10 5 16;
-  --color-primary-light-rgb: 109 40 217;  /* violet-700 */
-  --color-primary-light-hover-rgb: 91 33 182; /* violet-800 */
+  --color-primary-light-rgb: 109 40 217;
+  --color-primary-light-hover-rgb: 91 33 182;
 }
-
 :root[data-theme="emerald"] {
   --color-primary-rgb: 52 211 153;
   --color-primary-hover-rgb: 16 185 129;
-  --color-dark-rgb: 10 26 20;
-  --color-darker-rgb: 5 16 11;
-  --color-primary-light-rgb: 4 120 87;    /* emerald-700 */
-  --color-primary-light-hover-rgb: 6 95 70; /* emerald-800 */
+  --color-primary-light-rgb: 4 120 87;
+  --color-primary-light-hover-rgb: 6 95 70;
 }
-
 :root[data-theme="amber"] {
   --color-primary-rgb: 251 191 36;
   --color-primary-hover-rgb: 245 158 11;
-  --color-dark-rgb: 26 20 10;
-  --color-darker-rgb: 16 12 5;
-  --color-primary-light-rgb: 180 83 9;    /* amber-700 (600 fails AA on white) */
-  --color-primary-light-hover-rgb: 146 64 14; /* amber-800 */
+  --color-primary-light-rgb: 180 83 9;
+  --color-primary-light-hover-rgb: 146 64 14;
 }
-
 :root[data-theme="rose"] {
   --color-primary-rgb: 251 113 133;
   --color-primary-hover-rgb: 244 63 94;
-  --color-dark-rgb: 26 10 14;
-  --color-darker-rgb: 16 5 7;
-  --color-primary-light-rgb: 190 18 60;  /* rose-700 */
-  --color-primary-light-hover-rgb: 159 18 57; /* rose-800 */
+  --color-primary-light-rgb: 190 18 60;
+  --color-primary-light-hover-rgb: 159 18 57;
 }
 
-/* ============================================================
-   Light / dark mode — semantic tokens consumed by Tailwind
-   (see tailwind.config.js). Components reference these so a
-   single attribute flip re-themes the whole site.
-   ============================================================ */
-
-:root,
+/* ---- dark mode: invert the neutral surface/text tokens only ---- */
 :root[data-theme-mode="dark"] {
-  --color-surface-rgb: var(--color-dark-rgb);
-  --color-surface-alt-rgb: var(--color-darker-rgb);
-  --color-card-rgb: 19 28 46;          /* panels / chips */
-  --color-content-rgb: 226 232 240;     /* primary text */
-  --color-content-soft-rgb: 203 213 225;/* secondary text */
-  --color-content-muted-rgb: 148 163 184;/* tertiary text */
-  --color-content-faint-rgb: 100 116 139;/* captions */
-  --color-border-rgb: 51 65 85;         /* default borders */
-  --color-border-strong-rgb: 71 85 105;
-  --color-field-rgb: 30 41 59;          /* inputs / chips */
-  --color-field-hover-rgb: 51 65 85;
+  --color-surface-rgb: 17 17 17;
+  --color-surface-alt-rgb: 10 10 10;
+  --color-card-rgb: 22 22 22;
+  --color-content-rgb: 250 247 242;
+  --color-content-soft-rgb: 196 196 196;
+  --color-content-muted-rgb: 140 140 140;
+  --color-content-faint-rgb: 100 100 100;
+  --color-border-rgb: 250 247 242;
+  --color-border-strong-rgb: 250 247 242;
+  --color-border-soft-rgb: 38 38 38;
+  --color-field-rgb: 28 28 28;
+  --color-field-hover-rgb: 44 44 44;
+  --color-dark-rgb: 250 247 242;
+  --color-darker-rgb: 220 220 220;
   --color-accent-rgb: var(--color-primary-rgb);
   --color-accent-hover-rgb: var(--color-primary-hover-rgb);
-  --color-on-accent-rgb: var(--color-darker-rgb); /* text on filled accent */
+  --color-on-accent-rgb: 20 20 20;
 }
 
+/* ---- light mode: accent uses the darker, contrast-safe shade ---- */
 :root[data-theme-mode="light"] {
-  --color-surface-rgb: 255 255 255;     /* white sections */
-  --color-surface-alt-rgb: 226 232 240; /* slate-200 page */
-  --color-card-rgb: 241 245 249;        /* slate-100 panels / chips */
-  --color-content-rgb: 15 23 42;        /* slate-900 */
-  --color-content-soft-rgb: 51 65 85;   /* slate-700 */
-  --color-content-muted-rgb: 71 85 105; /* slate-600 */
-  --color-content-faint-rgb: 100 116 139;/* slate-500 */
-  --color-border-rgb: 226 232 240;      /* slate-200 */
-  --color-border-strong-rgb: 203 213 225;/* slate-300 */
-  --color-field-rgb: 255 255 255;       /* inputs (white on slate-100) */
-  --color-field-hover-rgb: 241 245 249;
-  /* The bright brand accent is too faint on white, so shift to the
-     darker, contrast-safe shade in light mode.
-     Tokens are set to meet WCAG AA (4.5:1) for small text on slate-200. */
   --color-accent-rgb: var(--color-primary-light-rgb);
   --color-accent-hover-rgb: var(--color-primary-light-hover-rgb);
   --color-on-accent-rgb: 255 255 255;
-}
-
-/* The dotted grid is built from --color-border-rgb; in light mode that token
-   is near-white (slate-200) and vanishes against white, so use the darker
-   border-strong token for visible-but-subtle dots. */
-:root[data-theme-mode="light"] .bg-grid {
-  background-image: radial-gradient(
-    rgb(var(--color-border-strong-rgb, 203 213 225) / 0.6) 1px,
-    transparent 1px
-  );
 }
 
 * {
@@ -153,131 +143,262 @@ html {
 }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background-color: rgb(var(--color-surface-alt-rgb, 5 8 16));
-  color: rgb(var(--color-content-rgb, 226 232 240));
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background-color: rgb(var(--color-surface-rgb));
+  color: rgb(var(--color-content-rgb));
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background-color: rgb(var(--color-accent-rgb, 0 212 255));
-  color: rgb(var(--color-on-accent-rgb, 5 8 16));
+  background-color: rgb(var(--color-accent-rgb));
+  color: rgb(var(--color-on-accent-rgb));
 }
 
-::-webkit-scrollbar {
-  width: 8px;
+/* ---- Reusable primitives ---- */
+
+/* Page shell: constrain content with generous side margins. */
+.container {
+  width: var(--container);
+  margin-inline: auto;
+  padding-inline: 1rem;
 }
 
-::-webkit-scrollbar-track {
-  background: rgb(var(--color-surface-alt-rgb, 5 8 16));
-  border-radius: 9999px;
+/* Generous vertical spacing for every major section. */
+.section {
+  padding-block: var(--section-y);
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgb(var(--color-accent-rgb, 0 212 255));
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--color-accent-hover-rgb, 0 184 224));
-}
-
-/* ============================================================
-   UI refresh — bold editorial design system
-   (shared across the redesigned sections)
-
-   These utilities are additive: they layer on top of the existing
-   token-based Tailwind classes so every section can share one
-   typographic voice (large fluid display type, uppercase eyebrows,
-   accent gradient words, dotted-grid backdrop).
-   ============================================================ */
-
-/* Fluid display headings — clamp keeps them large but never overflowing. */
+/* Bold condensed display face — the hero / major-heading voice.
+   Dramatically oversized via clamp(); tight line-height + tracking.
+   The floor is low (2.5rem) and the step is 13vw so the type scales DOWN on
+   mobile instead of hitting a floor that made "Hi, I'm Vikas" overflow its
+   column at 390px, while still reaching the 13rem cap on large screens. */
 .display {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  font-weight: 800;
-}
-
-/* Small uppercase kicker above each section title. */
-.eyebrow {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  font-family: 'Anton', 'Arial Narrow', sans-serif;
+  font-size: clamp(2.5rem, 13vw, 13rem);
+  font-weight: 900;
+  line-height: 0.8;
+  letter-spacing: -0.005em;
   text-transform: uppercase;
 }
 
-/* Accent gradient text for key words in headings. */
-.text-gradient {
-  background: linear-gradient(
-    135deg,
-    rgb(var(--color-accent-rgb, 0 212 255)),
-    rgb(var(--color-accent-hover-rgb, 0 184 224))
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Mid-size display — for sub-hero block titles (featured project, detail panel)
+   where the full clamp() size would overwhelm the column. Same face, tighter.
+   Scales down on mobile so project titles never wrap into a third line. */
+.display-md {
+  font-family: 'Anton', 'Arial Narrow', sans-serif;
+  font-size: clamp(1.75rem, 8vw, 3.5rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+/* Large display — the featured skills block's category title. One step up
+   from display-md so the featured category reads as a headline rather than a
+   panel label. Single token; do not stack it with .display-md. */
+.display-xl {
+  font-family: 'Anton', 'Arial Narrow', sans-serif;
+  font-size: clamp(2rem, 10vw, 6rem);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+/* Outlined display text — the recurring solid + outlined motif. Stroke colour
+   follows currentColor so it adapts to light/dark automatically. */
+.outline {
   color: transparent;
+  -webkit-text-stroke: 1.5px currentColor;
 }
 
-/* Dotted grid backdrop — fades toward the edges via a radial mask. */
-.bg-grid {
-  background-image: radial-gradient(
-    rgb(var(--color-border-rgb, 51 65 85) / 0.5) 1px,
-    transparent 1px
-  );
-  background-size: 26px 26px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 40%, transparent 100%);
-  mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 40%, transparent 100%);
+/* Small uppercase kicker above headings. */
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
-/* Soft glow halo used behind the hero portrait cutout. */
-.aura {
-  filter: blur(8px);
-  opacity: 0.7;
+/* Single-line clamp — projects use it for row descriptions. Tailwind's
+   line-clamp plugin isn't installed, so this is a hand-rolled utility. */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-/* Animated aurora — one soft accent glow that slowly wanders around the whole
-   Projects section (see the .section-aurora layer in Projects.tsx). It sits
-   behind the cards (clipped by the section's overflow-hidden) and re-colours
-   with the theme accent. Kept faint outside Hero so it reads as ambient drift.
-   The global reduced-motion rule freezes it. */
-@keyframes sectionAurora {
-  0%   { transform: translate(-10%, -8%) scale(1); }
-  33%  { transform: translate(12%, 6%) scale(1.1); }
-  66%  { transform: translate(4%, 16%) scale(1.15); }
-  100% { transform: translate(-10%, -8%) scale(1); }
+/* Section number — tiny monospace index rendered beside the kicker. */
+.section-num {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
 }
 
-.section-aurora {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(40% 40% at 30% 30%, rgb(var(--color-accent-rgb, 0 212 255) / 0.07), transparent 70%),
-    radial-gradient(36% 36% at 70% 60%, rgb(var(--color-accent-hover-rgb, 0 184 224) / 0.06), transparent 70%);
-  filter: blur(48px);
-  animation: sectionAurora 22s ease-in-out infinite;
+/* Thin rule — section / metadata divider. */
+.rule {
+  height: 1px;
+  width: 100%;
+  background: rgb(var(--color-border-rgb) / 0.25);
 }
 
-/* Respect users who prefer reduced motion: kill the looping animations. */
+/* A rule that grows from left to right on reveal — used under section titles. */
+.rule-reveal {
+  height: 1px;
+  width: 0;
+  background: rgb(var(--color-accent-rgb));
+  transform-origin: left;
+}
+
+/* Metadata row: label + value pair separated by a rule, used in timelines /
+   stat lines. Keeps numbers and labels visually distinct without a card. */
+.meta-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+}
+.meta-row .meta-sep {
+  width: 1px;
+  height: 0.875rem;
+  background: rgb(var(--color-border-soft-rgb) / 0.6);
+}
+
+/* Rectangular button — the only button shape. Thin border, no pill, no shadow,
+   no gradient. Primary fills with the accent; secondary is outlined. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 1.5px solid rgb(var(--color-border-rgb));
+  background: transparent;
+  color: rgb(var(--color-content-rgb));
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: background-color var(--dur-fast) var(--ease-expo),
+    color var(--dur-fast) var(--ease-expo),
+    border-color var(--dur-fast) var(--ease-expo);
+}
+.btn:hover {
+  background: rgb(var(--color-accent-rgb));
+  color: rgb(var(--color-on-accent-rgb));
+  border-color: rgb(var(--color-accent-rgb));
+}
+.btn-primary {
+  background: rgb(var(--color-accent-rgb));
+  color: rgb(var(--color-on-accent-rgb));
+  border-color: rgb(var(--color-accent-rgb));
+}
+.btn-primary:hover {
+  background: rgb(var(--color-accent-hover-rgb));
+  border-color: rgb(var(--color-accent-hover-rgb));
+}
+.btn svg {
+  transition: transform var(--dur-fast) var(--ease-expo);
+}
+.btn:hover svg {
+  transform: translateX(2.5px);
+}
+
+/* Field — a single-line text input/select/textarea. Rectangular, thin border,
+   no rounded pill. */
+.field {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: rgb(var(--color-field-rgb));
+  border: 1.5px solid rgb(var(--color-border-strong-rgb));
+  color: rgb(var(--color-content-rgb));
+  font-size: 1rem;
+  transition: border-color var(--dur-fast) var(--ease-expo),
+    background-color var(--dur-fast) var(--ease-expo);
+}
+.field::placeholder {
+  color: rgb(var(--color-content-faint-rgb));
+}
+.field:focus {
+  outline: none;
+  border-color: rgb(var(--color-accent-rgb));
+}
+
+/* Arrow-link micro-detail: underline + moving arrow on hover. */
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-underline-offset: 4px;
+}
+.arrow-link svg {
+  transition: transform var(--dur-fast) var(--ease-expo);
+}
+.arrow-link:hover svg {
+  transform: translateX(3px);
+}
+
+/* Visible focus for keyboard users only; accent-coloured and restrained. */
+:focus-visible {
+  outline: 2px solid rgb(var(--color-accent-rgb));
+  outline-offset: 3px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+ /* Embedded photography — no frame, no shadow. */
+.photo-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Project visual tile — the Kafka wordmark and WASM icon ship as near-black
+   (#1A1919) shapes on a transparent field, so they read as holes in dark mode.
+   Invert them so the strokes pick up the light surface colour instead. */
+[data-theme-mode="dark"] .project-logo {
+  filter: invert(1) brightness(1.25);
+}
+
+/* Neutral, thin scrollbar. */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-border-rgb) / 0.4);
+  border-radius: 9999px;
+}
+
+/* Respect prefers-reduced-motion: freeze looping/continuous animation and
+   disable smooth scroll. Entrance transitions from framer-motion are handled
+   by MotionConfig(reducedMotion="user") in main.tsx. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
+  }
+  html {
     scroll-behavior: auto !important;
   }
 }
 
 /* Hero rotating roles use a distinctive display face (Space Grotesk) so the
-   cycled phrases stand out from the body copy. Falls back to the system sans. */
+   cycled phrases stand out from the body copy. Falls back to system sans. */
 .font-roles {
-  font-family: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', sans-serif;
   font-feature-settings: 'ss01' 1, 'ss02' 1;
   letter-spacing: -0.01em;
 }

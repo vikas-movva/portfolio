@@ -5,6 +5,14 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vikas Portfolio</title>
+
+    <!-- Editorial display face: Anton (bold condensed). Loaded from Google Fonts
+         so the massive clamp()-sized headings render with the intended weight.
+         Inter is the UI/body face. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
     <!-- Set the active colour theme AND mode before first paint to avoid a flash.
          Change the value below (or src/theme/theme.ts → activeTheme) to retheme.
          Valid themes: cyan | violet | emerald | amber | rose
@@ -16,8 +24,8 @@
       const randomMode = modes[Math.floor(Math.random() * modes.length)];
       document.documentElement.dataset.theme = randomTheme;
       document.documentElement.dataset.themeMode = randomMode;
-      </script>
-    </head>
+    </script>
+  </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

@@ -8,7 +8,6 @@ import {
 } from '../data'
 import type { ContactIconName } from '../data'
 import SectionHeading from './SectionHeading'
-import RotatingRings from './RotatingRings'
 
 /** Icon map keyed by the string names used in src/data/contact.ts. */
 const socialIcons: Record<ContactIconName, React.ReactNode> = {
@@ -86,12 +85,10 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden py-24 md:py-32 px-6 bg-surface-alt scroll-mt-20"
+      className="relative py-24 md:py-32 bg-surface-alt scroll-mt-20"
       aria-labelledby="contact-title"
     >
-      <div className="section-aurora" aria-hidden="true" />
-      <RotatingRings position="bottom-left" size={280} />
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="container">
         <SectionHeading
           id="contact-title"
           eyebrow="Get In Touch"
@@ -103,7 +100,7 @@ export default function Contact() {
           subtitle="Have a project in mind or just want to say hi? I'd love to hear from you."
         />
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="flex flex-col gap-12 lg:grid lg:grid-cols-2 lg:gap-12">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -116,69 +113,59 @@ export default function Contact() {
             >
               <motion.div
                 variants={itemVariants}
-                className="p-6 rounded-2xl bg-card border border-border"
+                className="space-y-4"
               >
                 <h3 className="text-xl font-bold text-content mb-6 flex items-center gap-3">
-                  <span className="w-1 h-8 bg-accent rounded-full"></span>
+                  <span className="w-1 h-8 bg-accent"></span>
                   Let's Connect
                 </h3>
-                <div className="space-y-4">
-                  {socialLinks.map((social, index) => (
-                    <motion.a
-                      key={social.name}
-                      href={deriveSocialHref(social.source, contactData)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-center gap-4 p-4 rounded-xl bg-field/50 border border-border hover:border-accent/30 hover:bg-field transition-all"
-                      whileHover={{ x: 4 }}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      <motion.div
-                        className="p-3 rounded-xl bg-accent/10 text-accent group-hover:bg-accent group-hover:text-on-accent transition-all"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                      >
-                        {socialIcons[social.icon]}
-                      </motion.div>
-                      <div className="flex-1">
-                        <p className="font-semibold text-content group-hover:text-accent transition-colors">
-                          {social.name}
-                        </p>
-                        <p className="text-sm text-content-muted">{social.description}</p>
-                      </div>
-                      <svg className="w-5 h-5 text-content-faint group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </motion.a>
-                  ))}
-                </div>
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={social.name}
+                    href={deriveSocialHref(social.source, contactData)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-4 py-3 border-b border-border-soft transition-colors hover:border-accent"
+                    whileHover={{ x: 4 }}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <div className="p-2 border border-border-strong text-content-soft group-hover:border-accent group-hover:text-accent transition-all">
+                      {socialIcons[social.icon]}
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-semibold text-content group-hover:text-accent transition-colors">
+                        {social.name}
+                      </p>
+                      <p className="text-sm text-content-muted">{social.description}</p>
+                    </div>
+                    <svg className="w-5 h-5 text-content-faint group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </motion.a>
+                ))}
               </motion.div>
 
               <motion.div
                 variants={itemVariants}
-                className="p-6 rounded-2xl bg-gradient-to-br from-accent/10 to-accent/5 border border-accent/20"
+                className="space-y-4"
               >
-                <h3 className="text-xl font-bold text-content mb-4 flex items-center gap-3">
-                  <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  Availability
-                </h3>
-                <div className="flex items-center gap-3 mb-3">
-                  <motion.div
-                    className="w-3 h-3 rounded-full bg-green-500"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                    aria-hidden="true"
-                  />
-                  <span className="text-green-400 font-medium">{contactData.availability}</span>
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="w-2 h-2 rounded-full bg-accent" />
+                  <span className="text-sm font-semibold tracking-widest uppercase text-content">
+                    Availability
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="w-2 h-2 rounded-full bg-accent" />
+                  <span className="text-content font-medium">{contactData.availability}</span>
                 </div>
                 <p className="text-content-muted text-sm">
                   Based in {contactData.location} • Open to remote & hybrid roles
                 </p>
-                <p className="text-content-faint text-sm mt-2">
+                <p className="text-content-faint text-sm">
                   Typically responds within 24 hours
                 </p>
               </motion.div>
@@ -197,86 +184,80 @@ export default function Contact() {
               action="https://formsubmit.co/ajax/vikas.s.movva@gmail.com"
               method="POST"
               variants={itemVariants}
-              className="p-8 rounded-2xl bg-card border border-border"
+              className="space-y-8 border-t border-border pt-8"
               noValidate
             >
-              <h3 className="text-xl font-bold text-content mb-6 flex items-center gap-3">
-                  <span className="w-1 h-8 bg-accent rounded-full"></span>
+              <h3 className="text-xl font-bold text-content mb-2 flex items-center gap-3">
+                  <span className="w-1 h-8 bg-accent"></span>
                   Send a Message
                 </h3>
               
-              <div className="grid md:grid-cols-2 gap-6 mb-6">
+              <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-content-soft mb-2">
                     Name *
                   </label>
-                  <motion.input
+                  <input
                     type="text"
                     id="name"
                     name="name"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-field border border-border-strong text-content placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
-                    whileFocus={{ scale: 1.01 }}
+                    className="field"
                   />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-content-soft mb-2">
                     Email *
                   </label>
-                  <motion.input
+                  <input
                     type="email"
                     id="email"
                     name="email"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-field border border-border-strong text-content placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
-                    whileFocus={{ scale: 1.01 }}
+                    className="field"
                   />
                 </div>
               </div>
 
-              <div className="mb-6">
+              <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-content-soft mb-2">
                   Subject *
                 </label>
-                <motion.select
+                <select
                   id="subject"
                   name="subject"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-field border border-border-strong text-content focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all appearance-none"
-                  whileFocus={{ scale: 1.01 }}
+                  className="field appearance-none"
                 >
                   <option value="" disabled>Select a topic</option>
                   {contactSubjects.map((s) => (
                     <option key={s.value} value={s.value}>{s.label}</option>
                   ))}
-                </motion.select>
+                </select>
               </div>
 
-              <div className="mb-6">
+              <div>
                 <label htmlFor="message" className="block text-sm font-medium text-content-soft mb-2">
                   Message *
                 </label>
-                <motion.textarea
+                <textarea
                   id="message"
                   name="message"
                   required
                   rows={5}
-                  className="w-full px-4 py-3 rounded-xl bg-field border border-border-strong text-content placeholder-content-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-none"
-                  whileFocus={{ scale: 1.01 }}
+                  className="field resize-none"
                   placeholder="Tell me about your project, role, or just say hi..."
                 />
               </div>
 
-              <motion.button
+              <button
                 type="submit"
                 disabled={submitStatus === 'submitting'}
-                className="w-full px-8 py-4 rounded-xl bg-accent text-on-accent font-semibold text-lg hover:bg-accent-hover transition-all disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className="btn btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {submitStatus === 'submitting' ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-on-accent" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
@@ -284,7 +265,7 @@ export default function Contact() {
                   </>
                 ) : submitStatus === 'success' ? (
                   <>
-                    <svg className="-ml-1 mr-3 h-5 w-5 text-on-accent" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <svg className="-ml-1 mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     Message Sent!
@@ -292,11 +273,11 @@ export default function Contact() {
                 ) : (
                   'Send Message'
                 )}
-              </motion.button>
+              </button>
 
               {submitStatus === 'error' && (
                 <motion.p
-                  className="mt-4 text-center text-red-400 text-sm"
+                  className="text-center text-sm text-accent"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
@@ -304,17 +285,12 @@ export default function Contact() {
                 </motion.p>
               )}
 
-              <motion.p
-                className="mt-6 text-center text-sm text-content-faint"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-              >
+              <p className="text-center text-sm text-content-faint">
                 Or email me directly at{' '}
                 <a href={`mailto:${contactData.email}`} className="text-accent hover:underline font-medium">
                   {contactData.email}
                 </a>
-              </motion.p>
+              </p>
             </motion.form>
           </motion.div>
         </div>

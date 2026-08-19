@@ -46,16 +46,16 @@ export default function ThemeControls({
 
   return (
     <div className={container}>
-      {/* Light / dark toggle */}
+      {/* Light / dark toggle — thin rectangular button, no pill/glass. */}
       <motion.button
         type="button"
         onClick={toggleMode}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
         aria-label={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         aria-pressed={mode === 'light'}
         title={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-        className="p-2 rounded-lg bg-accent/10 text-accent hover:bg-accent/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        className="p-2 border border-border-soft text-content-muted hover:text-accent hover:border-accent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
@@ -71,18 +71,18 @@ export default function ThemeControls({
         </AnimatePresence>
       </motion.button>
 
-      {/* Accent picker */}
+      {/* Accent picker — thin rectangular button. */}
       <div className="relative" ref={popoverRef}>
         <motion.button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.92 }}
           aria-haspopup="true"
           aria-expanded={open}
           aria-label="Choose accent colour"
           title="Choose accent colour"
-          className="p-2 rounded-lg bg-accent/10 text-accent hover:bg-accent/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="p-2 border border-border-soft text-content-muted hover:text-accent hover:border-accent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           <PaletteIcon />
         </motion.button>
@@ -96,7 +96,7 @@ export default function ThemeControls({
               transition={{ duration: 0.15 }}
               role="menu"
               aria-label="Accent colour"
-              className="absolute right-0 mt-2 z-50 p-3 rounded-xl bg-surface border border-border shadow-2xl shadow-black/40 flex flex-col gap-1 w-44"
+              className="absolute right-0 mt-2 z-50 p-3 border border-border-soft bg-surface flex flex-col gap-1 w-44"
             >
               <span className="text-xs font-medium text-content-faint mb-1 px-1">
                 Accent colour
@@ -119,7 +119,7 @@ export default function ThemeControls({
                       whileHover={{ scale: 1.15 }}
                       whileTap={{ scale: 0.9 }}
                       className={`relative h-7 w-7 rounded-full flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-surface focus-visible:ring-accent ${
-                        active ? 'ring-2 ring-white ring-offset-1 ring-offset-surface' : ''
+                        active ? 'ring-2 ring-current ring-offset-1 ring-offset-surface' : ''
                       }`}
                       style={{ backgroundColor: themes[name].primary }}
                     >

@@ -43,5 +43,28 @@ export const slideRight: Variants = {
   },
 }
 
+/** Photography reveal: rises slightly and eases in. Slightly softer than fadeUp
+    so embedded images feel heavier than type. */
+export const revealImage: Variants = {
+  hidden: { opacity: 0, y: 40, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+  },
+}
+
+/** A slower stagger parent for large editorial blocks (hero, feature sections). */
+export const staggerSlow: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.16, delayChildren: 0.12 },
+  },
+}
+
 /** Scroll-trigger config shared by every whileInView heading. */
 export const inViewOnce = { once: true, margin: '-80px' } as const
+
+/** Scroll-trigger config that re-animates on every pass (rules / accents). */
+export const inViewRepeat = { once: false, margin: '-60px' } as const

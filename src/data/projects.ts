@@ -8,6 +8,13 @@
  * All projects below are real repositories from github.com/vikas-movva.
  */
 
+import kafkaLogo from '../assets/Apache_Kafka_logo.svg'
+import wasmLogo from '../assets/webassembly-icon.svg'
+import pythonLogo from '../assets/python-programming-language-icon.svg'
+import rustLogo from '../assets/rust-programming-language-icon.svg'
+import neuralNetLogo from '../assets/neural-network-black-icon.svg'
+import calendarShareLogo from '../assets/calendarshare.svg'
+
 export interface ProjectLink {
   github: string | null
   demo: string | null
@@ -27,12 +34,35 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
+    title: "CalendarShare",
+    description:
+      "A calendar-sharing web app that lets a user connect a calendar, select a timeframe, control what recipients see, and generate a secure share link exposing only that calendar slice.",
+    longDescription:
+      "CalendarShare is a single-origin app: a Rust/Axum backend serves the compiled React frontend from the same domain, keeping cookies and CORS simple. Connect a calendar via Google OAuth 2.0, pick a date range, and choose a visibility mode (busy/free, title + time, or full details with location and description). Shares are persisted as a snapshot at creation time, so public requests read from the database, never from the provider. Share tokens are 32 bytes of CSPRNG output; only the SHA-256 hash is stored, so a database leak reveals nothing usable. Links can expire (hour, day, week, forever) and be revoked at any time, with expiration and revocation enforced on every public request. Recipients open the link with no login and no Google access. OAuth credentials are encrypted at rest with AES-256-GCM and never sent to browsers; session cookies are HTTP-only and signed with an HMAC key.",
+    image: calendarShareLogo,
+    technologies: ["Rust", "Axum", "Tokio", "Serde", "SQLx", "Reqwest", "React", "TypeScript", "Vite", "Tailwind", "TanStack Query", "PostgreSQL", "Google OAuth 2.0"],
+    category: "Web App",
+    highlights: [
+      "Google OAuth 2.0 / OpenID Connect calendar connection",
+      "Snapshot-first sharing — reads from DB, never from the provider",
+      "Cryptographically random tokens; only SHA-256 hash stored",
+      "Server-side visibility filtering by mode (busy/free, title+time, full)",
+      "Expiration and revocation enforced on every public request",
+      "Provider abstraction via a CalendarProvider trait isolating Google-specific logic",
+    ],
+    links: {
+      github: "https://github.com/vikas-movva/calendarshare",
+      demo: "https://calendershare.onrender.com/",
+    },
+    featured: true,
+  },
+  {
     title: "Real-Time Fraud Detection Pipeline",
     description:
       "End-to-end streaming pipeline for real-time credit card fraud detection using Kafka, Spark Structured Streaming, Cassandra, and PostgreSQL with 4 fraud detection rules and composite risk scoring.",
     longDescription:
       "Built an end-to-end data engineering pipeline for real-time credit card fraud detection. A Python transaction generator publishes ~100 tx/sec to a 3-broker Kafka cluster. Spark Structured Streaming consumes the stream via foreachBatch and applies four fraud detection rules (HIGH_AMOUNT, VELOCITY, OFFLINE_HIGH, GEO_IMPOSSIBILITY), composited into a 0-100 risk score with LOW/MEDIUM/HIGH/CRITICAL severity levels. Alerts are written to Cassandra for low-latency lookups and to PostgreSQL for full audit trail. A custom metrics exporter exposes 9 business-level KPIs to Prometheus, visualized in a pre-provisioned Grafana dashboard with 10 panels and auto-refresh. Verified end-to-end: 460k+ results and 26k+ alerts in Postgres, 13k+ alerts in Cassandra.",
-    image: "🔍",
+    image: kafkaLogo,
     technologies: ["Apache Kafka", "PySpark", "Cassandra", "PostgreSQL", "Prometheus", "Grafana", "Docker"],
     category: "Data Engineering",
     highlights: [
@@ -53,7 +83,6 @@ export const projectsData: Project[] = [
       "A procedural map generator for worldbuilding that runs 100% locally, with a deterministic Rust→WASM compute core and a GPU (PixiJS/WebGL2) renderer staying smooth at ≤60k cells / 60fps.",
     longDescription:
       "Worldgen is a local-first worldbuilding tool — an FMG-style (Azgaar's Fantasy Map Generator) procedural map generator geared to worldbuilding. Its differentiator is a deterministic Rust→WASM compute core that runs off-thread (seeded, byte-identical output per seed) handling Voronoi mesh generation, authored heightmaps, climate (temperature + precipitation), biome classification, and rivers with dependent recompute. A Web Worker bridge keeps the UI responsive during generation, while a PixiJS v8 WebGL2 renderer draws merged geometry per layer with viewport culling and pan/zoom at 60fps for up to 60k cells. The React + TypeScript + Zustand UI wraps it with an event-sourced timeline for procedurally generated history. Everything runs on-device; the optional LLM polish is strictly opt-in.",
-    image: "🗺️",
     technologies: ["Rust", "WebAssembly", "PixiJS v8", "React", "TypeScript", "Vite", "Zustand"],
     category: "Web App",
     highlights: [
@@ -62,6 +91,7 @@ export const projectsData: Project[] = [
       "PixiJS v8 WebGL2 renderer: 60fps at ≤60k cells with viewport culling",
       "Event-sourced timeline + opt-in LLM history polish, 100% local",
     ],
+    image: wasmLogo,
     links: {
       github: "https://github.com/vikas-movva/worldgen",
       demo: "https://vikas-movva.github.io/worldgen/",
@@ -74,7 +104,6 @@ export const projectsData: Project[] = [
       "A Nintendo Entertainment System emulator written in Rust, implementing the CPU, memory bus, and cartridge loading for running classic NES games.",
     longDescription:
       "Built a Nintendo Entertainment System emulator from scratch in Rust. The project implements the NES CPU (6502 architecture) with full instruction set emulation, memory bus management, and cartridge (iNes) format loading. This is a deep systems-programming project that required careful cycle-accurate CPU emulation, memory mapping, and understanding of the NES hardware architecture.",
-    image: "🎮",
     technologies: ["Rust", "6502 CPU", "Emulation", "Systems Programming"],
     category: "Systems",
     highlights: [
@@ -83,6 +112,7 @@ export const projectsData: Project[] = [
       "iNes cartridge format parsing and loading",
       "~94k lines of Rust",
     ],
+    image: rustLogo,
     links: {
       github: "https://github.com/vikas-movva/rust-nes-emu",
       demo: null,
@@ -95,7 +125,7 @@ export const projectsData: Project[] = [
       "Modular credit risk analysis pipeline in Python with data cleaning, feature engineering, model training, evaluation, and customer segmentation.",
     longDescription:
       "Designed a modular credit risk pipeline that takes a credit risk dataset through the full ML lifecycle: loading, schema standardization, cleaning and preprocessing, feature engineering, exploratory data analysis, model training, evaluation, and prediction. The architecture is split into separate Python modules (loader, preprocessing, feature_engineering, eda, train, evaluate, predict, segmentation) so each stage is independently manageable and testable. Includes customer segmentation logic for clustering borrowers into groups based on financial characteristics, and generates predicted labels, probabilities, and risk levels as outputs.",
-    image: "💳",
+    image: pythonLogo,
     technologies: ["Python", "pandas", "scikit-learn", "Jupyter", "Matplotlib"],
     category: "Data Science",
     highlights: [
@@ -116,7 +146,7 @@ export const projectsData: Project[] = [
       "Handwritten digit recognition system trained on the MNIST dataset using neural networks implemented from scratch in Python.",
     longDescription:
       "Built a handwritten digit recognition system trained on the classic MNIST dataset. The project includes data loading from CSV, neural network implementation, training, and evaluation. Achieves high accuracy on the test set using a feedforward neural network architecture. The implementation is done in Jupyter notebooks with Python, making the training process and results fully reproducible and interactive.",
-    image: "🔢",
+    image: neuralNetLogo,
     technologies: ["Python", "NumPy", "Neural Networks", "Jupyter"],
     category: "ML/AI",
     highlights: [
@@ -137,7 +167,7 @@ export const projectsData: Project[] = [
       "Full-stack ML demo application with a React frontend and Flask API backend for real-time digit classification.",
     longDescription:
       "Built a full-stack machine learning demo application. The frontend is a React app that captures user input (drawn digits), sends it to a Flask API backend, and displays the model's prediction in real time. The Flask API wraps a trained ML model and exposes a simple REST endpoint. Containerized with Docker for easy deployment.",
-    image: "🧠",
+    image: "",
     technologies: ["React", "Flask", "Python", "Docker", "JavaScript"],
     category: "Web App",
     highlights: [

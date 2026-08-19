@@ -18,12 +18,12 @@ function App() {
         <Experience />
         <Contact />
       </main>
-      <footer className="py-8 px-6 bg-surface-alt border-t border-border">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-content-muted text-sm">
+      <footer className="py-10 border-t border-border">
+        <div className="container flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-content-muted">
             Built with React, TypeScript, Tailwind CSS & Framer Motion
           </p>
-          <p className="text-content-muted text-sm mt-1">
+          <p className="text-sm text-content-muted">
             © {new Date().getFullYear()} Vikas Movva. All rights reserved.
           </p>
         </div>
