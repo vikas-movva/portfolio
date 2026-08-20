@@ -23,7 +23,7 @@ export default function Experience() {
           number="04"
           title={
             <>
-              My Professional <span className="text-accent">Journey</span>
+              <span className="text-accent">My</span> Professional <span className="text-accent">Journey</span>
             </>
           }
           subtitle="Building scalable systems and the academic foundation behind my engineering and data work."
