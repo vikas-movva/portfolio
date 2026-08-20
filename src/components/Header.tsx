@@ -196,7 +196,7 @@ export default function Header() {
                 </motion.button>
               ))}
             </div>
-            <div className="container pb-8 pt-4 border-t border-border-soft">
+            <div className="container pb-8 pt-4 border-t border-border-soft bg-surface/95 backdrop-blur-md">
               <ThemeControls variant="mobile" />
             </div>
           </motion.div>
