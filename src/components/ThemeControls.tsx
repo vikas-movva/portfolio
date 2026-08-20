@@ -96,7 +96,9 @@ export default function ThemeControls({
               transition={{ duration: 0.15 }}
               role="menu"
               aria-label="Accent colour"
-              className="absolute right-0 mt-2 z-50 p-3 border border-border-soft bg-surface flex flex-col gap-1 w-44"
+              className={`absolute mt-2 z-50 p-3 border border-border-soft bg-surface flex flex-col gap-1 w-44 ${
+                variant === 'mobile' ? 'left-0' : 'right-0'
+              }`}
             >
               <span className="text-xs font-medium text-content-faint mb-1 px-1">
                 Accent colour
