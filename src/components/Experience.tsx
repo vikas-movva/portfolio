@@ -34,7 +34,7 @@ export default function Experience() {
           {/* Timeline accent rule — accent-coloured, drawn from the top.
               Desktop only: mobile recomposes to a borderless stack. */}
           <motion.div
-            className="hidden md:block absolute left-0 top-2 bottom-0 w-px"
+            className="hidden md:block absolute left-0.5 top-2 bottom-0 w-px"
             initial={{ scaleY: 0 }}
             whileInView={{ scaleY: 1 }}
             viewport={inViewOnce}
@@ -56,9 +56,9 @@ export default function Experience() {
                 {/* Timeline dot — desktop only. Anchored to the rule's x;
                     translate-x-[-50%] centres the 12px dot on the line. */}
                 <motion.div
-                  className="hidden md:block absolute -left-9 top-2 w-3 h-3 rounded-full bg-accent border-2 border-surface -translate-x-1/2"
+                  className="hidden md:block absolute -left-9 top-2 w-3 h-3 rounded-full bg-accent border-2 border-surface -translate-x-2"
                   initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
+                  whileInView={{ scale: 1.5 }}
                   viewport={inViewOnce}
                   transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.1 }}
                   aria-hidden="true"
