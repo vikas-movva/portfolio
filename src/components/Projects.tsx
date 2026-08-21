@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { motion } from 'framer-motion'
 import { projectsData } from '../data'
 import SectionHeading from './SectionHeading'
@@ -6,6 +6,9 @@ import FeaturedProjectCard from './projects/FeaturedProjectCard'
 import ProjectRow from './projects/ProjectRow'
 import ProjectModal from './projects/ProjectModal'
 import type { Project } from '../data'
+
+/** Number of projects shown in full before the list becomes scrollable. */
+const SCROLL_AFTER = 6
 
 
 /**
@@ -22,11 +25,41 @@ import type { Project } from '../data'
 export default function Projects() {
   const [filter, setFilter] = useState('all')
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+  // Max height that reveals exactly the first SCROLL_AFTER rows; null when
+  // everything fits (no scrolling needed).
+  const [listMaxHeight, setListMaxHeight] = useState<number | null>(null)
 
   const categories = ['all', ...Array.from(new Set(projectsData.map((p) => p.category)))]
 
   const filteredProjects =
     filter === 'all' ? projectsData : projectsData.filter((p) => p.category === filter)
+
+  // Measure the bottom edge of the Nth row so the scroll container ends
+  // exactly where row N+1 would start. Re-measures on resize/reflow.
+  useLayoutEffect(() => {
+    const list = listRef.current
+    if (!list) return
+
+    const measure = () => {
+      const items = list.querySelectorAll<HTMLElement>('[data-project-item]')
+      if (items.length <= SCROLL_AFTER) {
+        setListMaxHeight(null)
+        return
+      }
+      const boundary = items[SCROLL_AFTER - 1]
+      setListMaxHeight(boundary.offsetTop + boundary.offsetHeight)
+    }
+
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(list)
+    // Observe each row too so late reflows (fonts, images) re-measure.
+    list.querySelectorAll('[data-project-item]').forEach((item) => observer.observe(item))
+    return () => observer.disconnect()
+  }, [filter])
+
+  const isScrollable = listMaxHeight !== null
 
   // Close the modal on Escape for keyboard users.
   useEffect(() => {
@@ -119,10 +152,22 @@ export default function Projects() {
           </div>
         </motion.div>
 
-        <div className="space-y-px border-y border-border-soft" role="list" aria-label="Projects">
+        <div
+          ref={listRef}
+          className={`relative space-y-px border-y border-border-soft transition-[max-height] duration-500 ease-out ${
+            isScrollable ? 'overflow-y-auto pr-2 sm:pr-3' : ''
+          }`}
+          style={listMaxHeight !== null ? { maxHeight: listMaxHeight } : undefined}
+          role="list"
+          aria-label="Projects"
+        >
           {filteredProjects.map((project, index) =>
             index === 0 ? (
-              <div key={project.title} className="border-b border-border-soft py-8 lg:py-10" role="listitem">
+              <div
+                key={project.title}
+                data-project-item
+                className="border-b border-border-soft py-8 lg:py-10"
+              >
                 <FeaturedProjectCard
                   project={project}
                   index={index}
@@ -130,15 +175,30 @@ export default function Projects() {
                 />
               </div>
             ) : (
-              <ProjectRow
-                key={project.title}
-                project={project}
-                index={index}
-                onOpen={setSelectedProject}
-              />
+              <div key={project.title} data-project-item role="listitem">
+                <ProjectRow project={project} index={index} onOpen={setSelectedProject} />
+              </div>
             )
           )}
         </div>
+
+        {/* Fade affordance + hint shown only while the list overflows. */}
+        {isScrollable && (
+          <div aria-hidden="true" className="pointer-events-none relative">
+            <div className="absolute inset-x-0 -top-10 h-10 bg-gradient-to-t from-surface to-transparent" />
+            <p className="flex items-center justify-center gap-2 pt-4 text-xs font-mono tracking-widest text-content-faint uppercase">
+              Scroll for more
+              <svg
+                className="h-3.5 w-3.5 animate-bounce"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </p>
+          </div>
+        )}
 
         {filteredProjects.length === 0 && (
           <motion.div

@@ -56,6 +56,50 @@ export const projectsData: Project[] = [
     },
     featured: true,
   },
+    {
+    title: "Word Craft",
+    description:
+      "Infinite-Craft-style word blending game powered by real word2vec embeddings: combine two words and an offset network finds the nearest neighbor in a ~12.8k-word vocabulary.",
+    longDescription:
+      "An infinite-craft-style word blending game backed by actual trained embeddings rather than an LLM: emb(a) + emb(b) is passed through a small offset network and matched against the nearest neighbor over a ~12.8k-word vocabulary (128-dim, int8-quantized to a ~2.6 MB asset fetched once and cached in IndexedDB, inference is fully client-side). The offset net consumes [emb(a)+emb(b), |emb(a)-emb(b)|], so blends are commutative by construction. Two play modes — an unlock graph with progression and free-form sandbox — plus snap-to-unlocked dedupe and a curated override table checked before the model, so hand-authored recipes always resolve exactly regardless of quantization drift (model-only top-1 is ~70% on authored combos; override paths are 100%). Trained via the Python pipeline in the same repo: SGNS pretraining on wikitext-103 (~80M tokens), then an offset net fit on hand combos, margin-filtered geometric triples, and same-sentence co-occurrence blends with hard negatives and early-stopped checkpoints.",
+    image: neuralNetLogo,
+    technologies: ["React", "TypeScript", "Vite", "Tailwind", "Python", "Word2Vec", "IndexedDB"],
+    category: "ML/AI",
+    highlights: [
+      "SGNS embeddings pretrained on wikitext-103 (~80M tokens), int8-quantized for the browser",
+      "~12.8k-word vocabulary nearest-neighbor search — zero backend calls",
+      "Offset network makes A+B == B+A by construction — no ordering hacks",
+      "Curated override table checked before the model: authored recipes resolve exactly",
+      "Two modes: unlock-graph progression and free-form sandbox",
+      "Fetched once, IndexedDB-cached — repeat visits load from local cache",
+    ],
+    links: {
+      github: "https://github.com/vikas-movva/ml-portfolio",
+      demo: "https://vikas-movva.github.io/ml-portfolio/demo/word2vec-game",
+    },
+    featured: true,
+  },
+    {
+    title: "Worldgen - Local-First Worldbuilding Tool",
+    description:
+      "A procedural map generator for worldbuilding that runs 100% locally, with a deterministic Rust→WASM compute core and a GPU (PixiJS/WebGL2) renderer staying smooth at ≤60k cells / 60fps.",
+    longDescription:
+      "Worldgen is a local-first worldbuilding tool — an FMG-style (Azgaar's Fantasy Map Generator) procedural map generator geared to worldbuilding. Its differentiator is a deterministic Rust→WASM compute core that runs off-thread (seeded, byte-identical output per seed) handling Voronoi mesh generation, authored heightmaps, climate (temperature + precipitation), biome classification, and rivers with dependent recompute. A Web Worker bridge keeps the UI responsive during generation, while a PixiJS v8 WebGL2 renderer draws merged geometry per layer with viewport culling and pan/zoom at 60fps for up to 60k cells. The React + TypeScript + Zustand UI wraps it with an event-sourced timeline for procedurally generated history. Everything runs on-device; the optional LLM polish is strictly opt-in.",
+    technologies: ["Rust", "WebAssembly", "PixiJS v8", "React", "TypeScript", "Vite", "Zustand"],
+    category: "Web App",
+    highlights: [
+      "Deterministic Rust→WASM core: byte-identical output for a given seed",
+      "Voronoi mesh, authored heightmaps, climate, biomes, rivers with dependent recompute",
+      "PixiJS v8 WebGL2 renderer: 60fps at ≤60k cells with viewport culling",
+      "Event-sourced timeline + opt-in LLM history polish, 100% local",
+    ],
+    image: wasmLogo,
+    links: {
+      github: "https://github.com/vikas-movva/worldgen",
+      demo: "https://vikas-movva.github.io/worldgen/",
+    },
+    featured: true,
+  },
   {
     title: "Real-Time Fraud Detection Pipeline",
     description:
@@ -74,27 +118,6 @@ export const projectsData: Project[] = [
     links: {
       github: "https://github.com/vikas-movva/fraud-detection-pipeline",
       demo: null,
-    },
-    featured: true,
-  },
-  {
-    title: "Worldgen - Local-First Worldbuilding Tool",
-    description:
-      "A procedural map generator for worldbuilding that runs 100% locally, with a deterministic Rust→WASM compute core and a GPU (PixiJS/WebGL2) renderer staying smooth at ≤60k cells / 60fps.",
-    longDescription:
-      "Worldgen is a local-first worldbuilding tool — an FMG-style (Azgaar's Fantasy Map Generator) procedural map generator geared to worldbuilding. Its differentiator is a deterministic Rust→WASM compute core that runs off-thread (seeded, byte-identical output per seed) handling Voronoi mesh generation, authored heightmaps, climate (temperature + precipitation), biome classification, and rivers with dependent recompute. A Web Worker bridge keeps the UI responsive during generation, while a PixiJS v8 WebGL2 renderer draws merged geometry per layer with viewport culling and pan/zoom at 60fps for up to 60k cells. The React + TypeScript + Zustand UI wraps it with an event-sourced timeline for procedurally generated history. Everything runs on-device; the optional LLM polish is strictly opt-in.",
-    technologies: ["Rust", "WebAssembly", "PixiJS v8", "React", "TypeScript", "Vite", "Zustand"],
-    category: "Web App",
-    highlights: [
-      "Deterministic Rust→WASM core: byte-identical output for a given seed",
-      "Voronoi mesh, authored heightmaps, climate, biomes, rivers with dependent recompute",
-      "PixiJS v8 WebGL2 renderer: 60fps at ≤60k cells with viewport culling",
-      "Event-sourced timeline + opt-in LLM history polish, 100% local",
-    ],
-    image: wasmLogo,
-    links: {
-      github: "https://github.com/vikas-movva/worldgen",
-      demo: "https://vikas-movva.github.io/worldgen/",
     },
     featured: true,
   },
@@ -162,23 +185,25 @@ export const projectsData: Project[] = [
     featured: false,
   },
   {
-    title: "ML Demo — Digit Classifier App",
+    title: "ml-portfolio",
     description:
-      "Full-stack ML demo application with a React frontend and Flask API backend for real-time digit classification.",
+      "Interactive ML portfolio with two live demos — a word2vec word-blending game and an image classifier served by a Rust ONNX API — each backed by its full Python training pipeline and code-explanation walkthroughs.",
     longDescription:
-      "Built a full-stack machine learning demo application. The frontend is a React app that captures user input (drawn digits), sends it to a Flask API backend, and displays the model's prediction in real time. The Flask API wraps a trained ML model and exposes a simple REST endpoint. Containerized with Docker for easy deployment.",
-    image: "",
-    technologies: ["React", "Flask", "Python", "Docker", "JavaScript"],
-    category: "Web App",
+      "A collection of deployed machine-learning demos built to be inspected end to end: every demo ships with its training pipeline and a step-by-step walkthrough that pins each explanation to file and line ranges in the repo. Craft Lab runs entirely in-browser (word2vec + offset net, int8-quantized, IndexedDB-cached). The Vision Classifier accepts an image upload and returns top-k probabilities from a MobileNetV2 model fine-tuned on CIFAR-10 (80.8% fp32 → 79.5% after dynamic int8 quantization), dynamically quantized ONNX shrinks it 8.9 MB → 2.6 MB, and a Rust axum + ort API serves it on Render with CORS locked to the Pages origin (cold starts accepted by design on the free tier). Frontend is React 19 + Vite + TypeScript + Tailwind deployed to GitHub Pages with an SPA fallback so deep links survive hard refresh.",
+    image: pythonLogo,
+    technologies: ["React", "TypeScript", "Vite", "Tailwind", "Rust", "Axum", "ort (ONNX Runtime)", "PyTorch", "ONNX", "Python"],
+    category: "ML/AI",
     highlights: [
-      "React frontend with real-time canvas input",
-      "Flask REST API serving ML model predictions",
-      "Dockerized for portable deployment",
-      "Full-stack ML inference pipeline",
+      "Two deployed demos: in-browser word2vec game + Rust-served image classifier",
+      "MobileNetV2 fine-tuned on CIFAR-10: 8.9 MB → 2.6 MB via dynamic int8 quantization at ~79.5% accuracy",
+      "Rust axum + ort inference API on Render, CORS restricted to the Pages origin",
+      "Full training pipelines in-repo: SGNS/offset-net trainer and PyTorch → ONNX → int8 export",
+      "Code-explanation walkthroughs pinning every claim to file + line ranges",
+      "GitHub Pages deploy with SPA fallback so /demo/* deep links survive refresh",
     ],
     links: {
-      github: "https://github.com/vikas-movva/ml-demo",
-      demo: null,
+      github: "https://github.com/vikas-movva/ml-portfolio",
+      demo: "https://vikas-movva.github.io/ml-portfolio/",
     },
     featured: false,
   },

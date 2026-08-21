@@ -55,7 +55,7 @@ export default function SkillCategory({
       whileInView="visible"
       viewport={{ once: true, margin: '-40px' }}
       transition={{ delay: index * 0.08 }}
-      className={`relative pt-8 ${featured ? 'pb-4' : 'pb-8'}`}
+      className={`relative pt-8 ${featured ? 'pb-' : 'pb-8'}`}
     >
       <div className="flex items-center gap-3 mb-8">
         <span className="text-accent">{iconMap[icon]}</span>
@@ -65,16 +65,12 @@ export default function SkillCategory({
         <span className="relative">
           <span
             aria-hidden="true"
-            className="pointer-events-none hidden sm:block absolute -left-2 top-1/2 -translate-y-1/2 display outline text-content opacity-[0.07]"
+            className="pointer-events-none hidden sm:block absolute -left-2 top-1/2 -translate-y-1/2 display text-content opacity-[0.07]"
           >
             {String(index + 1).padStart(2, '0')}
           </span>
           <h3
-            className={`tracking-tight text-content transition-colors hover:text-accent ${
-              featured
-                ? 'font-[clamp(1.5rem,9vw,3rem)] sm:font-[clamp(2.5rem,9vw,6rem)]'
-                : 'text-2xl font-display'
-            }`}
+            className={`tracking-tight text-content transition-colors hover:text-accent text-2xl font-display`}
           >
             {category}
           </h3>
