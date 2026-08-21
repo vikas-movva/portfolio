@@ -52,7 +52,7 @@ export const projectsData: Project[] = [
     ],
     links: {
       github: "https://github.com/vikas-movva/calendarshare",
-      demo: "https://calendershare.onrender.com/",
+      demo: "https://calendarshare.onrender.com/",
     },
     featured: true,
   },
